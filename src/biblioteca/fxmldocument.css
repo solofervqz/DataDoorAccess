@@ -1,0 +1,46 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.login-bg{
+    -fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);
+}
+
+.exit{    
+    -fx-background-color:transparent;
+    -fx-cursor:hand;
+    
+}
+
+.exit:hover{   
+    -fx-background-color:#fb3d63;
+}
+
+.textfield-design{   
+    -fx-background-color:transparent;
+    -fx-background-radius:10px;
+    -fx-border-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);
+    -fx-border-radius:10px;
+    -fx-text-inner-color:#000; 
+}
+
+.button-design{
+    -fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);
+    -fx-background-radius:20px;
+    -fx-cursor:hand;
+}
+
+.button-design:hover{
+    -fx-background-color:linear-gradient(to bottom left, #2c4277, #a4a4cc);   
+}
+
+.hypertext-design{  
+    -fx-text-fill:#5185c5;
+    -fx-underline:false;
+    -fx-border-color:transparent;    
+}
+
+.hypertext-design:hover{   
+    -fx-underline:true;  
+}
+

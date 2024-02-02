@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.lang.String?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.dashboardController">
+   <children>
+      <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <BorderPane layoutX="233.0" layoutY="100.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <top>
+                  <AnchorPane prefHeight="45.0" prefWidth="1105.0" styleClass="semi-top-form" stylesheets="@dashboardDesign.css" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="-51.0" layoutY="-77.0" prefHeight="35.0" prefWidth="1100.0" styleClass="top-form" stylesheets="@dashboardDesign.css" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <FontAwesomeIcon glyphName="BOOK" layoutX="22.0" layoutY="24.0" size="1.5em" />
+                              <Label layoutX="48.0" layoutY="8.0" text="BiblioTec">
+                                 <font>
+                                    <Font name="Tahoma" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="close" layoutX="1250.0" layoutY="2.0" mnemonicParsing="false" onAction="#close" prefHeight="24.0" prefWidth="48.0" styleClass="close" stylesheets="@dashboardDesign.css" AnchorPane.leftAnchor="1250.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                                 <graphic>
+                                    <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="minimize" layoutX="1191.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="48.0" styleClass="minimize" stylesheets="@dashboardDesign.css">
+                                 <graphic>
+                                    <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </top>
+               <left>
+                  <AnchorPane prefHeight="555.0" prefWidth="203.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="2.0" layoutY="78.0" prefHeight="555.0" prefWidth="203.0" styleClass="nav-form" stylesheets="@dashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="69.0" layoutY="86.0" size="7em" />
+                              <Label layoutX="61.0" layoutY="104.0" text="Bienvenido," textFill="WHITE">
+                                 <font>
+                                    <Font name="Tahoma" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="username" alignment="CENTER" layoutX="3.0" layoutY="125.0" prefHeight="23.0" prefWidth="197.0" text="cristinasuarezf" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="86.0" layoutX="111.0" layoutY="162.0" startX="-100.0" stroke="WHITE" />
+                              <Button fx:id="home_btn" layoutX="15.0" layoutY="171.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Home">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="WHITE" glyphName="HOME" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="addStudents_btn" layoutX="15.0" layoutY="216.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Estudiantes">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="WHITE" glyphName="USERS" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="dataAnalysis_btn" layoutX="15.0" layoutY="262.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Data Analysis">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="WHITE" glyphName="LINE_CHART" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="logout" layoutX="28.0" layoutY="569.0" mnemonicParsing="false" onAction="#logout" prefHeight="35.0" prefWidth="32.0" stylesheets="@dashboardDesign.css">
+                                 <styleClass>
+                                    <String fx:value="logout" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <graphic>
+                                    <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="2em" text="" textAlignment="CENTER" />
+                                 </graphic>
+                              </Button>
+                              <Label layoutX="72.0" layoutY="577.0" text="Cerrar sesión" textFill="WHITE">
+                                 <font>
+                                    <Font name="Tahoma" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </left>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane fx:id="home_form" layoutX="76.0" layoutY="101.0" prefHeight="635.0" prefWidth="1095.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="12.0" layoutY="20.0" prefHeight="600.0" prefWidth="1071.0" stylesheets="@dashboardDesign.css">
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane prefHeight="150.0" prefWidth="1070.0" stylesheets="@dashboardDesign.css">
+                                       <styleClass>
+                                          <String fx:value="white-bg" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <AnchorPane layoutX="45.0" layoutY="15.0" prefHeight="120.0" prefWidth="280.0" styleClass="card" stylesheets="@dashboardDesign.css">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="21.0" layoutY="68.0" size="4em" />
+                                                <Label fx:id="home_totalEnrolled" alignment="CENTER_RIGHT" layoutX="85.0" layoutY="13.0" prefHeight="36.0" prefWidth="185.0" text="0" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Comic Sans MS Bold" size="25.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="79.0" layoutY="85.0" text="Total de alumnos ingresados" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Tahoma" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="745.0" layoutY="15.0" prefHeight="120.0" prefWidth="280.0" styleClass="card" stylesheets="@dashboardDesign.css">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="MALE" layoutX="21.0" layoutY="79.0" size="4em" />
+                                                <Label fx:id="home_totalMale" alignment="CENTER_RIGHT" layoutX="85.0" layoutY="11.0" prefHeight="36.0" prefWidth="185.0" text="0" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Comic Sans MS Bold" size="25.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="74.0" layoutY="84.0" text="Alumnos hombres ingresados" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Tahoma" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="395.0" layoutY="15.0" prefHeight="120.0" prefWidth="280.0" styleClass="card" stylesheets="@dashboardDesign.css">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="FEMALE" layoutX="21.0" layoutY="74.0" size="4em" />
+                                                <Label fx:id="home_totalFemale" alignment="CENTER_RIGHT" layoutX="84.0" layoutY="14.0" prefHeight="36.0" prefWidth="185.0" text="0" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Comic Sans MS Bold" size="25.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="80.0" layoutY="83.0" text="Alumnas mujeres ingresadas" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Tahoma" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                    <BarChart fx:id="dailyChartHome" layoutX="10.0" layoutY="166.0" prefHeight="421.0" prefWidth="1050.0" stylesheets="@dashboardDesign.css">
+                                      <xAxis>
+                                        <CategoryAxis side="BOTTOM" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                      </yAxis>
+                                    </BarChart>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="addStudents_form" layoutX="91.0" layoutY="96.0" prefHeight="596.0" prefWidth="1071.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="12.0" layoutY="19.0" prefHeight="600.0" prefWidth="1071.0" stylesheets="@dashboardDesign.css">
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane prefHeight="377.0" prefWidth="1070.0" stylesheets="@dashboardDesign.css">
+                                       <styleClass>
+                                          <String fx:value="white-bg" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <TextField fx:id="addStudents_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#addStudentsSearch" prefHeight="30.0" prefWidth="274.0" promptText="Buscar" styleClass="search" stylesheets="@dashboardDesign.css" />
+                                          <FontAwesomeIcon glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
+                                          <TableView fx:id="addStudents_tableView" layoutX="10.0" layoutY="59.0" onMouseClicked="#addStudentsSelect" prefHeight="308.0" prefWidth="1051.0">
+                                             <columns>
+                                                <TableColumn fx:id="addStudents_col_noControl" editable="false" maxWidth="90.0" prefWidth="90.0" resizable="false" sortable="false" text="N° Control" />
+                                                <TableColumn fx:id="addStudents_col_nombre" editable="false" maxWidth="110.0" prefWidth="110.0" resizable="false" sortable="false" text="Nombre" />
+                                                <TableColumn fx:id="addStudents_col_apellidoPaterno" editable="false" maxWidth="120.0" prefWidth="120.0" resizable="false" sortable="false" text="Apellido Paterno" />
+                                                <TableColumn fx:id="addStudents_col_apellidoMaterno" editable="false" maxWidth="120.0" prefWidth="120.0" resizable="false" sortable="false" text="Apellido Materno" />
+                                                <TableColumn fx:id="addStudents_col_carrera" editable="false" maxWidth="235.0" prefWidth="235.0" resizable="false" sortable="false" text="Carrera" />
+                                                <TableColumn fx:id="addStudents_col_genero" editable="false" maxWidth="120.0" prefWidth="120.0" resizable="false" sortable="false" text="Género" />
+                                                <TableColumn fx:id="addStudents_col_horaEntrada" editable="false" maxWidth="125.0" prefWidth="125.0" resizable="false" sortable="false" text="Hora de entrada" />
+                                                <TableColumn fx:id="addStudents_col_fechaEntrada" editable="false" maxWidth="125.0" prefWidth="125.0" resizable="false" sortable="false" text="Fecha de entrada" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                    <Label layoutX="141.0" layoutY="407.0" text="N° Control:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="addStudents_noControl" layoutX="238.0" layoutY="403.0" prefHeight="25.0" prefWidth="113.0" styleClass="textfield" stylesheets="@dashboardDesign.css" />
+                                    <Label layoutX="157.0" layoutY="448.0" prefWidth="60.0" text="Nombre:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="addStudents_nombre" layoutX="238.0" layoutY="444.0" prefHeight="26.0" prefWidth="160.0" styleClass="textfield" stylesheets="@dashboardDesign.css" />
+                                    <Label layoutX="106.0" layoutY="490.0" prefHeight="18.0" prefWidth="111.0" text="Apellido Paterno:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="addStudents_apellidoPaterno" layoutX="238.0" layoutY="486.0" prefHeight="26.0" prefWidth="160.0" styleClass="textfield" stylesheets="@dashboardDesign.css" />
+                                    <Label layoutX="104.0" layoutY="532.0" prefHeight="18.0" prefWidth="113.0" text="Apellido Materno:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="addStudents_apellidoMaterno" layoutX="238.0" layoutY="528.0" prefHeight="26.0" prefWidth="160.0" styleClass="textfield" stylesheets="@dashboardDesign.css" />
+                                    <Label layoutX="577.0" layoutY="407.0" text="Carrera:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="578.0" layoutY="448.0" prefHeight="18.0" prefWidth="54.0" text="Género:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="addStudents_carrera" layoutX="654.0" layoutY="404.0" onAction="#addStudentsListaCarrera" prefWidth="150.0" promptText="Seleccionar uno" />
+                                    <ComboBox fx:id="addStudents_genero" layoutX="654.0" layoutY="444.0" onAction="#addStudentsGenderList" prefWidth="150.0" promptText="Seleccionar uno" />
+                                    <Button fx:id="addStudents_addBtn" layoutX="975.0" layoutY="551.0" mnemonicParsing="false" onAction="#addStudentsAdd" prefHeight="35.0" prefWidth="85.0" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Agregar" />
+                                    <Button fx:id="addStudents_updateBtn" layoutX="876.0" layoutY="551.0" mnemonicParsing="false" onAction="#addStudentsUpdate" prefHeight="35.0" prefWidth="85.0" styleClass="update-btn" stylesheets="@dashboardDesign.css" text="Modificar" />
+                                    <Button fx:id="addStudents_deleteBtn" layoutX="775.0" layoutY="551.0" mnemonicParsing="false" onAction="#addStudentsDelete" prefHeight="35.0" prefWidth="85.0" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Eliminar" />
+                                    <Button fx:id="addStudents_clearBtn" layoutX="676.0" layoutY="551.0" mnemonicParsing="false" onAction="#addStudentsClear" prefHeight="35.0" prefWidth="85.0" styleClass="clear-btn" stylesheets="@dashboardDesign.css" text="Clear" />
+                                    <Button fx:id="print" layoutX="578.0" layoutY="551.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="85.0" stylesheets="@dashboardDesign.css" text="Imprimir" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="data_form" prefHeight="635.0" prefWidth="1095.0" visible="false">
+                           <children>
+                              <AnchorPane layoutX="12.0" layoutY="20.0" prefHeight="596.0" prefWidth="1048.0" stylesheets="@dashboardDesign.css">
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane fx:id="nav_chart" layoutX="-12.0" layoutY="173.0" prefHeight="166.0" prefWidth="115.0" styleClass="chartNav-Bar" stylesheets="@dashboardDesign.css">
+                                       <children>
+                                          <Button fx:id="daily_chart_btn" layoutX="3.0" layoutY="14.0" mnemonicParsing="false" onAction="#navigationChartButton" prefHeight="35.0" prefWidth="107.0" styleClass="chart-Button" stylesheets="@dashboardDesign.css" text="Diario" textFill="WHITE">
+                                             <graphic>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="LINE_CHART" size="1.5em" />
+                                             </graphic>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="weekly_chart_btn" layoutX="3.0" layoutY="66.0" mnemonicParsing="false" onAction="#navigationChartButton" prefHeight="35.0" prefWidth="107.0" styleClass="chart-Button" stylesheets="@dashboardDesign.css" text="Semanal" textFill="WHITE">
+                                             <graphic>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="AREA_CHART" size="1.5em" />
+                                             </graphic>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="monthly_chart_btn" layoutX="3.0" layoutY="117.0" mnemonicParsing="false" onAction="#navigationChartButton" prefHeight="35.0" prefWidth="107.0" styleClass="chart-Button" stylesheets="@dashboardDesign.css" text="Mensual" textFill="WHITE">
+                                             <graphic>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="BAR_CHART" size="1.5em" />
+                                             </graphic>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="analysis_FemaleMale" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0">
+                                       <children>
+                                          <AnchorPane prefHeight="43.0" prefWidth="940.0">
+                                             <children>
+                                                <Label layoutX="438.0" layoutY="8.0" text="Análisis">
+                                                   <font>
+                                                      <Font name="System Bold" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="14.0" layoutY="63.0" prefHeight="450.0" prefWidth="938.0" stylesheets="@dashboardDesign.css">
+                                             <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                             <children>
+                                                <LineChart fx:id="totalFemaleMaleChart" layoutX="132.0" layoutY="25.0" prefHeight="450.0" prefWidth="938.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <xAxis>
+                                                    <CategoryAxis side="BOTTOM" />
+                                                  </xAxis>
+                                                  <yAxis>
+                                                    <NumberAxis side="LEFT" />
+                                                  </yAxis>
+                                                </LineChart>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="daily_charts" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0" visible="false">
+                                       <children>
+                                          <AnchorPane prefHeight="43.0" prefWidth="940.0">
+                                             <children>
+                                                <Label layoutX="410.0" layoutY="8.0" text="Análisis Diario">
+                                                   <font>
+                                                      <Font name="System Bold" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="14.0" layoutY="63.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@dashboardDesign.css">
+                                             <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                             <children>
+                                                <BarChart fx:id="totalEnrolledChart_daily" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <xAxis>
+                                                      <CategoryAxis side="BOTTOM" />
+                                                   </xAxis>
+                                                   <yAxis>
+                                                      <NumberAxis side="LEFT" />
+                                                   </yAxis>
+                                                </BarChart>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="477.0" layoutY="63.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@dashboardDesign.css">
+                                             <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                             <children>
+                                                <LineChart fx:id="totalFemaleChart_daily" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <xAxis>
+                                                      <CategoryAxis side="BOTTOM" />
+                                                   </xAxis>
+                                                   <yAxis>
+                                                      <NumberAxis side="LEFT" />
+                                                   </yAxis>
+                                                </LineChart>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="477.0" layoutY="293.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@dashboardDesign.css">
+                                             <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                             <children>
+                                                <LineChart fx:id="totalMaleChart_daily" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <xAxis>
+                                                      <CategoryAxis side="BOTTOM" />
+                                                   </xAxis>
+                                                   <yAxis>
+                                                      <NumberAxis side="LEFT" />
+                                                   </yAxis>
+                                                </LineChart>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="weekly_charts" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0" visible="false">
+                                       <children>
+                                          <AnchorPane prefHeight="43.0" prefWidth="940.0">
+                                             <children>
+                                                <Label layoutX="399.0" layoutY="8.0" text="Análisis Semanal">
+                                                   <font>
+                                                      <Font name="System Bold" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="14.0" layoutY="63.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@dashboardDesign.css">
+                                             <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                             <children>
+                                                <BarChart fx:id="totalEnrolledChart_weekly" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <xAxis>
+                                                      <CategoryAxis side="BOTTOM" />
+                                                   </xAxis>
+                                                   <yAxis>
+                                                      <NumberAxis side="LEFT" />
+                                                   </yAxis>
+                                                </BarChart>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="477.0" layoutY="63.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@dashboardDesign.css">
+                                             <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                             <children>
+                                                <LineChart fx:id="totalFemaleChart_weekly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <xAxis>
+                                                      <CategoryAxis side="BOTTOM" />
+                                                   </xAxis>
+                                                   <yAxis>
+                                                      <NumberAxis side="LEFT" />
+                                                   </yAxis>
+                                                </LineChart>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="477.0" layoutY="293.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@dashboardDesign.css">
+                                             <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                             <children>
+                                                <LineChart fx:id="totalMaleChart_weekly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <xAxis>
+                                                      <CategoryAxis side="BOTTOM" />
+                                                   </xAxis>
+                                                   <yAxis>
+                                                      <NumberAxis side="LEFT" />
+                                                   </yAxis>
+                                                </LineChart>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="monthly_charts" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0" visible="false">
+                                       <children>
+                                          <AnchorPane prefHeight="43.0" prefWidth="940.0">
+                                             <children>
+                                                <Label layoutX="400.0" layoutY="8.0" text="Análisis Mensual">
+                                                   <font>
+                                                      <Font name="System Bold" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="14.0" layoutY="63.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@dashboardDesign.css">
+                                             <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                             <children>
+                                                <BarChart fx:id="totalEnrolledChart_monthly" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <xAxis>
+                                                      <CategoryAxis side="BOTTOM" />
+                                                   </xAxis>
+                                                   <yAxis>
+                                                      <NumberAxis side="LEFT" />
+                                                   </yAxis>
+                                                </BarChart>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="477.0" layoutY="63.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@dashboardDesign.css">
+                                             <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                             <children>
+                                                <LineChart fx:id="totalFemaleChart_monthly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <xAxis>
+                                                      <CategoryAxis side="BOTTOM" />
+                                                   </xAxis>
+                                                   <yAxis>
+                                                      <NumberAxis side="LEFT" />
+                                                   </yAxis>
+                                                </LineChart>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane layoutX="477.0" layoutY="293.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@dashboardDesign.css">
+                                             <styleClass>
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                             <children>
+                                                <LineChart fx:id="totalMaleChart_monthly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <xAxis>
+                                                      <CategoryAxis side="BOTTOM" />
+                                                   </xAxis>
+                                                   <yAxis>
+                                                      <NumberAxis side="LEFT" />
+                                                   </yAxis>
+                                                </LineChart>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
