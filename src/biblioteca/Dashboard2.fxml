@@ -164,7 +164,7 @@
                                           </AnchorPane>
                                        </children>
                                     </AnchorPane>
-                                    <BarChart fx:id="dailyChartHome" layoutX="10.0" layoutY="166.0" prefHeight="421.0" prefWidth="1050.0" stylesheets="@dashboardDesign.css">
+                                    <BarChart fx:id="dailyChartHome" layoutX="10.0" layoutY="166.0" prefHeight="421.0" prefWidth="1050.0" stylesheets="@barChartMaleFemale.css">
                                       <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                       </xAxis>
@@ -333,7 +333,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <BarChart fx:id="totalEnrolledChart_daily" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <BarChart fx:id="totalEnrolledChart_daily" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@barChartGeneral.css" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -349,7 +349,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <LineChart fx:id="totalFemaleChart_daily" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="totalFemaleChart_daily" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartFemale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -365,7 +365,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <LineChart fx:id="totalMaleChart_daily" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="totalMaleChart_daily" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartMale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -394,7 +394,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <BarChart fx:id="totalEnrolledChart_weekly" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <BarChart fx:id="totalEnrolledChart_weekly" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@barChartGeneral.css" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -410,7 +410,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <LineChart fx:id="totalFemaleChart_weekly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="totalFemaleChart_weekly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartFemale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -426,7 +426,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <LineChart fx:id="totalMaleChart_weekly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="totalMaleChart_weekly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartMale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -455,7 +455,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <BarChart fx:id="totalEnrolledChart_monthly" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <BarChart fx:id="totalEnrolledChart_monthly" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@barChartGeneral.css" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -471,7 +471,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <LineChart fx:id="totalFemaleChart_monthly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="totalFemaleChart_monthly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartFemale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -487,7 +487,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <LineChart fx:id="totalMaleChart_monthly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="totalMaleChart_monthly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartMale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>

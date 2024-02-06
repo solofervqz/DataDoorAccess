@@ -1,0 +1,14 @@
+.default-color0.chart-series-line{
+    -fx-stroke: #e2c0c1
+}
+.default-color0.chart-line-symbol{
+    -fx-background-color: #e2c0c1, #ffffff
+}
+
+.default-color1.chart-series-line{
+    -fx-stroke: #e2c0c1
+}
+.default-color1.chart-line-symbol{
+    -fx-background-color: #e2c0c1, #ffffff
+}
+

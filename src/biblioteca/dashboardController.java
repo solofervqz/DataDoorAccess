@@ -517,7 +517,7 @@ public class dashboardController implements Initializable {
 
     }
     
-        public void DisplayDailyChartHome() {
+    public void DisplayDailyChartHome() {
         dailyChartHome.getData().clear();
 
         String femaleSql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero= 'Femenino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";

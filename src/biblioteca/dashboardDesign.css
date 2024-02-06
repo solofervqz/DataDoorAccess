@@ -198,11 +198,3 @@
 .chart-Button:hover{
     -fx-background-color:linear-gradient(to bottom right, #133075, #6e6e96);  
 }
-
-.default-color0.chart-bar{
-    -fx-bar-fill: Pink
-}
-
-.default-color1.chart-bar{
-    -fx-bar-fill: #14346c
-}
