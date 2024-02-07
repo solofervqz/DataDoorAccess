@@ -64,34 +64,10 @@ public class dashboardController implements Initializable {
     private Label home_totalMale;
 
     @FXML
-    private TextField addStudents_nombre;
-
-    @FXML
     private TextField addStudents_noControl;
 
     @FXML
-    private TextField addStudents_apellidoMaterno;
-
-    @FXML
-    private TextField addStudents_apellidoPaterno;
-    
-    @FXML
-    private ComboBox<?> addStudents_genero;
-    
-    @FXML
-    private ComboBox<?> addStudents_carrera;
-
-    @FXML
-    private Button addStudents_clearBtn;
-
-    @FXML
     private Button addStudents_addBtn;
-
-    @FXML
-    private Button addStudents_updateBtn;
-
-    @FXML
-    private Button addStudents_deleteBtn;
 
     @FXML
     private Button addStudents_btn;
@@ -248,6 +224,12 @@ public class dashboardController implements Initializable {
         stage.setIconified(true);
     }
     
+    public void maximize(){
+        Stage stage = (Stage)main_form.getScene().getWindow();
+        stage.setMaximized(true);
+
+    }
+    
     /*  -------- NAV --------*/
     private double x = 0;
     private double y = 0;
@@ -346,10 +328,9 @@ public class dashboardController implements Initializable {
             
 //            TO BECOME UPDATED ONCE YOU CLICK THE ADD STUDENTS BUTTON ON NAV
             addStudentsShowListData();
-            addStudentsListaCarrera();
+/*            addStudentsListaCarrera();
             addStudentsGenderList();
-            addStudentsSearch();
-            
+    */        
             nav_chart.setVisible(false);
 
         } else if (event.getSource() == dataAnalysis_btn) {
@@ -448,7 +429,7 @@ public class dashboardController implements Initializable {
     /*  -------- HOME --------*/
     public void homeDisplayTotalEnrolledStudents() {
 
-        String sql = "SELECT COUNT(id) FROM students";
+        String sql = "SELECT COUNT(id) FROM historial";
 
         connect = database.connectDb();
 
@@ -472,8 +453,8 @@ public class dashboardController implements Initializable {
     
     public void homeDisplayFemaleEnrolled() {
 
-        String sql = "SELECT COUNT(id) FROM students WHERE genero = 'Femenino'";
-
+        String sql = "SELECT COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'F'";
+        
         connect = database.connectDb();
 
         try {
@@ -483,7 +464,7 @@ public class dashboardController implements Initializable {
             result = prepare.executeQuery();
 
             if (result.next()) {
-                countFemale = result.getInt("COUNT(id)");
+                countFemale = result.getInt("COUNT(*)");
             }
 
             home_totalFemale.setText(String.valueOf(countFemale));
@@ -496,7 +477,7 @@ public class dashboardController implements Initializable {
 
     public void homeDisplayMaleEnrolled() {
 
-        String sql = "SELECT COUNT(id) FROM students WHERE genero = 'Masculino'";
+        String sql = "SELECT COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'M'";
 
         connect = database.connectDb();
 
@@ -507,7 +488,7 @@ public class dashboardController implements Initializable {
             result = prepare.executeQuery();
 
             if (result.next()) {
-                countMale = result.getInt("COUNT(id)");
+                countMale = result.getInt("COUNT(*)");
             }
             home_totalMale.setText(String.valueOf(countMale));
 
@@ -519,9 +500,9 @@ public class dashboardController implements Initializable {
     
     public void DisplayDailyChartHome() {
         dailyChartHome.getData().clear();
-
-        String femaleSql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero= 'Femenino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
-        String maleSql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero= 'Masculino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+       
+        String femaleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+        String maleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
 
         connect = database.connectDb();
 
@@ -555,274 +536,12 @@ public class dashboardController implements Initializable {
         }
     }
 
-    
-/*  -------- ADD STUDENTS --------*/
-    public void addStudentsAdd() {
-
-        String insertData = "INSERT INTO students "
-                + "(noControl,nombre,apellidoPaterno,apellidoMaterno,carrera,genero,horaEntrada,fechaEntrada) "
-                + "VALUES(?,?,?,?,?,?,?,?)";
-
-        connect = database.connectDb();
-
-        try {
-            Alert alert;
-
-            if (addStudents_noControl.getText().isEmpty()
-                    || addStudents_nombre.getText().isEmpty()
-                    || addStudents_apellidoPaterno.getText().isEmpty()
-                    || addStudents_apellidoMaterno.getText().isEmpty()
-                    || addStudents_carrera.getSelectionModel().getSelectedItem() == null
-                    || addStudents_genero.getSelectionModel().getSelectedItem() == null
-                    /*|| addStudents_horaEntrada.getValue() == null*/
-                    /*|| addStudents_fechaEntrada.getValue() == null*/ ) {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Llene todos los campos!");
-                alert.showAndWait();
-            } else {
-                // CHECK IF THE STUDENTNUMBER IS ALREADY EXIST
-                String checkData = "SELECT noControl FROM students WHERE noControl = '"
-                        + addStudents_noControl.getText() + "'";
-
-                statement = connect.createStatement();
-                result = statement.executeQuery(checkData);
-
-                if (result.next()) {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("N° Control " + addStudents_noControl.getText() + " ya existe");
-                    alert.showAndWait();
-                } else {
-                    prepare = connect.prepareStatement(insertData);
-                    prepare.setString(1, addStudents_noControl.getText());
-                    prepare.setString(2, addStudents_nombre.getText());
-                    prepare.setString(3, addStudents_apellidoPaterno.getText());
-                    prepare.setString(4, addStudents_apellidoMaterno.getText());
-                    prepare.setString(5, (String) addStudents_carrera.getSelectionModel().getSelectedItem());
-                    prepare.setString(6, (String) addStudents_genero.getSelectionModel().getSelectedItem());
-                    //prepare.setString(7, String.valueOf(addStudents_horaEntrada.getValue()));
-                    //prepare.setString(8, String.valueOf(addStudents_fechaEntrada.getValue()));
-                    
-                    LocalTime horaEntrada = LocalTime.now();
-                    Time sqlTime = Time.valueOf(horaEntrada);
-                    //java.sql.Time sqlTime = new java.sql.Time(horaEntrada.getTime());
-                    prepare.setString(7, String.valueOf(sqlTime));
-
-                    
-                    Date fechaEntrada = new Date();
-                    java.sql.Date sqlDate = new java.sql.Date(fechaEntrada.getTime());
-                    prepare.setString(8, String.valueOf(sqlDate));
-
-                    prepare.executeUpdate();
-
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Agregado exitosamente!");
-                    alert.showAndWait();
-
-                    // TO UPDATE THE TABLEVIEW
-                    addStudentsShowListData();
-                    // TO CLEAR THE FIELDS
-                    addStudentsClear();
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void addStudentsUpdate() {
-
-        String updateData = "UPDATE students SET "
-                + "nombre = '" + addStudents_nombre.getText()
-                + "', apellidoPaterno = '" + addStudents_apellidoPaterno.getText()
-                + "', apellidoMaterno = '" + addStudents_apellidoMaterno.getText()
-                + "', carrera = '" + addStudents_carrera.getSelectionModel().getSelectedItem()
-                + "', genero = '" + addStudents_genero.getSelectionModel().getSelectedItem()
-                + "' WHERE noControl = '"
-                + addStudents_noControl.getText() + "'";
-
-        connect = database.connectDb();
-
-        try {
-            Alert alert;
-            if (addStudents_noControl.getText().isEmpty()
-                    || addStudents_nombre.getText().isEmpty()
-                    || addStudents_apellidoPaterno.getText().isEmpty()
-                    || addStudents_apellidoMaterno.getText().isEmpty()
-                    || addStudents_carrera.getSelectionModel().getSelectedItem() == null
-                    || addStudents_genero.getSelectionModel().getSelectedItem() == null){
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Llene todos los campos!");
-                alert.showAndWait();
-            } else {
-
-                alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Seguro que quiere modificar los datos del N° Control " + addStudents_noControl.getText() + "?");
-                Optional<ButtonType> option = alert.showAndWait();
-
-                if (option.get().equals(ButtonType.OK)) {
-                    statement = connect.createStatement();
-                    statement.executeUpdate(updateData);
-
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Modificado exitosamente!");
-                    alert.showAndWait();
-
-                    // TO UPDATE THE TABLEVIEW
-                    addStudentsShowListData();
-                    // TO CLEAR THE FIELDS
-                    addStudentsClear();
-
-                } else {
-                    return;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void addStudentsDelete() {
-
-        String deleteData = "DELETE FROM students WHERE noControl = '"
-                + addStudents_noControl.getText() + "'";
-
-        connect = database.connectDb();
-
-        try {
-            Alert alert;
-                alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Seguro que quiere eliminar al alumno con el N° Control " + addStudents_noControl.getText() + "?");
-
-                Optional<ButtonType> option = alert.showAndWait();
-                
-                if(option.get().equals(ButtonType.OK)){
-                    statement = connect.createStatement();
-                    statement.executeUpdate(deleteData);                
-                
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Eliminado exitosamente!");
-                    alert.showAndWait();
-
-                    // TO UPDATE THE TABLEVIEW
-                    addStudentsShowListData();
-                    // TO CLEAR THE FIELDS
-                    addStudentsClear();
-                }else return;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-    
-    public void addStudentsClear() {
-        addStudents_noControl.setText("");
-        addStudents_nombre.setText("");
-        addStudents_apellidoPaterno.setText("");
-        addStudents_apellidoMaterno.setText("");
-        addStudents_carrera.getSelectionModel().clearSelection();
-        addStudents_genero.getSelectionModel().clearSelection();
-    }
-    
-     public void addStudentsSearch() {
-
-        FilteredList<studentData> filter = new FilteredList<>(addStudentsListD, e -> true);
-
-        addStudents_search.textProperty().addListener((Observable, oldValue, newValue) -> {
-
-            filter.setPredicate(predicateStudentData -> {
-
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String searchKey = newValue.toLowerCase();
-
-                if (predicateStudentData.getNoControl().toString().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getCarrera().toLowerCase().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getNombre().toLowerCase().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getApellidoPaterno().toLowerCase().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getApellidoMaterno().toLowerCase().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getGenero().toLowerCase().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getHoraEntrada().toString().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getFechaEntrada().toString().contains(searchKey)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-        });
-
-        SortedList<studentData> sortList = new SortedList<>(filter);
-
-        sortList.comparatorProperty().bind(addStudents_tableView.comparatorProperty());
-        addStudents_tableView.setItems(sortList);
-     }
-
-    private String[] ListaCarrera = {
-        "Ingeniería Indistrial", 
-        "Ingeniería en Diseño Indistrial", 
-        "Ingeniería en Sistemas Computacionales", 
-        "Ingeniería Informática", 
-        "Ingeniería en Gestión Empresarial", 
-        "Licenciatura en Administración", 
-        "Arquitectura"};
-
-    public void addStudentsListaCarrera() {
-
-        List<String> carreraL = new ArrayList<>();
-
-        for (String data : ListaCarrera) {
-            carreraL.add(data);
-        }
-
-        ObservableList ObList = FXCollections.observableArrayList(carreraL);
-        addStudents_carrera.setItems(ObList);
-
-    }
-
-    private String[] genderList = {"Femenino", "Masculino"};
-
-    public void addStudentsGenderList() {
-        List<String> genderL = new ArrayList<>();
-
-        for (String data : genderList) {
-            genderL.add(data);
-        }
-
-        ObservableList ObList = FXCollections.observableArrayList(genderL);
-        addStudents_genero.setItems(ObList);
-    }
-    
+/*  -------- ALUMNOS --------*/
     public ObservableList<studentData> addStudentsListData() {
 
         ObservableList<studentData> listStudents = FXCollections.observableArrayList();
 
-        String sql = "SELECT * FROM students";
+        String sql = "SELECT * FROM historial";
 
         connect = database.connectDb();
 
@@ -832,12 +551,7 @@ public class dashboardController implements Initializable {
             result = prepare.executeQuery();
 
             while (result.next()) {
-                studentD = new studentData(result.getInt("noControl"),
-                        result.getString("nombre"),
-                        result.getString("apellidoPaterno"),
-                        result.getString("apellidoMaterno"),
-                        result.getString("carrera"),
-                        result.getString("genero"),
+                studentD = new studentData(result.getString("noControl"),
                         LocalTime.parse(result.getString("horaEntrada")),
                         result.getDate("fechaEntrada"));
                                                 
@@ -850,39 +564,55 @@ public class dashboardController implements Initializable {
         return listStudents;
     }
     
+    /*
+        public ObservableList<studentData> addStudentsListData() {
+        ObservableList<studentData> listStudents = FXCollections.observableArrayList();
+
+        String sql = "SELECT historial.noControl, historial.horaEntrada, historial.fechaEntrada, alumnos.nombre, alumnos.apellidoPaterno, alumnos.apellidoMaterno, alumnos.carrera, alumnos.sexo " +
+                     "FROM historial " +
+                     "JOIN alumnos ON historial.noControl = alumnos.noControl";
+
+        connect = database.connectDb();
+
+        try {
+            studentData studentD;
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                studentD = new studentData(result.getString("noControl"),
+                        result.getString("nombre"),
+                        result.getString("apellidoPaterno"),
+                        result.getString("apellidoMaterno"),
+                        result.getString("carrera"),
+                        result.getString("sexo"), 
+                        LocalTime.parse(result.getString("horaEntrada")),
+                        result.getDate("fechaEntrada"));
+
+                listStudents.add(studentD);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listStudents;
+    }
+    */
+    
     private ObservableList<studentData> addStudentsListD;
     
     public void addStudentsShowListData() {
         addStudentsListD = addStudentsListData();
 
         addStudents_col_noControl.setCellValueFactory(new PropertyValueFactory<>("noControl"));
-        addStudents_col_nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        addStudents_col_apellidoPaterno.setCellValueFactory(new PropertyValueFactory<>("apellidoPaterno"));
-        addStudents_col_apellidoMaterno.setCellValueFactory(new PropertyValueFactory<>("apellidoMaterno"));
-        addStudents_col_carrera.setCellValueFactory(new PropertyValueFactory<>("carrera"));
-        addStudents_col_genero.setCellValueFactory(new PropertyValueFactory<>("genero"));
         addStudents_col_horaEntrada.setCellValueFactory(new PropertyValueFactory<>("horaEntrada"));
         addStudents_col_fechaEntrada.setCellValueFactory(new PropertyValueFactory<>("fechaEntrada"));
 
         addStudents_tableView.setItems(addStudentsListD);
     }
     
-    public void addStudentsSelect() {
 
-        studentData studentD = addStudents_tableView.getSelectionModel().getSelectedItem();
-        int num = addStudents_tableView.getSelectionModel().getSelectedIndex();
-
-        if ((num - 1) < -1) {
-            return;
-        }
-
-        addStudents_noControl.setText(String.valueOf(studentD.getNoControl()));
-        addStudents_nombre.setText(studentD.getNombre());
-        addStudents_apellidoPaterno.setText(studentD.getApellidoPaterno());
-        addStudents_apellidoMaterno.setText(studentD.getApellidoMaterno());
-    }
-    
-     /*  -------- DATA ANALYSIS --------*/
+/*  -------- DATA ANALYSIS --------*/
     
     public void DisplayTotalFemaleMaleChart() {
         totalFemaleMaleChart.getData().clear();
@@ -926,7 +656,7 @@ public class dashboardController implements Initializable {
     public void DisplayTotalEnrolledChart_daily() {
         totalEnrolledChart_daily.getData().clear();
 
-        String sql = "SELECT fechaEntrada, COUNT(id) FROM students GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
         //String sql = "SELECT fechaEntrada, COUNT(id) FROM students GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
 
         connect = database.connectDb();
@@ -952,7 +682,7 @@ public class dashboardController implements Initializable {
     public void DisplayFemaleEnrolledChart_daily() {
         totalFemaleChart_daily.getData().clear();
 
-        String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Femenino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
         //String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Femenino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
 
         connect = database.connectDb();
@@ -979,7 +709,7 @@ public class dashboardController implements Initializable {
 
         totalMaleChart_daily.getData().clear();
 
-        String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Masculino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
         //String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Masculino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
 
         connect = database.connectDb();
@@ -1007,7 +737,7 @@ public class dashboardController implements Initializable {
         totalEnrolledChart_weekly.getData().clear();
 
         // Utilizando la función WEEK() para agrupar por semana
-        String sql = "SELECT WEEK(fechaEntrada), COUNT(id) FROM students GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
+        String sql = "SELECT WEEK(fechaEntrada), COUNT(*) FROM historial GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
 
         try (Connection connect = database.connectDb();
              PreparedStatement prepare = connect.prepareStatement(sql);
@@ -1032,7 +762,7 @@ public class dashboardController implements Initializable {
         totalFemaleChart_weekly.getData().clear();
 
         // Utilizando la función WEEK() para agrupar por semana
-        String sql = "SELECT WEEK(fechaEntrada), COUNT(id) FROM students WHERE genero = 'Femenino' GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
+        String sql = "SELECT WEEK(fechaEntrada), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'F' GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
 
         try (Connection connect = database.connectDb();
              PreparedStatement prepare = connect.prepareStatement(sql);
@@ -1057,7 +787,7 @@ public class dashboardController implements Initializable {
     public void DisplayEnrolledMaleChart_weekly() {
         totalMaleChart_weekly.getData().clear();
         // Utilizando la función WEEK() para agrupar por semana
-        String sql = "SELECT WEEK(fechaEntrada), COUNT(id) FROM students WHERE genero = 'Masculino' GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
+        String sql = "SELECT WEEK(fechaEntrada), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'M' GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
 
         try (Connection connect = database.connectDb();
              PreparedStatement prepare = connect.prepareStatement(sql);
@@ -1083,8 +813,8 @@ public class dashboardController implements Initializable {
         totalEnrolledChart_monthly.getData().clear();
 
         // Utilizando la función MONTH() para agrupar por mes
-        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(id) FROM students GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
-        
+        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(*) FROM historial GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
+
         try (Connection connect = database.connectDb();
              PreparedStatement prepare = connect.prepareStatement(sql);
              ResultSet result = prepare.executeQuery()) {
@@ -1108,7 +838,7 @@ public class dashboardController implements Initializable {
         totalFemaleChart_monthly.getData().clear();
 
         // Utilizando la función MONTH() para agrupar por mes
-        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(id) FROM students WHERE genero = 'Femenino' GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
+        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'F' GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
 
         try (Connection connect = database.connectDb();
              PreparedStatement prepare = connect.prepareStatement(sql);
@@ -1134,7 +864,7 @@ public class dashboardController implements Initializable {
         totalMaleChart_monthly.getData().clear();
 
         // Utilizando la función MONTH() para agrupar por mes
-        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(id) FROM students WHERE genero = 'Masculino' GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
+        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'M' GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
 
         try (Connection connect = database.connectDb();
              PreparedStatement prepare = connect.prepareStatement(sql);
@@ -1180,8 +910,8 @@ public class dashboardController implements Initializable {
 
         // To show inmediately when we proceed to dashboard application form
         addStudentsShowListData();
-        addStudentsListaCarrera();
+  /*      addStudentsListaCarrera();
         addStudentsGenderList();
-        
+  */      
     }
 }

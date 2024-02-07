@@ -114,64 +114,17 @@
 }
 
 .textfield{
-    -fx-background-color:linear-gradient(to bottom, #efefef, #eee);
-    -fx-background-radius:4px;
+    -fx-background-color:transparent;
     -fx-border-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);
     -fx-border-width:.8px;
+    -fx-border-radius:8px;
     -fx-font-family:"Tahoma";
-    -fx-border-radius:4px;
+    -fx-font-size:14px;
+    -fx-padding:0px 0px 0px 28px;
 }
 .textfield:focused{
     -fx-background-color:#fff;
-    -fx-border-width:1px;
-}
-
-.add-btn{
-    -fx-background-color:#2d5278;
-    -fx-background-radius:8px;
-    -fx-cursor:hand;
-    -fx-text-fill:#fff;
-    -fx-font-size:14px;
-    -fx-font-family:"Arial";
-}
-.add-btn:hover{
-    -fx-background-color:#2268ae;
-}
-
-.update-btn{
-    -fx-background-color:#2d7755;
-    -fx-background-radius:8px;
-    -fx-cursor:hand;
-    -fx-text-fill:#fff;
-    -fx-font-size:14px;
-    -fx-font-family:"Arial";
-}
-.update-btn:hover{
-    -fx-background-color:#22ad72;
-}
-
-.delete-btn{
-    -fx-background-color:#90242f;
-    -fx-background-radius:8px;
-    -fx-cursor:hand;
-    -fx-text-fill:#fff;
-    -fx-font-size:14px;
-    -fx-font-family:"Arial";
-}
-.delete-btn:hover{
-    -fx-background-color:#c51f32;
-}
-
-.clear-btn{
-    -fx-background-color:#6e2275;
-    -fx-background-radius:8px;
-    -fx-cursor:hand;
-    -fx-text-fill:#fff;
-    -fx-font-size:14px;
-    -fx-font-family:"Arial";
-}
-.clear-btn:hover{
-    -fx-background-color:#ae21ac;
+    -fx-border-width:1.8px;
 }
 
 .label-info{
@@ -198,3 +151,70 @@
 .chart-Button:hover{
     -fx-background-color:linear-gradient(to bottom right, #133075, #6e6e96);  
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  -------- ALUMNOS --------*/
+/*        public ObservableList<studentData> addStudentsListData() {
+
+        ObservableList<studentData> listStudents = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM historial";
+
+        connect = database.connectDb();
+
+        try {
+            studentData studentD;
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                studentD = new studentData(result.getString("noControl"),
+                        LocalTime.parse(result.getString("horaEntrada")),
+                        result.getDate("fechaEntrada"));
+                                                
+                listStudents.add(studentD);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listStudents;
+    }
+    
+    private ObservableList<studentData> addStudentsListD;
+    
+    public void addStudentsShowListData() {
+        addStudentsListD = addStudentsListData();
+
+        addStudents_col_noControl.setCellValueFactory(new PropertyValueFactory<>("noControl"));
+        addStudents_col_horaEntrada.setCellValueFactory(new PropertyValueFactory<>("horaEntrada"));
+        addStudents_col_fechaEntrada.setCellValueFactory(new PropertyValueFactory<>("fechaEntrada"));
+
+        addStudents_tableView.setItems(addStudentsListD);
+    }
+*/
+
+
+
+
+
+
+
+
+
