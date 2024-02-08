@@ -11,62 +11,60 @@ import java.time.LocalTime;
  *
  * @author bombo
  */
-public class studentData {
+/*public class studentData {
     private String noControl;
     private LocalTime horaEntrada;
     private Date fechaEntrada;
 
     // MAKE SURE THAT SAME DATATYPE THAT YOU WILL PUT THERE 
-    public studentData(String noControl, LocalTime horaEntrada, Date fechaEntrada) {
+    public studentData(String noControl, Date fechaEntrada, LocalTime horaEntrada) {
         this.noControl = noControl;
-        this.horaEntrada = horaEntrada;
         this.fechaEntrada = fechaEntrada;
+        this.horaEntrada = horaEntrada;
     }
     
     public String getNoControl() {
         return noControl;
     }
     
-    public LocalTime getHoraEntrada() {
-        return horaEntrada;
-    }
-
     public Date getFechaEntrada() {
         return fechaEntrada;
     }
 
-}
+    public LocalTime getHoraEntrada() {
+        return horaEntrada;
+    }
+}*/
 
-/*
     public class studentData {
     private String noControl;
-    private LocalTime horaEntrada;
     private Date fechaEntrada;
+    private LocalTime horaEntrada;
     
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String carrera;
-    private String sexo;
+    private String genero;
 
 
     // MAKE SURE THAT SAME DATATYPE THAT YOU WILL PUT THERE 
-    public studentData(String noControl, String nombre, String apellidoPaterno, String apellidoMaterno, String carrera, String sexo, LocalTime horaEntrada, Date fechaEntrada) {
+    public studentData(String noControl, String nombre, String apellidoPaterno, String apellidoMaterno, String carrera, String genero, Date fechaEntrada, LocalTime horaEntrada) {
         this.noControl = noControl;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.carrera = carrera;
-        this.sexo = sexo;
-        this.horaEntrada = horaEntrada;
+        this.genero = genero;
         this.fechaEntrada = fechaEntrada;
+        this.horaEntrada = horaEntrada;
     }
     
     public String getNoControl() {
         return noControl;
     }
     
-        public String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
@@ -83,16 +81,16 @@ public class studentData {
     }
 
     public String getGenero() {
-        return sexo;
+        return genero;
+    }
+
+    public Date getFechaEntrada() {
+        return fechaEntrada;
     }
     
     public LocalTime getHoraEntrada() {
         return horaEntrada;
     }
 
-    public Date getFechaEntrada() {
-        return fechaEntrada;
-    }
 
 }
-*/

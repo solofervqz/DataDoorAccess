@@ -107,7 +107,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="home_form" layoutX="76.0" layoutY="101.0" prefHeight="635.0" prefWidth="1095.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="home_form" layoutX="76.0" layoutY="101.0" prefHeight="635.0" prefWidth="1095.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="12.0" layoutY="20.0" prefHeight="600.0" prefWidth="1071.0" stylesheets="@dashboardDesign.css">
                                  <styleClass>
@@ -180,7 +180,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="addStudents_form" layoutX="91.0" layoutY="96.0" prefHeight="596.0" prefWidth="1071.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="addStudents_form" layoutX="91.0" layoutY="96.0" prefHeight="596.0" prefWidth="1071.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="12.0" layoutY="19.0" prefHeight="600.0" prefWidth="1071.0" stylesheets="@dashboardDesign.css">
                                  <styleClass>
@@ -195,19 +195,20 @@
                                        </styleClass>
                                        <children>
                                           <FontAwesomeIcon glyphName="SEARCH" layoutX="21.0" layoutY="45.0" size="1.5em" />
-                                          <TableView fx:id="addStudents_tableView" layoutX="21.0" layoutY="72.0" prefHeight="512.0" prefWidth="1030.0">
+                                          <TableView fx:id="addStudents_tableView" layoutX="21.0" layoutY="72.0" onMouseClicked="#addStudentsSelect" prefHeight="512.0" prefWidth="1030.0">
                                             <columns>
                                               <TableColumn fx:id="addStudents_col_noControl" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" resizable="false" text="N° Control" />
-                                              <TableColumn maxWidth="110.0" minWidth="110.0" prefWidth="110.0" text="Nombre" />
-                                                <TableColumn maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Apellido Paterno" />
-                                                <TableColumn fx:id="addStudents_col_noControl1" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Apellido Materno" />
-                                                <TableColumn fx:id="addStudents_col_noControl11" maxWidth="230.0" minWidth="230.0" prefWidth="230.0" text="Carrera" />
-                                                <TableColumn fx:id="addStudents_col_noControl111" maxWidth="105.0" minWidth="105.0" prefWidth="105.0" resizable="false" text="Sexo" />
+                                              <TableColumn fx:id="addStudents_col_nombre" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" text="Nombre" />
+                                                <TableColumn fx:id="addStudents_col_apellidoPaterno" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Apellido Paterno" />
+                                                <TableColumn fx:id="addStudents_col_apellidoMaterno" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Apellido Materno" />
+                                                <TableColumn fx:id="addStudents_col_carrera" maxWidth="230.0" minWidth="230.0" prefWidth="230.0" text="Carrera" />
+                                                <TableColumn fx:id="addStudents_col_genero" maxWidth="105.0" minWidth="105.0" prefWidth="105.0" resizable="false" text="Sexo" />
                                                 <TableColumn fx:id="addStudents_col_fechaEntrada" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="fechaEntrada" />
                                                 <TableColumn fx:id="addStudents_col_horaEntrada" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="horaEntrada" />
                                             </columns>
                                           </TableView>
                                           <TextField fx:id="addStudents_noControl" layoutX="17.0" layoutY="24.0" prefHeight="30.0" prefWidth="234.0" styleClass="textfield" stylesheets="@dashboardDesign.css" />
+                                          <Button fx:id="addStudents_addBtn" layoutX="260.0" layoutY="26.0" mnemonicParsing="false" onAction="#addStudentsAdd" prefHeight="26.0" prefWidth="130.0" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Añadir estudiante" />
                                        </children>
                                     </AnchorPane>
                                  </children>

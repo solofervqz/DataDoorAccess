@@ -137,6 +137,18 @@
     -fx-padding:0px 0px 0px 5px;
 }
 
+.add-btn{
+    -fx-background-color:#2d5278;
+    -fx-background-radius:8px;
+    -fx-cursor:hand;
+    -fx-text-fill:#fff;
+    -fx-font-size:14px;
+    -fx-font-family:"Arial";
+}
+.add-btn:hover{
+    -fx-background-color:#2268ae;
+}
+
 /*Código nuevo*/
 .chartNav-Bar{
     -fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);   

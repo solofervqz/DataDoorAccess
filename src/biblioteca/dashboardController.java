@@ -328,9 +328,7 @@ public class dashboardController implements Initializable {
             
 //            TO BECOME UPDATED ONCE YOU CLICK THE ADD STUDENTS BUTTON ON NAV
             addStudentsShowListData();
-/*            addStudentsListaCarrera();
-            addStudentsGenderList();
-    */        
+
             nav_chart.setVisible(false);
 
         } else if (event.getSource() == dataAnalysis_btn) {
@@ -429,7 +427,7 @@ public class dashboardController implements Initializable {
     /*  -------- HOME --------*/
     public void homeDisplayTotalEnrolledStudents() {
 
-        String sql = "SELECT COUNT(id) FROM historial";
+        String sql = "SELECT COUNT(*) FROM historial";
 
         connect = database.connectDb();
 
@@ -440,7 +438,7 @@ public class dashboardController implements Initializable {
             result = prepare.executeQuery();
 
             if (result.next()) {
-                countEnrolled = result.getInt("COUNT(id)");
+                countEnrolled = result.getInt("COUNT(*)");
             }
 
             home_totalEnrolled.setText(String.valueOf(countEnrolled));
@@ -453,7 +451,7 @@ public class dashboardController implements Initializable {
     
     public void homeDisplayFemaleEnrolled() {
 
-        String sql = "SELECT COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'F'";
+        String sql = "SELECT COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F'";
         
         connect = database.connectDb();
 
@@ -477,7 +475,7 @@ public class dashboardController implements Initializable {
 
     public void homeDisplayMaleEnrolled() {
 
-        String sql = "SELECT COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'M'";
+        String sql = "SELECT COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M'";
 
         connect = database.connectDb();
 
@@ -501,8 +499,8 @@ public class dashboardController implements Initializable {
     public void DisplayDailyChartHome() {
         dailyChartHome.getData().clear();
        
-        String femaleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
-        String maleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+        String femaleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+        String maleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
 
         connect = database.connectDb();
 
@@ -536,41 +534,13 @@ public class dashboardController implements Initializable {
         }
     }
 
-/*  -------- ALUMNOS --------*/
-    public ObservableList<studentData> addStudentsListData() {
-
-        ObservableList<studentData> listStudents = FXCollections.observableArrayList();
-
-        String sql = "SELECT * FROM historial";
-
-        connect = database.connectDb();
-
-        try {
-            studentData studentD;
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                studentD = new studentData(result.getString("noControl"),
-                        LocalTime.parse(result.getString("horaEntrada")),
-                        result.getDate("fechaEntrada"));
-                                                
-                listStudents.add(studentD);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listStudents;
-    }
-    
-    /*
+/*  -------- ALUMNOS --------*/    
         public ObservableList<studentData> addStudentsListData() {
         ObservableList<studentData> listStudents = FXCollections.observableArrayList();
 
-        String sql = "SELECT historial.noControl, historial.horaEntrada, historial.fechaEntrada, alumnos.nombre, alumnos.apellidoPaterno, alumnos.apellidoMaterno, alumnos.carrera, alumnos.sexo " +
+        String sql = "SELECT historial.noControl, historial.fechaEntrada, historial.horaEntrada, alumnos.nombre, alumnos.apellidoPaterno, alumnos.apellidoMaterno, alumnos.carrera, alumnos.genero " +
                      "FROM historial " +
-                     "JOIN alumnos ON historial.noControl = alumnos.noControl";
+                     "JOIN alumnos ON historial.noControl = alumnos.noControl ORDER BY historial.fechaEntrada, historial.horaEntrada";
 
         connect = database.connectDb();
 
@@ -585,9 +555,9 @@ public class dashboardController implements Initializable {
                         result.getString("apellidoPaterno"),
                         result.getString("apellidoMaterno"),
                         result.getString("carrera"),
-                        result.getString("sexo"), 
-                        LocalTime.parse(result.getString("horaEntrada")),
-                        result.getDate("fechaEntrada"));
+                        result.getString("genero"),
+                        result.getDate("fechaEntrada"),
+                        LocalTime.parse(result.getString("horaEntrada")));
 
                 listStudents.add(studentD);
             }
@@ -597,7 +567,7 @@ public class dashboardController implements Initializable {
         }
         return listStudents;
     }
-    */
+    
     
     private ObservableList<studentData> addStudentsListD;
     
@@ -605,12 +575,94 @@ public class dashboardController implements Initializable {
         addStudentsListD = addStudentsListData();
 
         addStudents_col_noControl.setCellValueFactory(new PropertyValueFactory<>("noControl"));
-        addStudents_col_horaEntrada.setCellValueFactory(new PropertyValueFactory<>("horaEntrada"));
+        addStudents_col_nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        addStudents_col_apellidoPaterno.setCellValueFactory(new PropertyValueFactory<>("apellidoPaterno"));
+        addStudents_col_apellidoMaterno.setCellValueFactory(new PropertyValueFactory<>("apellidoMaterno"));
+        addStudents_col_carrera.setCellValueFactory(new PropertyValueFactory<>("carrera"));
+        addStudents_col_genero.setCellValueFactory(new PropertyValueFactory<>("genero"));
         addStudents_col_fechaEntrada.setCellValueFactory(new PropertyValueFactory<>("fechaEntrada"));
+        addStudents_col_horaEntrada.setCellValueFactory(new PropertyValueFactory<>("horaEntrada"));
 
         addStudents_tableView.setItems(addStudentsListD);
     }
     
+    public void addStudentsSelect() {
+
+        studentData studentD = addStudents_tableView.getSelectionModel().getSelectedItem();
+        int num = addStudents_tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        addStudents_noControl.setText(String.valueOf(studentD.getNoControl()));
+    }
+
+    public void addStudentsClear() {
+        addStudents_noControl.setText("");
+    }
+
+    public void addStudentsAdd() {
+        String insertData = "INSERT INTO historial "
+            + "(noControl, fechaEntrada, horaEntrada) "
+            + "VALUES(?,?,?)";
+
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+            if (addStudents_noControl.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Llene todos los campos!");
+                alert.showAndWait();
+            } else {
+            /*    // CHECK IF THE STUDENTNUMBER ALREADY EXIST IN THE DATABASE alumnos
+                String checkData = "SELECT noControl FROM alumnos WHERE noControl = '"
+                        + addStudents_noControl.getText() + "'";
+
+                statement = connect.createStatement();
+                result = statement.executeQuery(checkData);
+
+                if (result.next()) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("N° Control " + addStudents_noControl.getText() + " no está dado de alta en el semestre");
+                    alert.showAndWait();
+                } else {*/
+                prepare = connect.prepareStatement(insertData);
+                prepare.setString(1, addStudents_noControl.getText());
+                
+                Date fechaEntrada = new Date();
+                java.sql.Date sqlDate = new java.sql.Date(fechaEntrada.getTime());
+                prepare.setString(2, String.valueOf(sqlDate));
+
+                LocalTime horaEntrada = LocalTime.now();
+                Time sqlTime = Time.valueOf(horaEntrada);
+                prepare.setString(3, String.valueOf(sqlTime));
+
+                prepare.executeUpdate();
+
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Agregado exitosamente!");
+                alert.showAndWait();
+
+                // TO UPDATE THE TABLEVIEW
+                    addStudentsShowListData();
+                // TO CLEAR THE FIELDS
+                    addStudentsClear();
+
+            }
+            /*}*/
+        } catch (Exception e) {
+            e.printStackTrace();
+       
+        }
+    }
 
 /*  -------- DATA ANALYSIS --------*/
     
@@ -682,7 +734,7 @@ public class dashboardController implements Initializable {
     public void DisplayFemaleEnrolledChart_daily() {
         totalFemaleChart_daily.getData().clear();
 
-        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
         //String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Femenino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
 
         connect = database.connectDb();
@@ -709,7 +761,7 @@ public class dashboardController implements Initializable {
 
         totalMaleChart_daily.getData().clear();
 
-        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
         //String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Masculino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
 
         connect = database.connectDb();
@@ -762,7 +814,7 @@ public class dashboardController implements Initializable {
         totalFemaleChart_weekly.getData().clear();
 
         // Utilizando la función WEEK() para agrupar por semana
-        String sql = "SELECT WEEK(fechaEntrada), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'F' GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
+        String sql = "SELECT WEEK(fechaEntrada), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
 
         try (Connection connect = database.connectDb();
              PreparedStatement prepare = connect.prepareStatement(sql);
@@ -787,7 +839,7 @@ public class dashboardController implements Initializable {
     public void DisplayEnrolledMaleChart_weekly() {
         totalMaleChart_weekly.getData().clear();
         // Utilizando la función WEEK() para agrupar por semana
-        String sql = "SELECT WEEK(fechaEntrada), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'M' GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
+        String sql = "SELECT WEEK(fechaEntrada), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
 
         try (Connection connect = database.connectDb();
              PreparedStatement prepare = connect.prepareStatement(sql);
@@ -838,7 +890,7 @@ public class dashboardController implements Initializable {
         totalFemaleChart_monthly.getData().clear();
 
         // Utilizando la función MONTH() para agrupar por mes
-        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'F' GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
+        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
 
         try (Connection connect = database.connectDb();
              PreparedStatement prepare = connect.prepareStatement(sql);
@@ -864,7 +916,7 @@ public class dashboardController implements Initializable {
         totalMaleChart_monthly.getData().clear();
 
         // Utilizando la función MONTH() para agrupar por mes
-        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.sexo = 'M' GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
+        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
 
         try (Connection connect = database.connectDb();
              PreparedStatement prepare = connect.prepareStatement(sql);
@@ -910,8 +962,5 @@ public class dashboardController implements Initializable {
 
         // To show inmediately when we proceed to dashboard application form
         addStudentsShowListData();
-  /*      addStudentsListaCarrera();
-        addStudentsGenderList();
-  */      
     }
 }
