@@ -603,35 +603,33 @@ public class dashboardController implements Initializable {
     }
 
     public void addStudentsAdd() {
-        String insertData = "INSERT INTO historial "
-            + "(noControl, fechaEntrada, horaEntrada) "
-            + "VALUES(?,?,?)";
+        String insertData = "INSERT INTO historial (noControl, fechaEntrada, horaEntrada) VALUES(?,?,?)"; //Se crea una cadena de consulta SQL para insertar datos en la tabla historial. La consulta especifica las columnas noControl, fechaEntrada, horaEntrada, y usa marcadores de posición (?) para los valores que se insertarán más tarde.
 
-        connect = database.connectDb();
+        connect = database.connectDb(); //Llama al método connectDb() de la clase database para establecer una conexión con la base de datos.
 
         try {
             Alert alert;
-            if (addStudents_noControl.getText().isEmpty()) {
+            String inputText = addStudents_noControl.getText();
+            
+            if (inputText.isEmpty()) { //Verifica si el campo de texto addStudents_noControl está vacío.
+                //se crea y muestra un cuadro de diálogo de error
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
-                alert.setContentText("Llene todos los campos!");
+                alert.setContentText("No se ha ingresado num Control"); 
                 alert.showAndWait();
-            } else {
-            /*    // CHECK IF THE STUDENTNUMBER ALREADY EXIST IN THE DATABASE alumnos
-                String checkData = "SELECT noControl FROM alumnos WHERE noControl = '"
-                        + addStudents_noControl.getText() + "'";
-
-                statement = connect.createStatement();
-                result = statement.executeQuery(checkData);
-
-                if (result.next()) {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("N° Control " + addStudents_noControl.getText() + " no está dado de alta en el semestre");
-                    alert.showAndWait();
-                } else {*/
+  
+            } else { //Si entra aqui, entonces si hay algo dentro del campo de texto
+                
+                if(inputText.length() > 8){ //Verifica si lo ingresado es mayor a 8 caracteres
+                
+                    String numeroControl = inputText.substring(inputText.length() - 8);
+                    // Asignar el número de control al campo de texto
+                    addStudents_noControl.setText(numeroControl);
+                    
+                }
+                
+                // Proceder con la inserción en la base de datos
                 prepare = connect.prepareStatement(insertData);
                 prepare.setString(1, addStudents_noControl.getText());
                 
@@ -660,6 +658,7 @@ public class dashboardController implements Initializable {
             /*}*/
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("¡Hola, mundo!");
        
         }
     }
