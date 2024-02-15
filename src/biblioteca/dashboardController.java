@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalTime;
 import java.sql.Time;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -601,50 +602,103 @@ public class dashboardController implements Initializable {
     public void addStudentsClear() {
         addStudents_noControl.setText("");
     }
+    
+    /* -----    Metodos recursivos para agregar estudiante a registro -----*/
 
+     private String agregarPrefijo(String numeroControl) {
+         
+        char prefijo = numeroControl.charAt(0);
+        switch (prefijo) {
+            case 'C':
+                return "B" + numeroControl;
+            case 'B':
+                return "M" + numeroControl;
+            case 'M':
+                return "D" + numeroControl;
+            default:
+                return "C" + numeroControl;
+        }
+    }
+
+    private void insertarDatos(String numeroControl) throws SQLException {
+        // Preparar la consulta para insertar los datos
+        String insertData = "INSERT INTO historial (noControl, fechaEntrada, horaEntrada) VALUES (?, ?, ?)";
+        PreparedStatement prepare = connect.prepareStatement(insertData);
+        prepare.setString(1, numeroControl);
+
+        Date fechaEntrada = new Date(System.currentTimeMillis());
+        java.sql.Date sqlDate = new java.sql.Date(fechaEntrada.getTime());
+        prepare.setString(2, String.valueOf(sqlDate));
+
+        Time horaEntrada = new Time(System.currentTimeMillis());
+        prepare.setString(3, String.valueOf(horaEntrada));
+
+        // Ejecutar la consulta de inserción
+        prepare.executeUpdate();
+
+        // Mostrar un mensaje de éxito
+        System.out.println("¡Agregado exitosamente!");
+    }
+    
+     public void verificarInsercion(String numeroControl) {
+        try {
+            // Verificar si el número de control existe en la base de datos
+            String checkData = "SELECT noControl FROM alumnos WHERE noControl = ?";
+            PreparedStatement checkStatement = connect.prepareStatement(checkData);
+            checkStatement.setString(1, numeroControl);
+            ResultSet result = checkStatement.executeQuery();
+
+            if (!result.next()) { // Si el número de control no se encuentra en la base de datos
+                if (numeroControl.length() == 9) { // Si ya hemos añadido sufijos
+                    // Mostrar mensaje de advertencia y limpiar campos
+                    System.out.println("El número de control no se encuentra en la base de datos.");
+                    return;
+                } else {
+                    // Intentar con el siguiente prefijo
+                    String nuevoNumeroControl = agregarPrefijo(numeroControl);
+                    verificarInsercion(nuevoNumeroControl);
+                }
+            } else {
+                // Si el número de control se encuentra en la base de datos, proceder con la inserción
+                insertarDatos(numeroControl);
+            }
+        } catch (SQLException e) {
+            // Manejar cualquier excepción SQL que pueda ocurrir
+            e.printStackTrace();
+            // Mostrar un mensaje de error
+            System.out.println("Se produjo un error al intentar agregar el estudiante.");
+        }
+    }
+    
+    
+/* ------------------METODO PARA AGREGAR AL REGISTRO ---------------- */
     public void addStudentsAdd() {
-        String insertData = "INSERT INTO historial "
-            + "(noControl, fechaEntrada, horaEntrada) "
-            + "VALUES(?,?,?)";
 
-        connect = database.connectDb();
+        String numeroControl = "";
 
         try {
             Alert alert;
-            if (addStudents_noControl.getText().isEmpty()) {
+            numeroControl = addStudents_noControl.getText();
+            
+            if (numeroControl.isEmpty()) { //Verifica si el campo de texto addStudents_noControl está vacío.
+                //se crea y muestra un cuadro de diálogo de error
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
-                alert.setContentText("Llene todos los campos!");
+                alert.setContentText("No se ha ingresado num Control"); 
                 alert.showAndWait();
-            } else {
-            /*    // CHECK IF THE STUDENTNUMBER ALREADY EXIST IN THE DATABASE alumnos
-                String checkData = "SELECT noControl FROM alumnos WHERE noControl = '"
-                        + addStudents_noControl.getText() + "'";
-
-                statement = connect.createStatement();
-                result = statement.executeQuery(checkData);
-
-                if (result.next()) {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("N° Control " + addStudents_noControl.getText() + " no está dado de alta en el semestre");
-                    alert.showAndWait();
-                } else {*/
-                prepare = connect.prepareStatement(insertData);
-                prepare.setString(1, addStudents_noControl.getText());
+  
+            } else { //Si entra aqui, entonces si hay algo dentro del campo de texto
                 
-                Date fechaEntrada = new Date();
-                java.sql.Date sqlDate = new java.sql.Date(fechaEntrada.getTime());
-                prepare.setString(2, String.valueOf(sqlDate));
-
-                LocalTime horaEntrada = LocalTime.now();
-                Time sqlTime = Time.valueOf(horaEntrada);
-                prepare.setString(3, String.valueOf(sqlTime));
-
-                prepare.executeUpdate();
-
+                if(numeroControl.length() > 8){ //Verifica si lo ingresado es mayor a 8 caracteres
+                
+                    numeroControl = numeroControl.substring(numeroControl.length() - 8);
+                    // Asignar el número de control al campo de texto
+                    addStudents_noControl.setText(numeroControl);
+                    
+                }
+                
+                verificarInsercion(numeroControl);   
                 alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information Message");
                 alert.setHeaderText(null);
@@ -655,13 +709,15 @@ public class dashboardController implements Initializable {
                     addStudentsShowListData();
                 // TO CLEAR THE FIELDS
                     addStudentsClear();
-
+                
             }
-            /*}*/
+
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("¡Hola, mundo!");
        
         }
+        
     }
 
 /*  -------- DATA ANALYSIS --------*/
@@ -958,9 +1014,10 @@ public class dashboardController implements Initializable {
         DisplayEnrolledMaleChart_monthly();
         DisplayFemaleEnrolledChart_monthly();
         DisplayTotalEnrolledChart_monthly();
-
-
+       
         // To show inmediately when we proceed to dashboard application form
         addStudentsShowListData();
+        
+
     }
 }
