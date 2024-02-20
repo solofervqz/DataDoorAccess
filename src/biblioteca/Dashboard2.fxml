@@ -6,11 +6,14 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -251,11 +254,11 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="analysis_FemaleMale" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0">
+                                    <AnchorPane fx:id="analysis_Careers" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0">
                                        <children>
                                           <AnchorPane prefHeight="43.0" prefWidth="940.0">
                                              <children>
-                                                <Label layoutX="438.0" layoutY="8.0" text="Análisis">
+                                                <Label layoutX="384.0" layoutY="8.0" text="Análisis por Carreras">
                                                    <font>
                                                       <Font name="System Bold" size="18.0" />
                                                    </font>
@@ -268,14 +271,221 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <LineChart fx:id="totalFemaleMaleChart" layoutX="132.0" layoutY="25.0" prefHeight="450.0" prefWidth="938.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                  <xAxis>
-                                                    <CategoryAxis side="BOTTOM" />
-                                                  </xAxis>
-                                                  <yAxis>
-                                                    <NumberAxis side="LEFT" />
-                                                  </yAxis>
-                                                </LineChart>
+                                                <AnchorPane fx:id="careers_buttons" layoutY="12.0" prefHeight="426.0" prefWidth="354.0">
+                                                   <children>
+                                                      <Button fx:id="IDIN_chart_btn" alignment="BASELINE_LEFT" layoutX="67.0" layoutY="27.0" mnemonicParsing="false" onAction="#navigationCarrersChartButton" prefHeight="39.0" prefWidth="266.0" styleClass="IDIN-Button" stylesheets="@dashboardDesign.css" text="DISEÑO INDUSTRIAL" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                         </font>
+                                                         <graphic>
+                                                            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../iconos/Diseño.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button fx:id="ADM_chart_btn" alignment="BASELINE_LEFT" layoutX="67.0" layoutY="86.0" mnemonicParsing="false" onAction="#navigationCarrersChartButton" prefHeight="39.0" prefWidth="266.0" styleClass="ADM-Button" stylesheets="@dashboardDesign.css" text="ADMINISTRACIÓN" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                         </font>
+                                                         <graphic>
+                                                            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../iconos/Admin.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button fx:id="ISC_chart_btn" alignment="BASELINE_LEFT" layoutX="67.0" layoutY="142.0" mnemonicParsing="false" onAction="#navigationCarrersChartButton" prefHeight="39.0" prefWidth="266.0" styleClass="ISC-Button" stylesheets="@dashboardDesign.css" text="SISTEMAS COMPUTACIONALES" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                         </font>
+                                                         <graphic>
+                                                            <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../iconos/Sistemas.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button fx:id="IINF_chart_btn" alignment="BASELINE_LEFT" layoutX="67.0" layoutY="197.0" mnemonicParsing="false" onAction="#navigationCarrersChartButton" prefHeight="39.0" prefWidth="266.0" styleClass="IINF-Button" stylesheets="@dashboardDesign.css" text="INGENIERÍA INFORMÁTICA" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                         </font>
+                                                         <graphic>
+                                                            <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../iconos/Info.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button fx:id="IIND_chart_btn" alignment="BASELINE_LEFT" layoutX="67.0" layoutY="251.0" mnemonicParsing="false" onAction="#navigationCarrersChartButton" prefHeight="39.0" prefWidth="266.0" styleClass="IIND-Button" stylesheets="@dashboardDesign.css" text="INGENIERÍA INDUSTRIAL" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                         </font>
+                                                         <graphic>
+                                                            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../iconos/Ind.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button fx:id="IGE_chart_btn" alignment="BASELINE_LEFT" layoutX="67.0" layoutY="305.0" mnemonicParsing="false" onAction="#navigationCarrersChartButton" prefHeight="39.0" prefWidth="266.0" styleClass="IGE-Button" stylesheets="@dashboardDesign.css" text="GESTIÓN EMPRESARIAL" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                         </font>
+                                                         <graphic>
+                                                            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../iconos/IGE.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button fx:id="ARQ_chart_btn" alignment="BASELINE_LEFT" layoutX="67.0" layoutY="361.0" mnemonicParsing="false" onAction="#navigationCarrersChartButton" prefHeight="39.0" prefWidth="266.0" styleClass="ARQ-Button" stylesheets="@dashboardDesign.css" text="ARQUITECTURA" textFill="WHITE">
+                                                         <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                         </font>
+                                                         <graphic>
+                                                            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../iconos/Arqui.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane fx:id="analysisCareers_pieChart" layoutX="390.0" prefHeight="450.0" prefWidth="542.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="389.6" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <PieChart fx:id="analisisPorCarreras_chart" animated="false" clockwise="false" labelsVisible="false" layoutY="16.0" legendVisible="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="406.0" prefWidth="515.0" stylesheets="@pieChartCareers.css" AnchorPane.bottomAnchor="28.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="16.0" />
+                                                      <AnchorPane layoutX="455.0" layoutY="137.0" prefHeight="39.0" prefWidth="42.0" styleClass="IDIN-Lable" stylesheets="@dashboardDesign.css">
+                                                         <children>
+                                                            <Label fx:id="totalIDIN" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <font>
+                                                                  <Font name="System Bold" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane layoutX="350.0" layoutY="7.0" prefHeight="39.0" prefWidth="42.0" styleClass="IIND-Lable" stylesheets="@dashboardDesign.css">
+                                                         <children>
+                                                            <Label fx:id="totalIIND" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <font>
+                                                                  <Font name="System Bold" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane layoutX="119.0" layoutY="26.0" prefHeight="39.0" prefWidth="42.0" styleClass="ARQ-Lable" stylesheets="@dashboardDesign.css">
+                                                         <children>
+                                                            <Label fx:id="totalARQ" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <font>
+                                                                  <Font name="System Bold" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane layoutX="36.0" layoutY="164.0" prefHeight="39.0" prefWidth="42.0" styleClass="IGE-Lable" stylesheets="@dashboardDesign.css">
+                                                         <children>
+                                                            <Label fx:id="totalIGE" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <font>
+                                                                  <Font name="System Bold" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane layoutX="91.0" layoutY="350.0" prefHeight="39.0" prefWidth="42.0" styleClass="IINF-Lable" stylesheets="@dashboardDesign.css">
+                                                         <children>
+                                                            <Label fx:id="totalIINF" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <font>
+                                                                  <Font name="System Bold" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane layoutX="322.0" layoutY="400.0" prefHeight="37.0" prefWidth="42.0" styleClass="ADM-Lable" stylesheets="@dashboardDesign.css">
+                                                         <children>
+                                                            <Label fx:id="totalADM" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="44.0" prefWidth="42.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <font>
+                                                                  <Font name="System Bold" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane layoutX="444.0" layoutY="294.0" prefHeight="39.0" prefWidth="42.0" styleClass="ISC-Lable" stylesheets="@dashboardDesign.css">
+                                                         <children>
+                                                            <Label fx:id="totalISC" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <font>
+                                                                  <Font name="System Bold" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane fx:id="idinPieChart_AP" layoutX="390.4" layoutY="10.0" prefHeight="448.0" prefWidth="541.0" visible="false" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="390.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <PieChart fx:id="totalFemaleMaleIDIN_chart" layoutY="-20.0" legendVisible="false" prefHeight="445.0" prefWidth="536.0" stylesheets="@pieChartFemaleMale.css" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane fx:id="admPieChart_AP" layoutX="426.0" layoutY="20.0" prefHeight="450.0" prefWidth="534.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="389.6" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <PieChart fx:id="totalFemaleMaleADM_chart" layoutY="-20.0" legendVisible="false" prefHeight="448.0" prefWidth="536.0" stylesheets="@pieChartFemaleMale.css" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane fx:id="iscPieChart_AP" layoutX="436.0" layoutY="9.0" prefHeight="472.0" prefWidth="536.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="389.6" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <PieChart fx:id="totalFemaleMaleISC_chart" layoutY="-20.0" legendVisible="false" prefHeight="450.0" prefWidth="536.0" stylesheets="@pieChartFemaleMale.css" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane fx:id="iinfPieChart_AP" layoutX="446.0" layoutY="19.0" prefHeight="472.0" prefWidth="536.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="389.6" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <PieChart fx:id="totalFemaleMaleIINF_chart" layoutY="-20.0" legendVisible="false" prefHeight="449.0" prefWidth="536.0" stylesheets="@pieChartFemaleMale.css" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane fx:id="iindPieChart_AP" layoutX="456.0" layoutY="29.0" prefHeight="472.0" prefWidth="536.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="389.6" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <PieChart fx:id="totalFemaleMaleIIND_chart" layoutY="-20.0" legendVisible="false" prefHeight="448.0" prefWidth="536.0" stylesheets="@pieChartFemaleMale.css" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane fx:id="igePieChart_AP" layoutX="466.0" layoutY="39.0" prefHeight="472.0" prefWidth="536.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="389.6" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <PieChart fx:id="totalFemaleMaleIGE_chart" layoutY="-20.0" legendVisible="false" prefHeight="448.0" prefWidth="536.0" stylesheets="@pieChartFemaleMale.css" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane fx:id="arquiPieChart_AP" layoutX="476.0" layoutY="11.0" prefHeight="501.0" prefWidth="536.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="389.6" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <PieChart fx:id="totalFemaleMaleARQ_chart" layoutY="-20.0" legendVisible="false" prefHeight="449.0" prefWidth="536.0" stylesheets="@pieChartFemaleMale.css" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane fx:id="legendFemaleMale" layoutX="398.0" layoutY="382.0" prefHeight="66.0" prefWidth="508.0" visible="false" AnchorPane.rightAnchor="27.0">
+                                                   <children>
+                                                      <AnchorPane prefHeight="55.0" prefWidth="156.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="268.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <FontAwesomeIcon fill="#e2c0c1" glyphName="CIRCLE" AnchorPane.rightAnchor="57.0" AnchorPane.topAnchor="30.0" />
+                                                            <Label text="Mujeres" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="55.0" prefWidth="156.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="268.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <FontAwesomeIcon fill="#5284b2" glyphName="CIRCLE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0" />
+                                                            <Label text="Hombres" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="28.0">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </AnchorPane>
                                              </children>
                                           </AnchorPane>
                                        </children>

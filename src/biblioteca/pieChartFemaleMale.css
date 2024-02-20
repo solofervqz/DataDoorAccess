@@ -1,0 +1,19 @@
+.default-color0.chart-pie{
+    -fx-pie-color: #e2c0c1 /*Mujeres*/
+}
+
+.default-color1.chart-pie{
+    -fx-pie-color: #5284B2 /*Hombres*/
+}
+
+.default-color2.chart-pie{
+    -fx-pie-color: #e2c0c1 /*Mujeres*/
+}
+
+.default-color3.chart-pie{
+    -fx-pie-color: #5284B2 /*Hombres*/
+}
+
+.chart-pie-label{
+    -fx-font-size: 16;
+}

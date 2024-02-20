@@ -37,6 +37,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -146,10 +147,103 @@ public class dashboardController implements Initializable {
     private BarChart<?, ?> dailyChartHome;
     
     @FXML
-    private AnchorPane analysis_FemaleMale;
+    private Label totalIDIN;
+
+    @FXML
+    private Label totalADM;
+
+    @FXML
+    private Label totalISC;
     
     @FXML
-    private LineChart<?, ?> totalFemaleMaleChart;
+    private Label totalIINF;
+
+    @FXML
+    private Label totalIIND;
+
+    @FXML
+    private Label totalIGE;
+    
+    @FXML
+    private Label totalARQ;
+    
+    @FXML
+    private AnchorPane analysis_Careers;
+    
+    @FXML
+    private AnchorPane careers_buttons;
+    
+    @FXML
+    private AnchorPane analysisCareers_pieChart;
+    
+    @FXML
+    private AnchorPane idinPieChart_AP;
+    
+    @FXML
+    private AnchorPane admPieChart_AP;
+    
+    @FXML
+    private AnchorPane iscPieChart_AP;
+    
+    @FXML
+    private AnchorPane iinfPieChart_AP;
+    
+    @FXML
+    private AnchorPane iindPieChart_AP;
+    
+    @FXML
+    private AnchorPane igePieChart_AP;
+    
+    @FXML
+    private AnchorPane arquiPieChart_AP;
+    
+    @FXML
+    private AnchorPane legendFemaleMale;
+    
+    @FXML
+    private PieChart analisisPorCarreras_chart;
+    
+    @FXML
+    private PieChart totalFemaleMaleIDIN_chart;
+    
+    @FXML
+    private PieChart totalFemaleMaleADM_chart;
+    
+    @FXML
+    private PieChart totalFemaleMaleISC_chart;
+    
+    @FXML
+    private PieChart totalFemaleMaleIINF_chart;
+    
+    @FXML
+    private PieChart totalFemaleMaleIIND_chart;
+    
+    @FXML
+    private PieChart totalFemaleMaleIGE_chart;
+    
+    @FXML
+    private PieChart totalFemaleMaleARQ_chart;
+    
+    @FXML
+    private Button IDIN_chart_btn;
+    
+    @FXML
+    private Button ADM_chart_btn;
+    
+    @FXML
+    private Button ISC_chart_btn;
+    
+    @FXML
+    private Button IINF_chart_btn;
+    
+    @FXML
+    private Button IIND_chart_btn; 
+    
+    @FXML
+    private Button IGE_chart_btn;
+    
+    @FXML
+    private Button ARQ_chart_btn;
     
     @FXML
     private AnchorPane daily_charts;
@@ -337,23 +431,27 @@ public class dashboardController implements Initializable {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
             data_form.setVisible(true);
-            analysis_FemaleMale.setVisible(true);
+            analysis_Careers.setVisible(true);
             daily_charts.setVisible(false);
             weekly_charts.setVisible(false);
             monthly_charts.setVisible(false);
-
+            analysisCareers_pieChart.setVisible(true);
+            SetFalsePieChartsCareersFM();
+            legendFemaleMale.setVisible(false);
             
             dataAnalysis_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
             home_btn.setStyle("-fx-background-color:transparent");
             addStudents_btn.setStyle("-fx-background-color:transparent");
 
-            DisplayTotalFemaleMaleChart();            
+            DisplayCareersPieChart();            
             
             nav_chart.setVisible(true);
             monthly_chart_btn.setStyle("-fx-background-color:transparent");
             weekly_chart_btn.setStyle("-fx-background-color:transparent");
             daily_chart_btn.setStyle("-fx-background-color:transparent");
             
+            DisplayStyleButtonsCareers();
+            DisplayLabelsTotalCareers();
         }
     }
     
@@ -362,7 +460,7 @@ public class dashboardController implements Initializable {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
             data_form.setVisible(true);
-            analysis_FemaleMale.setVisible(false);
+            analysis_Careers.setVisible(false);
 
             DisplayEnrolledMaleChart_daily();
             DisplayFemaleEnrolledChart_daily();
@@ -383,7 +481,7 @@ public class dashboardController implements Initializable {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
             data_form.setVisible(true);
-            analysis_FemaleMale.setVisible(false);
+            analysis_Careers.setVisible(false);
             
             DisplayEnrolledMaleChart_weekly();
             DisplayFemaleEnrolledChart_weekly();
@@ -404,7 +502,7 @@ public class dashboardController implements Initializable {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
             data_form.setVisible(true);
-            analysis_FemaleMale.setVisible(false);
+            analysis_Careers.setVisible(false);
             
             DisplayEnrolledMaleChart_monthly();
             DisplayFemaleEnrolledChart_monthly();
@@ -722,44 +820,79 @@ public class dashboardController implements Initializable {
 
 /*  -------- DATA ANALYSIS --------*/
     
-    public void DisplayTotalFemaleMaleChart() {
-        totalFemaleMaleChart.getData().clear();
-
-        String femaleSql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Femenino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
-        String maleSql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Masculino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
-
+    //Función para desplegar la gráfica de pastel de todas las carreras
+    public void DisplayCareersPieChart() {
+        analisisPorCarreras_chart.getData().clear();
+        
+        String carreraSql = "SELECT a.carrera, COUNT(*) FROM alumnos a JOIN historial h ON a.noControl = h.noControl "
+                + "WHERE a.carrera NOT IN ('DOCTORADO EN CIENCIAS DE LA INGENIERIA', 'MAESTRIA EN SISTEMAS COMPUTACIONALES', "
+                + "'MAESTRIA EN INGENIERIA INDUSTRIAL') GROUP BY a.carrera ORDER BY CASE a.carrera "
+                + "WHEN 'INGENIERIA EN DISEÑO INDUSTRIAL' THEN 1 WHEN 'INGENIERIA INDUSTRIAL' THEN 2 WHEN 'ARQUITECTURA' "
+                + "THEN 3 WHEN 'INGENIERIA EN GESTION EMPRESARIAL' THEN 4 WHEN 'INGENIERIA INFORMATICA' THEN 5 "
+                + "WHEN 'LICENCIATURA EN ADMINISTRACION' THEN 6 WHEN 'INGENIERIA EN SISTEMAS COMPUTACIONALES' THEN 7 END;";
+        
         connect = database.connectDb();
 
         try {
-            XYChart.Series femaleSeries = new XYChart.Series();
-            femaleSeries.setName("Mujeres");
-
-            prepare = connect.prepareStatement(femaleSql);
+            prepare = connect.prepareStatement(carreraSql);
             result = prepare.executeQuery();
 
             while (result.next()) {
-                femaleSeries.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
+                PieChart.Data data = new PieChart.Data(result.getString(2), result.getInt(2));
+                analisisPorCarreras_chart.getData().add(data);
             }
-
-            totalFemaleMaleChart.getData().add(femaleSeries);
-
-            XYChart.Series maleSeries = new XYChart.Series();
-            maleSeries.setName("Hombres");
-
-            prepare = connect.prepareStatement(maleSql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                maleSeries.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            totalFemaleMaleChart.getData().add(maleSeries);
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
+    //Funcion para desplegar cuantas mujeres y hombres ingresaron de cada carrera
+    public void DisplayCareersFemaleMalePieChart(String carrera, PieChart grafico) {
+        grafico.getData().clear();
+        
+        String Sql = "SELECT genero, COUNT(*) FROM alumnos a JOIN historial h ON a.noControl = h.noControl WHERE a.carrera = '"
+                + carrera +"' GROUP BY genero;";
+        
+        connect = database.connectDb();
 
+        try {
+            prepare = connect.prepareStatement(Sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                PieChart.Data data = new PieChart.Data(result.getString(2), result.getInt(2));
+                grafico.getData().add(data);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //Funcion para desplegar cuantas mujeres y hombres ingresaron de cada carrera
+    public void DisplayTotalByCareer(String carrera, Label etiqueta) {        
+        String sql = "SELECT COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl "
+                + "WHERE a.carrera = '" + carrera + "';";
+        
+        connect = database.connectDb();
+
+        try {
+            int count = 0;
+
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            if (result.next()) {
+                count = result.getInt("COUNT(*)");
+            }
+
+            etiqueta.setText(String.valueOf(count));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     public void DisplayTotalEnrolledChart_daily() {
         totalEnrolledChart_daily.getData().clear();
@@ -993,7 +1126,97 @@ public class dashboardController implements Initializable {
             e.printStackTrace();
         }
     }
+    
+    //Función para aparecer las graficas individuales de cada carrera
+    public void navigationCarrersChartButton(){
+        if(IDIN_chart_btn.isFocused()){
+            SetFalsePieChartsCareersFM();
+            idinPieChart_AP.setVisible(true);
 
+            DisplayCareersFemaleMalePieChart("INGENIERIA EN DISEÑO INDUSTRIAL", totalFemaleMaleIDIN_chart);
+            
+            analysisCareers_pieChart.setVisible(false);
+            legendFemaleMale.setVisible(true);
+            
+            DisplayStyleButtonsCareers();
+            IDIN_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #0D111B, #364774);");
+         
+        } else if(ADM_chart_btn.isFocused()){
+            SetFalsePieChartsCareersFM();
+            admPieChart_AP.setVisible(true);
+
+            DisplayCareersFemaleMalePieChart("LICENCIATURA EN ADMINISTRACION", totalFemaleMaleADM_chart);
+            
+            analysisCareers_pieChart.setVisible(false);
+            legendFemaleMale.setVisible(true);
+            
+            DisplayStyleButtonsCareers();
+            ADM_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #23164C, #4B30A3);");
+            
+        } else if(ISC_chart_btn.isFocused()){
+            SetFalsePieChartsCareersFM();
+            iscPieChart_AP.setVisible(true);
+
+            DisplayCareersFemaleMalePieChart("INGENIERIA EN SISTEMAS COMPUTACIONALES", totalFemaleMaleISC_chart);
+            
+            analysisCareers_pieChart.setVisible(false);
+            legendFemaleMale.setVisible(true);
+            
+            DisplayStyleButtonsCareers();
+            ISC_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2A435B, #5284B2);");
+            
+        } else if(IINF_chart_btn.isFocused()){
+            SetFalsePieChartsCareersFM();
+            iinfPieChart_AP.setVisible(true);
+
+            DisplayCareersFemaleMalePieChart("INGENIERIA INFORMATICA", totalFemaleMaleIINF_chart);
+            
+            analysisCareers_pieChart.setVisible(false);
+            legendFemaleMale.setVisible(true);
+            
+            DisplayStyleButtonsCareers();
+            IINF_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #092615, #1F7C46);");
+            
+        } else if(IIND_chart_btn.isFocused()){
+            SetFalsePieChartsCareersFM();
+            iindPieChart_AP.setVisible(true);
+
+            DisplayCareersFemaleMalePieChart("INGENIERIA INDUSTRIAL", totalFemaleMaleIIND_chart);
+            
+            analysisCareers_pieChart.setVisible(false);
+            legendFemaleMale.setVisible(true);
+            
+            DisplayStyleButtonsCareers();
+            IIND_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #847C24, #DCCE3C);");
+            
+        } else if(IGE_chart_btn.isFocused()){
+            SetFalsePieChartsCareersFM();
+            igePieChart_AP.setVisible(true);
+
+            DisplayCareersFemaleMalePieChart("INGENIERIA EN GESTION EMPRESARIAL", totalFemaleMaleIGE_chart);
+            
+            analysisCareers_pieChart.setVisible(false);
+            legendFemaleMale.setVisible(true);
+            
+            DisplayStyleButtonsCareers();
+            IGE_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #7A3E25, #D1693E);");
+            
+        } else if(ARQ_chart_btn.isFocused()){
+            SetFalsePieChartsCareersFM();
+            arquiPieChart_AP.setVisible(true);
+
+            DisplayCareersFemaleMalePieChart("ARQUITECTURA", totalFemaleMaleARQ_chart);
+            
+            analysisCareers_pieChart.setVisible(false);
+            legendFemaleMale.setVisible(true);
+            
+            DisplayStyleButtonsCareers();
+            ARQ_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #401312, #972D2A);");
+            
+        }
+        
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources){
         displayUsername();
@@ -1004,7 +1227,7 @@ public class dashboardController implements Initializable {
         homeDisplayFemaleEnrolled();
         DisplayDailyChartHome();
                 
-        DisplayTotalFemaleMaleChart();            
+        DisplayCareersPieChart();            
         DisplayEnrolledMaleChart_daily();
         DisplayFemaleEnrolledChart_daily();
         DisplayTotalEnrolledChart_daily();
@@ -1014,10 +1237,69 @@ public class dashboardController implements Initializable {
         DisplayEnrolledMaleChart_monthly();
         DisplayFemaleEnrolledChart_monthly();
         DisplayTotalEnrolledChart_monthly();
-       
         // To show inmediately when we proceed to dashboard application form
         addStudentsShowListData();
         
 
+    }
+    
+    //ESTILOS DE LOS BOTONES DE LAS CARRERAS
+    public void IDINButtonStyle(){
+        IDIN_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #364774, #607CC8);");
+    }
+    
+    public void ADMButtonStyle(){
+        ADM_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #4B30A3, #6D74E5);");
+    }
+    
+    public void ISCButtonStyle(){
+        ISC_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #5284B2, #96DEFA);");
+    }
+    
+    public void IINFButtonStyle(){
+        IINF_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #1F7C46, #33D577);");
+    }
+    
+    public void IINDButtonStyle(){
+        IIND_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #DCCE3C, #FFF45D);");
+    }
+    
+    public void IGEButtonStyle(){
+        IGE_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #D1693E, #FF933E);");
+    }
+    
+    public void ARQButtonStyle(){
+        ARQ_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #972D2A, #FF4A47);");
+    }
+    
+    public void DisplayStyleButtonsCareers(){
+        IDINButtonStyle();
+        ADMButtonStyle();
+        ISCButtonStyle();
+        IINFButtonStyle();
+        IINDButtonStyle();
+        IGEButtonStyle();
+        ARQButtonStyle();
+    }
+    
+    //Función para desplegar en cada etiqueta correspondiente cuantos alumnos ingresaron por carrera
+    public void DisplayLabelsTotalCareers(){
+        DisplayTotalByCareer("INGENIERIA EN DISEÑO INDUSTRIAL", totalIDIN);
+        DisplayTotalByCareer("INGENIERIA INDUSTRIAL", totalIIND);
+        DisplayTotalByCareer("INGENIERIA EN SISTEMAS COMPUTACIONALES", totalISC);
+        DisplayTotalByCareer("INGENIERIA INFORMATICA", totalIINF);
+        DisplayTotalByCareer("LICENCIATURA EN ADMINISTRACION", totalADM);
+        DisplayTotalByCareer("INGENIERIA EN GESTION EMPRESARIAL", totalIGE);
+        DisplayTotalByCareer("ARQUITECTURA", totalARQ);
+    }
+    
+    public void SetFalsePieChartsCareersFM(){
+        idinPieChart_AP.setVisible(false);
+        admPieChart_AP.setVisible(false);
+        iscPieChart_AP.setVisible(false);
+        iinfPieChart_AP.setVisible(false);
+        iindPieChart_AP.setVisible(false);
+        igePieChart_AP.setVisible(false);
+        arquiPieChart_AP.setVisible(false);
     }
 }

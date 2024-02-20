@@ -1,0 +1,27 @@
+.default-color0.chart-pie{
+    -fx-pie-color: #364774 /*Diseño industrial*/
+}
+
+.default-color1.chart-pie{ 
+    -fx-pie-color: #DCCE3C /*Ing. industrial*/
+}
+
+.default-color2.chart-pie{
+    -fx-pie-color: #972D2A /*Arquitectura*/
+}
+
+.default-color3.chart-pie{
+    -fx-pie-color: #D1693E /*Gestion empresarial*/
+}
+
+.default-color4.chart-pie{
+    -fx-pie-color: #1F7C46 /*Informatica*/
+}
+
+.default-color5.chart-pie{
+    -fx-pie-color: #4B30A3 /*Administracion*/
+}
+
+.default-color6.chart-pie{
+    -fx-pie-color: #5284B2 /*Sistemas*/
+}
