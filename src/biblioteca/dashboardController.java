@@ -53,7 +53,7 @@ import javafx.stage.StageStyle;
  */
 public class dashboardController implements Initializable {
 
-@FXML
+    @FXML
     private AnchorPane home_form;
 
     @FXML
@@ -97,7 +97,7 @@ public class dashboardController implements Initializable {
 
     @FXML
     private TableColumn<studentData, LocalTime> addStudents_col_horaEntrada;
-    
+
     @FXML
     private TableColumn<studentData, Date> addStudents_col_fechaEntrada;
 
@@ -124,28 +124,34 @@ public class dashboardController implements Initializable {
 
     @FXML
     private Label username;
-    
+
     @FXML
     private AnchorPane data_form;
 
     @FXML
+    private AnchorPane reporte_form;
+
+    @FXML
     private Button dataAnalysis_btn;
-    
+
+    @FXML
+    private Button addReporte_btn;
+
     @FXML
     private AnchorPane nav_chart;
-    
+
     @FXML
     private Button daily_chart_btn;
-    
+
     @FXML
-    private Button weekly_chart_btn;
-    
+    private Button quarter_chart_btn;
+
     @FXML
-    private Button monthly_chart_btn;
-    
+    private Button semestre_chart_btn;
+
     @FXML
     private BarChart<?, ?> dailyChartHome;
-    
+
     @FXML
     private Label totalIDIN;
 
@@ -154,7 +160,7 @@ public class dashboardController implements Initializable {
 
     @FXML
     private Label totalISC;
-    
+
     @FXML
     private Label totalIINF;
 
@@ -163,132 +169,132 @@ public class dashboardController implements Initializable {
 
     @FXML
     private Label totalIGE;
-    
+
     @FXML
     private Label totalARQ;
-    
+
     @FXML
     private AnchorPane analysis_Careers;
-    
+
     @FXML
     private AnchorPane careers_buttons;
-    
+
     @FXML
     private AnchorPane analysisCareers_pieChart;
-    
+
     @FXML
     private AnchorPane idinPieChart_AP;
-    
+
     @FXML
     private AnchorPane admPieChart_AP;
-    
+
     @FXML
     private AnchorPane iscPieChart_AP;
-    
+
     @FXML
     private AnchorPane iinfPieChart_AP;
-    
+
     @FXML
     private AnchorPane iindPieChart_AP;
-    
+
     @FXML
     private AnchorPane igePieChart_AP;
-    
+
     @FXML
     private AnchorPane arquiPieChart_AP;
-    
+
     @FXML
     private AnchorPane legendFemaleMale;
-    
+
     @FXML
     private PieChart analisisPorCarreras_chart;
-    
+
     @FXML
     private PieChart totalFemaleMaleIDIN_chart;
-    
+
     @FXML
     private PieChart totalFemaleMaleADM_chart;
-    
+
     @FXML
     private PieChart totalFemaleMaleISC_chart;
-    
+
     @FXML
     private PieChart totalFemaleMaleIINF_chart;
-    
+
     @FXML
     private PieChart totalFemaleMaleIIND_chart;
-    
+
     @FXML
     private PieChart totalFemaleMaleIGE_chart;
-    
+
     @FXML
     private PieChart totalFemaleMaleARQ_chart;
-    
+
     @FXML
     private Button IDIN_chart_btn;
-    
+
     @FXML
     private Button ADM_chart_btn;
-    
+
     @FXML
     private Button ISC_chart_btn;
-    
+
     @FXML
     private Button IINF_chart_btn;
-    
+
     @FXML
-    private Button IIND_chart_btn; 
-    
+    private Button IIND_chart_btn;
+
     @FXML
     private Button IGE_chart_btn;
-    
+
     @FXML
     private Button ARQ_chart_btn;
-    
+
     @FXML
     private AnchorPane daily_charts;
 
     @FXML
-    private BarChart<?, ?> totalEnrolledChart_daily; 
+    private BarChart<?, ?> totalEnrolledChart_daily;
 
     @FXML
     private LineChart<?, ?> totalFemaleChart_daily;
-    
+
     @FXML
     private LineChart<?, ?> totalMaleChart_daily;
-    
-    @FXML
-    private AnchorPane weekly_charts;
-    
-    @FXML
-    private BarChart<?, ?> totalEnrolledChart_weekly; 
 
     @FXML
-    private LineChart<?, ?> totalFemaleChart_weekly;
-    
-    @FXML
-    private LineChart<?, ?> totalMaleChart_weekly;
-    
-    @FXML
-    private AnchorPane monthly_charts;
-    
-    @FXML
-    private BarChart<?, ?> totalEnrolledChart_monthly; 
+    private AnchorPane quarter_charts;
 
     @FXML
-    private LineChart<?, ?> totalFemaleChart_monthly;
-    
+    private BarChart<?, ?> totalEnrolledChart_quarter;
+
     @FXML
-    private LineChart<?, ?> totalMaleChart_monthly;
+    private LineChart<?, ?> totalFemaleChart_quarter;
+
+    @FXML
+    private LineChart<?, ?> totalMaleChart_quarter;
+
+    @FXML
+    private AnchorPane semestre_charts;
+
+    @FXML
+    private BarChart<?, ?> totalEnrolledChart_semestre;
+
+    @FXML
+    private LineChart<?, ?> totalFemaleChart_semestre;
+
+    @FXML
+    private LineChart<?, ?> totalMaleChart_semestre;
 
     private Connection connect;
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
-    
+
     /*  -------- HEADER --------*/
-    public void close(){
-        
+    public void close() {
+
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Message");
@@ -303,7 +309,7 @@ public class dashboardController implements Initializable {
                 logout.getScene().getWindow().hide();
 
                 System.exit(0);
-                
+
             } else {
                 return;
             }
@@ -314,21 +320,21 @@ public class dashboardController implements Initializable {
 
     }
 
-    public void minimize(){
-        Stage stage = (Stage)main_form.getScene().getWindow();
+    public void minimize() {
+        Stage stage = (Stage) main_form.getScene().getWindow();
         stage.setIconified(true);
     }
-    
-    public void maximize(){
-        Stage stage = (Stage)main_form.getScene().getWindow();
+
+    public void maximize() {
+        Stage stage = (Stage) main_form.getScene().getWindow();
         stage.setMaximized(true);
 
     }
-    
+
     /*  -------- NAV --------*/
     private double x = 0;
     private double y = 0;
-    
+
     public void logout() {
 
         try {
@@ -380,149 +386,164 @@ public class dashboardController implements Initializable {
 
     }
 
-    public void displayUsername(){
+    public void displayUsername() {
         username.setText(getData.username);
     }
-    
-    public void defaultNav(){
+
+    public void defaultNav() {
         home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
         addStudents_btn.setStyle("-fx-background-color:transparent");
         dataAnalysis_btn.setStyle("-fx-background-color:transparent");
+        dataAnalysis_btn.setStyle("-fx-background-color:transparent");
+        addReporte_btn.setStyle("-fx-background-color:transparent");
     }
-        
+
     public void switchForm(ActionEvent event) {
         if (event.getSource() == home_btn) {
             home_form.setVisible(true);
             addStudents_form.setVisible(false);
             data_form.setVisible(false);
-
+            reporte_form.setVisible(false);
 
             home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
             dataAnalysis_btn.setStyle("-fx-background-color:transparent");
+            addReporte_btn.setStyle("-fx-background-color:transparent");
 
             homeDisplayTotalEnrolledStudents();
             homeDisplayMaleEnrolled();
             homeDisplayFemaleEnrolled();
             DisplayDailyChartHome();
 
-
             nav_chart.setVisible(false);
-
 
         } else if (event.getSource() == addStudents_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(true);
             data_form.setVisible(false);
-
+            reporte_form.setVisible(false);
 
             addStudents_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
             home_btn.setStyle("-fx-background-color:transparent");
             dataAnalysis_btn.setStyle("-fx-background-color:transparent");
+            addReporte_btn.setStyle("-fx-background-color:transparent");
 
-            
 //            TO BECOME UPDATED ONCE YOU CLICK THE ADD STUDENTS BUTTON ON NAV
             addStudentsShowListData();
 
             nav_chart.setVisible(false);
 
         } else if (event.getSource() == dataAnalysis_btn) {
-            
+
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
             data_form.setVisible(true);
             analysis_Careers.setVisible(true);
             daily_charts.setVisible(false);
-            weekly_charts.setVisible(false);
-            monthly_charts.setVisible(false);
+            quarter_charts.setVisible(false);
+            semestre_charts.setVisible(false);
             analysisCareers_pieChart.setVisible(true);
             SetFalsePieChartsCareersFM();
             legendFemaleMale.setVisible(false);
-            
+            reporte_form.setVisible(false);
+
             dataAnalysis_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
             home_btn.setStyle("-fx-background-color:transparent");
             addStudents_btn.setStyle("-fx-background-color:transparent");
+            addReporte_btn.setStyle("-fx-background-color:transparent");
 
-            DisplayCareersPieChart();            
-            
+            DisplayCareersPieChart();
+
             nav_chart.setVisible(true);
-            monthly_chart_btn.setStyle("-fx-background-color:transparent");
-            weekly_chart_btn.setStyle("-fx-background-color:transparent");
+            semestre_chart_btn.setStyle("-fx-background-color:transparent");
+            quarter_chart_btn.setStyle("-fx-background-color:transparent");
             daily_chart_btn.setStyle("-fx-background-color:transparent");
-            
+
             DisplayStyleButtonsCareers();
             DisplayLabelsTotalCareers();
+        } else if (event.getSource() == addReporte_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(false);
+            data_form.setVisible(false);
+            reporte_form.setVisible(true);
+
+            addReporte_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
+            home_btn.setStyle("-fx-background-color:transparent");
+            dataAnalysis_btn.setStyle("-fx-background-color:transparent");
+            addStudents_btn.setStyle("-fx-background-color:transparent");
+
+            nav_chart.setVisible(false);
         }
     }
-    
-    public void navigationChartButton(){
-        if(daily_chart_btn.isFocused()){
+
+    public void navigationChartButton() {
+        if (daily_chart_btn.isFocused()) {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
             data_form.setVisible(true);
             analysis_Careers.setVisible(false);
+            reporte_form.setVisible(false);
 
             DisplayEnrolledMaleChart_daily();
             DisplayFemaleEnrolledChart_daily();
             DisplayTotalEnrolledChart_daily();
-            
-            nav_chart.setVisible(true);            
+
+            nav_chart.setVisible(true);
 
             daily_charts.setVisible(true);
-            weekly_charts.setVisible(false);
-            monthly_charts.setVisible(false);
-            
-           daily_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
-            weekly_chart_btn.setStyle("-fx-background-color:transparent");
-            monthly_chart_btn.setStyle("-fx-background-color:transparent");
-        
-         
-        }else if(weekly_chart_btn.isFocused()){
+            quarter_charts.setVisible(false);
+            semestre_charts.setVisible(false);
+
+            daily_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
+            quarter_chart_btn.setStyle("-fx-background-color:transparent");
+            semestre_chart_btn.setStyle("-fx-background-color:transparent");
+
+        } else if (quarter_chart_btn.isFocused()) {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
             data_form.setVisible(true);
             analysis_Careers.setVisible(false);
-            
-            DisplayEnrolledMaleChart_weekly();
-            DisplayFemaleEnrolledChart_weekly();
-            DisplayTotalEnrolledChart_weekly();
-            
-            nav_chart.setVisible(true);            
+            reporte_form.setVisible(false);
+
+            DisplayEnrolledMaleChart_quarter();
+            DisplayFemaleEnrolledChart_quarter();
+            DisplayTotalEnrolledChart_quarter();
+
+            nav_chart.setVisible(true);
 
             daily_charts.setVisible(false);
-            weekly_charts.setVisible(true);
-            monthly_charts.setVisible(false);
-            
-            weekly_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
+            quarter_charts.setVisible(true);
+            semestre_charts.setVisible(false);
+
+            quarter_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
             daily_chart_btn.setStyle("-fx-background-color:transparent");
-            monthly_chart_btn.setStyle("-fx-background-color:transparent");
-        
-        
-        }else if(monthly_chart_btn.isFocused()){
+            semestre_chart_btn.setStyle("-fx-background-color:transparent");
+
+        } else if (semestre_chart_btn.isFocused()) {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
             data_form.setVisible(true);
             analysis_Careers.setVisible(false);
-            
-            DisplayEnrolledMaleChart_monthly();
-            DisplayFemaleEnrolledChart_monthly();
-            DisplayTotalEnrolledChart_monthly();
-            
-            nav_chart.setVisible(true);            
+            reporte_form.setVisible(false);
+
+            DisplayEnrolledMaleChart_semestre();
+            DisplayFemaleEnrolledChart_semestre();
+            DisplayTotalEnrolledChart_semestre();
+
+            nav_chart.setVisible(true);
 
             daily_charts.setVisible(false);
-            weekly_charts.setVisible(false);
-            monthly_charts.setVisible(true);
-            
-            monthly_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
-            weekly_chart_btn.setStyle("-fx-background-color:transparent");
+            quarter_charts.setVisible(false);
+            semestre_charts.setVisible(true);
+
+            semestre_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2c4277, #a4a4cc);");
+            quarter_chart_btn.setStyle("-fx-background-color:transparent");
             daily_chart_btn.setStyle("-fx-background-color:transparent");
-        
-        
+
         }
-        
+
     }
-    
+
     /*  -------- HOME --------*/
     public void homeDisplayTotalEnrolledStudents() {
 
@@ -547,11 +568,11 @@ public class dashboardController implements Initializable {
         }
 
     }
-    
+
     public void homeDisplayFemaleEnrolled() {
 
         String sql = "SELECT COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F'";
-        
+
         connect = database.connectDb();
 
         try {
@@ -594,12 +615,12 @@ public class dashboardController implements Initializable {
         }
 
     }
-    
+
     public void DisplayDailyChartHome() {
         dailyChartHome.getData().clear();
-       
-        String femaleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
-        String maleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+
+        String femaleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) DESC LIMIT 5";
+        String maleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) DESC LIMIT 5";
 
         connect = database.connectDb();
 
@@ -615,7 +636,7 @@ public class dashboardController implements Initializable {
             }
 
             dailyChartHome.getData().add(femaleSeries);
-    
+
             XYChart.Series maleSeries = new XYChart.Series();
             maleSeries.setName("Hombres");
 
@@ -633,13 +654,13 @@ public class dashboardController implements Initializable {
         }
     }
 
-/*  -------- ALUMNOS --------*/    
-        public ObservableList<studentData> addStudentsListData() {
+    /*  -------- ALUMNOS --------*/
+    public ObservableList<studentData> addStudentsListData() {
         ObservableList<studentData> listStudents = FXCollections.observableArrayList();
 
-        String sql = "SELECT historial.noControl, historial.fechaEntrada, historial.horaEntrada, alumnos.nombre, alumnos.apellidoPaterno, alumnos.apellidoMaterno, alumnos.carrera, alumnos.genero " +
-                     "FROM historial " +
-                     "JOIN alumnos ON historial.noControl = alumnos.noControl ORDER BY historial.fechaEntrada, historial.horaEntrada";
+        String sql = "SELECT historial.noControl, historial.fechaEntrada, historial.horaEntrada, alumnos.nombre, alumnos.apellidoPaterno, alumnos.apellidoMaterno, alumnos.carrera, alumnos.genero "
+                + "FROM historial "
+                + "JOIN alumnos ON historial.noControl = alumnos.noControl ORDER BY historial.fechaEntrada DESC, historial.horaEntrada DESC";
 
         connect = database.connectDb();
 
@@ -666,10 +687,9 @@ public class dashboardController implements Initializable {
         }
         return listStudents;
     }
-    
-    
+
     private ObservableList<studentData> addStudentsListD;
-    
+
     public void addStudentsShowListData() {
         addStudentsListD = addStudentsListData();
 
@@ -684,7 +704,7 @@ public class dashboardController implements Initializable {
 
         addStudents_tableView.setItems(addStudentsListD);
     }
-    
+
     public void addStudentsSelect() {
 
         studentData studentD = addStudents_tableView.getSelectionModel().getSelectedItem();
@@ -700,11 +720,10 @@ public class dashboardController implements Initializable {
     public void addStudentsClear() {
         addStudents_noControl.setText("");
     }
-    
-    /* -----    Metodos recursivos para agregar estudiante a registro -----*/
 
-     private String agregarPrefijo(String numeroControl) {
-         
+    /* -----    Metodos recursivos para agregar estudiante a registro -----*/
+    private String agregarPrefijo(String numeroControl) {
+
         char prefijo = numeroControl.charAt(0);
         switch (prefijo) {
             case 'C':
@@ -733,12 +752,13 @@ public class dashboardController implements Initializable {
 
         // Ejecutar la consulta de inserción
         prepare.executeUpdate();
-
+        /*
         // Mostrar un mensaje de éxito
         System.out.println("¡Agregado exitosamente!");
+         */
     }
-    
-     public void verificarInsercion(String numeroControl) {
+
+    public void verificarInsercion(String numeroControl) {
         try {
             // Verificar si el número de control existe en la base de datos
             String checkData = "SELECT noControl FROM alumnos WHERE noControl = ?";
@@ -767,9 +787,8 @@ public class dashboardController implements Initializable {
             System.out.println("Se produjo un error al intentar agregar el estudiante.");
         }
     }
-    
-    
-/* ------------------METODO PARA AGREGAR AL REGISTRO ---------------- */
+
+    /* ------------------METODO PARA AGREGAR AL REGISTRO ---------------- */
     public void addStudentsAdd() {
 
         String numeroControl = "";
@@ -777,60 +796,57 @@ public class dashboardController implements Initializable {
         try {
             Alert alert;
             numeroControl = addStudents_noControl.getText();
-            
+
             if (numeroControl.isEmpty()) { //Verifica si el campo de texto addStudents_noControl está vacío.
                 //se crea y muestra un cuadro de diálogo de error
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
-                alert.setContentText("No se ha ingresado num Control"); 
+                alert.setContentText("No se ha ingresado num Control");
                 alert.showAndWait();
-  
+
             } else { //Si entra aqui, entonces si hay algo dentro del campo de texto
-                
-                if(numeroControl.length() > 8){ //Verifica si lo ingresado es mayor a 8 caracteres
-                
+
+                if (numeroControl.length() > 8) { //Verifica si lo ingresado es mayor a 8 caracteres
+
                     numeroControl = numeroControl.substring(numeroControl.length() - 8);
                     // Asignar el número de control al campo de texto
                     addStudents_noControl.setText(numeroControl);
-                    
+
                 }
-                
-                verificarInsercion(numeroControl);   
-                alert = new Alert(Alert.AlertType.INFORMATION);
+
+                verificarInsercion(numeroControl);
+                /* alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Agregado exitosamente!");
                 alert.showAndWait();
-
+                 */
                 // TO UPDATE THE TABLEVIEW
-                    addStudentsShowListData();
+                addStudentsShowListData();
                 // TO CLEAR THE FIELDS
-                    addStudentsClear();
-                
+                addStudentsClear();
+
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("¡Hola, mundo!");
-       
         }
-        
+
     }
 
-/*  -------- DATA ANALYSIS --------*/
-    
+    /*  -------- DATA ANALYSIS --------*/
     //Función para desplegar la gráfica de pastel de todas las carreras
     public void DisplayCareersPieChart() {
         analisisPorCarreras_chart.getData().clear();
-        
+
         String carreraSql = "SELECT a.carrera, COUNT(*) FROM alumnos a JOIN historial h ON a.noControl = h.noControl "
                 + "WHERE a.carrera NOT IN ('DOCTORADO EN CIENCIAS DE LA INGENIERIA', 'MAESTRIA EN SISTEMAS COMPUTACIONALES', "
                 + "'MAESTRIA EN INGENIERIA INDUSTRIAL') GROUP BY a.carrera ORDER BY CASE a.carrera "
                 + "WHEN 'INGENIERIA EN DISEÑO INDUSTRIAL' THEN 1 WHEN 'INGENIERIA INDUSTRIAL' THEN 2 WHEN 'ARQUITECTURA' "
                 + "THEN 3 WHEN 'INGENIERIA EN GESTION EMPRESARIAL' THEN 4 WHEN 'INGENIERIA INFORMATICA' THEN 5 "
                 + "WHEN 'LICENCIATURA EN ADMINISTRACION' THEN 6 WHEN 'INGENIERIA EN SISTEMAS COMPUTACIONALES' THEN 7 END;";
-        
+
         connect = database.connectDb();
 
         try {
@@ -841,19 +857,19 @@ public class dashboardController implements Initializable {
                 PieChart.Data data = new PieChart.Data(result.getString(2), result.getInt(2));
                 analisisPorCarreras_chart.getData().add(data);
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     //Funcion para desplegar cuantas mujeres y hombres ingresaron de cada carrera
     public void DisplayCareersFemaleMalePieChart(String carrera, PieChart grafico) {
         grafico.getData().clear();
-        
+
         String Sql = "SELECT genero, COUNT(*) FROM alumnos a JOIN historial h ON a.noControl = h.noControl WHERE a.carrera = '"
-                + carrera +"' GROUP BY genero;";
-        
+                + carrera + "' GROUP BY genero;";
+
         connect = database.connectDb();
 
         try {
@@ -864,17 +880,17 @@ public class dashboardController implements Initializable {
                 PieChart.Data data = new PieChart.Data(result.getString(2), result.getInt(2));
                 grafico.getData().add(data);
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     //Funcion para desplegar cuantas mujeres y hombres ingresaron de cada carrera
-    public void DisplayTotalByCareer(String carrera, Label etiqueta) {        
+    public void DisplayTotalByCareer(String carrera, Label etiqueta) {
         String sql = "SELECT COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl "
                 + "WHERE a.carrera = '" + carrera + "';";
-        
+
         connect = database.connectDb();
 
         try {
@@ -888,16 +904,16 @@ public class dashboardController implements Initializable {
             }
 
             etiqueta.setText(String.valueOf(count));
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void DisplayTotalEnrolledChart_daily() {
         totalEnrolledChart_daily.getData().clear();
 
-        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) DESC LIMIT 7";
         //String sql = "SELECT fechaEntrada, COUNT(id) FROM students GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
 
         connect = database.connectDb();
@@ -919,11 +935,11 @@ public class dashboardController implements Initializable {
         }
 
     }
-    
+
     public void DisplayFemaleEnrolledChart_daily() {
         totalFemaleChart_daily.getData().clear();
 
-        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) DESC LIMIT 7";
         //String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Femenino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
 
         connect = database.connectDb();
@@ -950,7 +966,7 @@ public class dashboardController implements Initializable {
 
         totalMaleChart_daily.getData().clear();
 
-        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC";
+        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) DESC LIMIT 7";
         //String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Masculino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
 
         connect = database.connectDb();
@@ -974,305 +990,293 @@ public class dashboardController implements Initializable {
 
     }
 
-    public void DisplayTotalEnrolledChart_weekly() {
-        totalEnrolledChart_weekly.getData().clear();
+    public void DisplayTotalEnrolledChart_quarter() {
+        totalEnrolledChart_quarter.getData().clear();
 
-        // Utilizando la función WEEK() para agrupar por semana
-        String sql = "SELECT WEEK(fechaEntrada), COUNT(*) FROM historial GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
+        // Utilizando la función QUARTER() para agrupar por trimestre
+        String sql = "SELECT QUARTER(fechaEntrada), COUNT(*) FROM historial GROUP BY QUARTER(fechaEntrada) ORDER BY QUARTER(fechaEntrada) DESC";
 
-        try (Connection connect = database.connectDb();
-             PreparedStatement prepare = connect.prepareStatement(sql);
-             ResultSet result = prepare.executeQuery()) {
+        try (Connection connect = database.connectDb(); PreparedStatement prepare = connect.prepareStatement(sql); ResultSet result = prepare.executeQuery()) {
 
             XYChart.Series chart = new XYChart.Series();
 
             while (result.next()) {
-                // Puedes personalizar la presentación de la semana según tus necesidades
-                String semana = "Semana " + result.getString(1);
-                chart.getData().add(new XYChart.Data<>(semana, result.getInt(2)));
+                // Puedes personalizar la presentación del trimestre según tus necesidades
+                String trimestre = "Trimestre " + result.getString(1);
+                chart.getData().add(new XYChart.Data<>(trimestre, result.getInt(2)));
             }
 
-            totalEnrolledChart_weekly.getData().add(chart);
+            totalEnrolledChart_quarter.getData().add(chart);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public void DisplayFemaleEnrolledChart_weekly() {
-        totalFemaleChart_weekly.getData().clear();
 
-        // Utilizando la función WEEK() para agrupar por semana
-        String sql = "SELECT WEEK(fechaEntrada), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
+    public void DisplayFemaleEnrolledChart_quarter() {
+        totalFemaleChart_quarter.getData().clear();
 
-        try (Connection connect = database.connectDb();
-             PreparedStatement prepare = connect.prepareStatement(sql);
-             ResultSet result = prepare.executeQuery()) {
+        // Utilizando la función QUARTER() para agrupar por trimestre
+        String sql = "SELECT QUARTER(fechaEntrada), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY QUARTER(fechaEntrada) ORDER BY QUARTER(fechaEntrada) DESC LIMIT 5";
+
+        try (Connection connect = database.connectDb(); PreparedStatement prepare = connect.prepareStatement(sql); ResultSet result = prepare.executeQuery()) {
 
             XYChart.Series chart = new XYChart.Series();
             chart.setName("Mujeres");
 
             while (result.next()) {
-                // Puedes personalizar la presentación de la semana según tus necesidades
-                String semana = "Semana " + result.getString(1);
-                chart.getData().add(new XYChart.Data<>(semana, result.getInt(2)));
+                // Puedes personalizar la presentación del trimestre según tus necesidades
+                String trimestre = "Trimestre " + result.getString(1);
+                chart.getData().add(new XYChart.Data<>(trimestre, result.getInt(2)));
             }
 
-            totalFemaleChart_weekly.getData().add(chart);
+            totalFemaleChart_quarter.getData().add(chart);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void DisplayEnrolledMaleChart_weekly() {
-        totalMaleChart_weekly.getData().clear();
-        // Utilizando la función WEEK() para agrupar por semana
-        String sql = "SELECT WEEK(fechaEntrada), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY WEEK(fechaEntrada) ORDER BY WEEK(fechaEntrada) ASC LIMIT 5";
+    public void DisplayEnrolledMaleChart_quarter() {
+        totalMaleChart_quarter.getData().clear();
+        // Utilizando la función QUARTER() para agrupar por trimestre
+        String sql = "SELECT QUARTER(fechaEntrada), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY QUARTER(fechaEntrada) ORDER BY QUARTER(fechaEntrada) DESC LIMIT 5";
 
-        try (Connection connect = database.connectDb();
-             PreparedStatement prepare = connect.prepareStatement(sql);
-             ResultSet result = prepare.executeQuery()) {
+        try (Connection connect = database.connectDb(); PreparedStatement prepare = connect.prepareStatement(sql); ResultSet result = prepare.executeQuery()) {
 
             XYChart.Series chart = new XYChart.Series();
             chart.setName("Hombres");
 
             while (result.next()) {
-                // Puedes personalizar la presentación de la semana según tus necesidades
-                String semana = "Semana " + result.getString(1);
-                chart.getData().add(new XYChart.Data<>(semana, result.getInt(2)));
+                // Puedes personalizar la presentación del trimestre según tus necesidades
+                String trimestre = "Trimestre " + result.getString(1);
+                chart.getData().add(new XYChart.Data<>(trimestre, result.getInt(2)));
             }
 
-            totalMaleChart_weekly.getData().add(chart);
+            totalMaleChart_quarter.getData().add(chart);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-   
-    public void DisplayTotalEnrolledChart_monthly() {
-        totalEnrolledChart_monthly.getData().clear();
 
-        // Utilizando la función MONTH() para agrupar por mes
-        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(*) FROM historial GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
+    public void DisplayTotalEnrolledChart_semestre() {
+        totalEnrolledChart_semestre.getData().clear();
 
-        try (Connection connect = database.connectDb();
-             PreparedStatement prepare = connect.prepareStatement(sql);
-             ResultSet result = prepare.executeQuery()) {
+        // Utilizando la función MONTH() y expresiones CASE para calcular el semestre
+        String sql = "SELECT CASE WHEN MONTH(fechaEntrada) <= 6 THEN '1er Semestre' ELSE '2do Semestre' END AS Semestre, COUNT(*) FROM historial GROUP BY Semestre DESC";
+
+        try (Connection connect = database.connectDb(); PreparedStatement prepare = connect.prepareStatement(sql); ResultSet result = prepare.executeQuery()) {
 
             XYChart.Series chart = new XYChart.Series();
 
             while (result.next()) {
-                // Puedes personalizar la presentación del mes según tus necesidades
-                String mes = "Mes " + result.getString(1);
-                chart.getData().add(new XYChart.Data<>(mes, result.getInt(2)));
+                // Puedes personalizar la presentación del semestre según tus necesidades
+                String semestre = result.getString(1);
+                chart.getData().add(new XYChart.Data<>(semestre, result.getInt(2)));
             }
 
-            totalEnrolledChart_monthly.getData().add(chart);
+            totalEnrolledChart_semestre.getData().add(chart);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void DisplayFemaleEnrolledChart_monthly() {
-        totalFemaleChart_monthly.getData().clear();
+    public void DisplayFemaleEnrolledChart_semestre() {
+        totalFemaleChart_semestre.getData().clear();
 
-        // Utilizando la función MONTH() para agrupar por mes
-        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
+        // Utilizando la función QUARTER() y YEAR() para agrupar por semestre
+        String sql = "SELECT CONCAT(YEAR(fechaEntrada), '-S', QUARTER(fechaEntrada)), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY YEAR(fechaEntrada), QUARTER(fechaEntrada) ORDER BY YEAR(fechaEntrada) DESC, QUARTER(fechaEntrada) DESC";
 
-        try (Connection connect = database.connectDb();
-             PreparedStatement prepare = connect.prepareStatement(sql);
-             ResultSet result = prepare.executeQuery()) {
+        try (Connection connect = database.connectDb(); PreparedStatement prepare = connect.prepareStatement(sql); ResultSet result = prepare.executeQuery()) {
 
             XYChart.Series chart = new XYChart.Series();
             chart.setName("Mujeres");
 
             while (result.next()) {
-                // Puedes personalizar la presentación del mes según tus necesidades
-                String mes = "Mes " + result.getString(1);
-                chart.getData().add(new XYChart.Data<>(mes, result.getInt(2)));
+                // Puedes personalizar la presentación del semestre según tus necesidades
+                String semestre = "Semestre " + result.getString(1);
+                chart.getData().add(new XYChart.Data<>(semestre, result.getInt(2)));
             }
 
-            totalFemaleChart_monthly.getData().add(chart);
+            totalFemaleChart_semestre.getData().add(chart);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void DisplayEnrolledMaleChart_monthly() {
-        totalMaleChart_monthly.getData().clear();
+    public void DisplayEnrolledMaleChart_semestre() {
+        totalMaleChart_semestre.getData().clear();
 
-        // Utilizando la función MONTH() para agrupar por mes
-        String sql = "SELECT DATE_FORMAT(fechaEntrada, '%Y-%m'), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY DATE_FORMAT(fechaEntrada, '%Y-%m') ORDER BY DATE_FORMAT(fechaEntrada, '%Y-%m') ASC";
+        // Utilizando la función QUARTER() y YEAR() para agrupar por semestre
+        String sql = "SELECT CONCAT(YEAR(fechaEntrada), '-S', QUARTER(fechaEntrada)), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY YEAR(fechaEntrada), QUARTER(fechaEntrada) ORDER BY YEAR(fechaEntrada) DESC, QUARTER(fechaEntrada) DESC";
 
-        try (Connection connect = database.connectDb();
-             PreparedStatement prepare = connect.prepareStatement(sql);
-             ResultSet result = prepare.executeQuery()) {
+        try (Connection connect = database.connectDb(); PreparedStatement prepare = connect.prepareStatement(sql); ResultSet result = prepare.executeQuery()) {
 
             XYChart.Series chart = new XYChart.Series();
             chart.setName("Hombres");
 
             while (result.next()) {
-                // Puedes personalizar la presentación del mes según tus necesidades
-                String mes = "Mes " + result.getString(1);
-                chart.getData().add(new XYChart.Data<>(mes, result.getInt(2)));
+                // Puedes personalizar la presentación del semestre según tus necesidades
+                String semestre = "Semestre " + result.getString(1);
+                chart.getData().add(new XYChart.Data<>(semestre, result.getInt(2)));
             }
 
-            totalMaleChart_monthly.getData().add(chart);
+            totalMaleChart_semestre.getData().add(chart);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     //Función para aparecer las graficas individuales de cada carrera
-    public void navigationCarrersChartButton(){
-        if(IDIN_chart_btn.isFocused()){
+    public void navigationCarrersChartButton() {
+        if (IDIN_chart_btn.isFocused()) {
             SetFalsePieChartsCareersFM();
             idinPieChart_AP.setVisible(true);
 
             DisplayCareersFemaleMalePieChart("INGENIERIA EN DISEÑO INDUSTRIAL", totalFemaleMaleIDIN_chart);
-            
+
             analysisCareers_pieChart.setVisible(false);
             legendFemaleMale.setVisible(true);
-            
+
             DisplayStyleButtonsCareers();
             IDIN_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #0D111B, #364774);");
-         
-        } else if(ADM_chart_btn.isFocused()){
+
+        } else if (ADM_chart_btn.isFocused()) {
             SetFalsePieChartsCareersFM();
             admPieChart_AP.setVisible(true);
 
             DisplayCareersFemaleMalePieChart("LICENCIATURA EN ADMINISTRACION", totalFemaleMaleADM_chart);
-            
+
             analysisCareers_pieChart.setVisible(false);
             legendFemaleMale.setVisible(true);
-            
+
             DisplayStyleButtonsCareers();
             ADM_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #23164C, #4B30A3);");
-            
-        } else if(ISC_chart_btn.isFocused()){
+
+        } else if (ISC_chart_btn.isFocused()) {
             SetFalsePieChartsCareersFM();
             iscPieChart_AP.setVisible(true);
 
             DisplayCareersFemaleMalePieChart("INGENIERIA EN SISTEMAS COMPUTACIONALES", totalFemaleMaleISC_chart);
-            
+
             analysisCareers_pieChart.setVisible(false);
             legendFemaleMale.setVisible(true);
-            
+
             DisplayStyleButtonsCareers();
             ISC_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #2A435B, #5284B2);");
-            
-        } else if(IINF_chart_btn.isFocused()){
+
+        } else if (IINF_chart_btn.isFocused()) {
             SetFalsePieChartsCareersFM();
             iinfPieChart_AP.setVisible(true);
 
             DisplayCareersFemaleMalePieChart("INGENIERIA INFORMATICA", totalFemaleMaleIINF_chart);
-            
+
             analysisCareers_pieChart.setVisible(false);
             legendFemaleMale.setVisible(true);
-            
+
             DisplayStyleButtonsCareers();
             IINF_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #092615, #1F7C46);");
-            
-        } else if(IIND_chart_btn.isFocused()){
+
+        } else if (IIND_chart_btn.isFocused()) {
             SetFalsePieChartsCareersFM();
             iindPieChart_AP.setVisible(true);
 
             DisplayCareersFemaleMalePieChart("INGENIERIA INDUSTRIAL", totalFemaleMaleIIND_chart);
-            
+
             analysisCareers_pieChart.setVisible(false);
             legendFemaleMale.setVisible(true);
-            
+
             DisplayStyleButtonsCareers();
             IIND_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #847C24, #DCCE3C);");
-            
-        } else if(IGE_chart_btn.isFocused()){
+
+        } else if (IGE_chart_btn.isFocused()) {
             SetFalsePieChartsCareersFM();
             igePieChart_AP.setVisible(true);
 
             DisplayCareersFemaleMalePieChart("INGENIERIA EN GESTION EMPRESARIAL", totalFemaleMaleIGE_chart);
-            
+
             analysisCareers_pieChart.setVisible(false);
             legendFemaleMale.setVisible(true);
-            
+
             DisplayStyleButtonsCareers();
             IGE_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #7A3E25, #D1693E);");
-            
-        } else if(ARQ_chart_btn.isFocused()){
+
+        } else if (ARQ_chart_btn.isFocused()) {
             SetFalsePieChartsCareersFM();
             arquiPieChart_AP.setVisible(true);
 
             DisplayCareersFemaleMalePieChart("ARQUITECTURA", totalFemaleMaleARQ_chart);
-            
+
             analysisCareers_pieChart.setVisible(false);
             legendFemaleMale.setVisible(true);
-            
+
             DisplayStyleButtonsCareers();
             ARQ_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #401312, #972D2A);");
-            
+
         }
-        
+
     }
-    
+
+    /*  -------- GENERAR REPORTES --------*/
     @Override
-    public void initialize(URL location, ResourceBundle resources){
+    public void initialize(URL location, ResourceBundle resources) {
         displayUsername();
         defaultNav();
-             
+
         homeDisplayTotalEnrolledStudents();
         homeDisplayMaleEnrolled();
         homeDisplayFemaleEnrolled();
         DisplayDailyChartHome();
-                
-        DisplayCareersPieChart();            
+
+        DisplayCareersPieChart();
         DisplayEnrolledMaleChart_daily();
         DisplayFemaleEnrolledChart_daily();
         DisplayTotalEnrolledChart_daily();
-        DisplayEnrolledMaleChart_weekly();
-        DisplayFemaleEnrolledChart_weekly();
-        DisplayTotalEnrolledChart_weekly();
-        DisplayEnrolledMaleChart_monthly();
-        DisplayFemaleEnrolledChart_monthly();
-        DisplayTotalEnrolledChart_monthly();
+        DisplayEnrolledMaleChart_quarter();
+        DisplayFemaleEnrolledChart_quarter();
+        DisplayTotalEnrolledChart_quarter();
+        DisplayEnrolledMaleChart_semestre();
+        DisplayFemaleEnrolledChart_semestre();
+        DisplayTotalEnrolledChart_semestre();
         // To show inmediately when we proceed to dashboard application form
         addStudentsShowListData();
-        
 
     }
-    
+
     //ESTILOS DE LOS BOTONES DE LAS CARRERAS
-    public void IDINButtonStyle(){
+    public void IDINButtonStyle() {
         IDIN_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #364774, #607CC8);");
     }
-    
-    public void ADMButtonStyle(){
+
+    public void ADMButtonStyle() {
         ADM_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #4B30A3, #6D74E5);");
     }
-    
-    public void ISCButtonStyle(){
+
+    public void ISCButtonStyle() {
         ISC_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #5284B2, #96DEFA);");
     }
-    
-    public void IINFButtonStyle(){
+
+    public void IINFButtonStyle() {
         IINF_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #1F7C46, #33D577);");
     }
-    
-    public void IINDButtonStyle(){
+
+    public void IINDButtonStyle() {
         IIND_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #DCCE3C, #FFF45D);");
     }
-    
-    public void IGEButtonStyle(){
+
+    public void IGEButtonStyle() {
         IGE_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #D1693E, #FF933E);");
     }
-    
-    public void ARQButtonStyle(){
+
+    public void ARQButtonStyle() {
         ARQ_chart_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #972D2A, #FF4A47);");
     }
-    
-    public void DisplayStyleButtonsCareers(){
+
+    public void DisplayStyleButtonsCareers() {
         IDINButtonStyle();
         ADMButtonStyle();
         ISCButtonStyle();
@@ -1281,9 +1285,9 @@ public class dashboardController implements Initializable {
         IGEButtonStyle();
         ARQButtonStyle();
     }
-    
+
     //Función para desplegar en cada etiqueta correspondiente cuantos alumnos ingresaron por carrera
-    public void DisplayLabelsTotalCareers(){
+    public void DisplayLabelsTotalCareers() {
         DisplayTotalByCareer("INGENIERIA EN DISEÑO INDUSTRIAL", totalIDIN);
         DisplayTotalByCareer("INGENIERIA INDUSTRIAL", totalIIND);
         DisplayTotalByCareer("INGENIERIA EN SISTEMAS COMPUTACIONALES", totalISC);
@@ -1292,8 +1296,8 @@ public class dashboardController implements Initializable {
         DisplayTotalByCareer("INGENIERIA EN GESTION EMPRESARIAL", totalIGE);
         DisplayTotalByCareer("ARQUITECTURA", totalARQ);
     }
-    
-    public void SetFalsePieChartsCareersFM(){
+
+    public void SetFalsePieChartsCareersFM() {
         idinPieChart_AP.setVisible(false);
         admPieChart_AP.setVisible(false);
         iscPieChart_AP.setVisible(false);

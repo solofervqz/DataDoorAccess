@@ -19,6 +19,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.dashboardController">
    <children>
@@ -102,6 +103,11 @@
                                     <Font name="Tahoma" size="15.0" />
                                  </font>
                               </Label>
+                              <Button fx:id="addReporte_btn" layoutX="15.0" layoutY="310.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Generar Reporte">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="WHITE" glyphName="PRINT" size="1.5em" />
+                                 </graphic>
+                              </Button>
                            </children>
                         </AnchorPane>
                      </children>
@@ -200,14 +206,14 @@
                                           <FontAwesomeIcon glyphName="SEARCH" layoutX="21.0" layoutY="45.0" size="1.5em" />
                                           <TableView fx:id="addStudents_tableView" layoutX="21.0" layoutY="72.0" onMouseClicked="#addStudentsSelect" prefHeight="512.0" prefWidth="1030.0">
                                             <columns>
-                                              <TableColumn fx:id="addStudents_col_noControl" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" resizable="false" text="N° Control" />
-                                              <TableColumn fx:id="addStudents_col_nombre" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" text="Nombre" />
-                                                <TableColumn fx:id="addStudents_col_apellidoPaterno" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Apellido Paterno" />
-                                                <TableColumn fx:id="addStudents_col_apellidoMaterno" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Apellido Materno" />
-                                                <TableColumn fx:id="addStudents_col_carrera" maxWidth="230.0" minWidth="230.0" prefWidth="230.0" text="Carrera" />
-                                                <TableColumn fx:id="addStudents_col_genero" maxWidth="105.0" minWidth="105.0" prefWidth="105.0" resizable="false" text="Sexo" />
-                                                <TableColumn fx:id="addStudents_col_fechaEntrada" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="fechaEntrada" />
-                                                <TableColumn fx:id="addStudents_col_horaEntrada" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="horaEntrada" />
+                                              <TableColumn fx:id="addStudents_col_noControl" editable="false" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" resizable="false" sortable="false" text="N° Control" />
+                                              <TableColumn fx:id="addStudents_col_nombre" editable="false" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" sortable="false" text="Nombre" />
+                                                <TableColumn fx:id="addStudents_col_apellidoPaterno" editable="false" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Apellido Paterno" />
+                                                <TableColumn fx:id="addStudents_col_apellidoMaterno" editable="false" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Apellido Materno" />
+                                                <TableColumn fx:id="addStudents_col_carrera" editable="false" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" sortable="false" text="Carrera" />
+                                                <TableColumn fx:id="addStudents_col_genero" editable="false" maxWidth="80.0" minWidth="80.0" resizable="false" sortable="false" text="Sexo" />
+                                                <TableColumn fx:id="addStudents_col_fechaEntrada" editable="false" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" sortable="false" text="fechaEntrada" />
+                                                <TableColumn fx:id="addStudents_col_horaEntrada" editable="false" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" sortable="false" text="horaEntrada" />
                                             </columns>
                                           </TableView>
                                           <TextField fx:id="addStudents_noControl" layoutX="17.0" layoutY="24.0" prefHeight="30.0" prefWidth="234.0" styleClass="textfield" stylesheets="@dashboardDesign.css" />
@@ -236,7 +242,7 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="weekly_chart_btn" layoutX="3.0" layoutY="66.0" mnemonicParsing="false" onAction="#navigationChartButton" prefHeight="35.0" prefWidth="107.0" styleClass="chart-Button" stylesheets="@dashboardDesign.css" text="Semanal" textFill="WHITE">
+                                          <Button fx:id="quarter_chart_btn" layoutX="3.0" layoutY="66.0" mnemonicParsing="false" onAction="#navigationChartButton" prefHeight="35.0" prefWidth="107.0" styleClass="chart-Button" stylesheets="@dashboardDesign.css" text="Trimestre" textFill="WHITE">
                                              <graphic>
                                                 <FontAwesomeIcon fill="WHITE" glyphName="AREA_CHART" size="1.5em" />
                                              </graphic>
@@ -244,7 +250,7 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Button>
-                                          <Button fx:id="monthly_chart_btn" layoutX="3.0" layoutY="117.0" mnemonicParsing="false" onAction="#navigationChartButton" prefHeight="35.0" prefWidth="107.0" styleClass="chart-Button" stylesheets="@dashboardDesign.css" text="Mensual" textFill="WHITE">
+                                          <Button fx:id="semestre_chart_btn" layoutX="3.0" layoutY="117.0" mnemonicParsing="false" onAction="#navigationChartButton" prefHeight="35.0" prefWidth="107.0" styleClass="chart-Button" stylesheets="@dashboardDesign.css" text="Semestre" textFill="WHITE">
                                              <graphic>
                                                 <FontAwesomeIcon fill="WHITE" glyphName="BAR_CHART" size="1.5em" />
                                              </graphic>
@@ -254,7 +260,7 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="analysis_Careers" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0">
+                                    <AnchorPane fx:id="analysis_Careers" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0" visible="false">
                                        <children>
                                           <AnchorPane prefHeight="43.0" prefWidth="940.0">
                                              <children>
@@ -551,11 +557,11 @@
                                           </AnchorPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="weekly_charts" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0" visible="false">
+                                    <AnchorPane fx:id="quarter_charts" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0" visible="false">
                                        <children>
                                           <AnchorPane prefHeight="43.0" prefWidth="940.0">
                                              <children>
-                                                <Label layoutX="399.0" layoutY="8.0" text="Análisis Semanal">
+                                                <Label layoutX="392.0" layoutY="8.0" text="Análisis Trimestral">
                                                    <font>
                                                       <Font name="System Bold" size="18.0" />
                                                    </font>
@@ -568,7 +574,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <BarChart fx:id="totalEnrolledChart_weekly" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@barChartGeneral.css" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <BarChart fx:id="totalEnrolledChart_quarter" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@barChartGeneral.css" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -584,7 +590,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <LineChart fx:id="totalFemaleChart_weekly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartFemale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="totalFemaleChart_quarter" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartFemale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -600,7 +606,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <LineChart fx:id="totalMaleChart_weekly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartMale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="totalMaleChart_quarter" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartMale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -612,11 +618,11 @@
                                           </AnchorPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="monthly_charts" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0" visible="false">
+                                    <AnchorPane fx:id="semestre_charts" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0" visible="false">
                                        <children>
                                           <AnchorPane prefHeight="43.0" prefWidth="940.0">
                                              <children>
-                                                <Label layoutX="400.0" layoutY="8.0" text="Análisis Mensual">
+                                                <Label layoutX="394.0" layoutY="8.0" text="Análisis Semestral">
                                                    <font>
                                                       <Font name="System Bold" size="18.0" />
                                                    </font>
@@ -629,7 +635,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <BarChart fx:id="totalEnrolledChart_monthly" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@barChartGeneral.css" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <BarChart fx:id="totalEnrolledChart_semestre" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@barChartGeneral.css" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -645,7 +651,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <LineChart fx:id="totalFemaleChart_monthly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartFemale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="totalFemaleChart_semestre" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartFemale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -661,7 +667,7 @@
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <LineChart fx:id="totalMaleChart_monthly" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartMale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <LineChart fx:id="totalMaleChart_semestre" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartMale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -674,6 +680,23 @@
                                        </children>
                                     </AnchorPane>
                                  </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="reporte_form" prefHeight="636.0" prefWidth="1100.0" visible="false">
+                           <children>
+                              <AnchorPane layoutX="11.0" layoutY="20.0" prefHeight="601.0" prefWidth="1073.0" stylesheets="@dashboardDesign.css">
+                                 <children>
+                                    <AnchorPane prefHeight="600.0" prefWidth="1073.0">
+                                       <children>
+                                          <Text layoutX="524.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hola" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white-bg" />
+                                 </styleClass>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
