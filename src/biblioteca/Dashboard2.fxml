@@ -216,7 +216,7 @@
                                                 <TableColumn fx:id="addStudents_col_horaEntrada" editable="false" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" sortable="false" text="horaEntrada" />
                                             </columns>
                                           </TableView>
-                                          <TextField fx:id="addStudents_noControl" layoutX="17.0" layoutY="24.0" prefHeight="30.0" prefWidth="234.0" styleClass="textfield" stylesheets="@dashboardDesign.css" />
+                                          <TextField fx:id="addStudents_noControl" layoutX="17.0" layoutY="24.0" onKeyReleased="#txtFieldAddStudentKeyReleased" prefHeight="30.0" prefWidth="234.0" styleClass="textfield" stylesheets="@dashboardDesign.css" />
                                           <Button fx:id="addStudents_addBtn" layoutX="260.0" layoutY="26.0" mnemonicParsing="false" onAction="#addStudentsAdd" prefHeight="26.0" prefWidth="130.0" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Añadir estudiante" />
                                        </children>
                                     </AnchorPane>

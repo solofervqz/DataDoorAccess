@@ -42,6 +42,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -769,7 +770,7 @@ public class dashboardController implements Initializable {
             if (!result.next()) { // Si el número de control no se encuentra en la base de datos
                 if (numeroControl.length() == 9) { // Si ya hemos añadido sufijos
                     // Mostrar mensaje de advertencia y limpiar campos
-                    System.out.println("El número de control no se encuentra en la base de datos.");
+                    //System.out.println("El número de control no se encuentra en la base de datos.");
                     return;
                 } else {
                     // Intentar con el siguiente prefijo
@@ -784,7 +785,7 @@ public class dashboardController implements Initializable {
             // Manejar cualquier excepción SQL que pueda ocurrir
             e.printStackTrace();
             // Mostrar un mensaje de error
-            System.out.println("Se produjo un error al intentar agregar el estudiante.");
+            //System.out.println("Se produjo un error al intentar agregar el estudiante.");
         }
     }
 
@@ -833,6 +834,13 @@ public class dashboardController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+    
+    //Método para llamar a la función addStudentsAdd cuando se presione la tecla enter
+    public void txtFieldAddStudentKeyReleased(KeyEvent event){
+        if(event.getCode() == event.getCode().ENTER){
+            addStudentsAdd();
+        }
     }
 
     /*  -------- DATA ANALYSIS --------*/
