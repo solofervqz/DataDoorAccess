@@ -4,6 +4,7 @@
  */
 package biblioteca;
 
+import com.itextpdf.text.BadElementException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,6 +47,26 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import javafx.scene.control.Alert.AlertType;
+
+
+import com.itextpdf.text.pdf.PdfPageEvent;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  * FXML Controller class
  *
@@ -250,6 +271,9 @@ public class dashboardController implements Initializable {
 
     @FXML
     private Button ARQ_chart_btn;
+
+    @FXML
+    private Button reportePDF_btn;
 
     @FXML
     private AnchorPane daily_charts;
@@ -754,7 +778,7 @@ public class dashboardController implements Initializable {
         prepare.executeUpdate();
         /*
         // Mostrar un mensaje de éxito
-        System.out.println("¡Agregado exitosamente!");
+        //System.out.println("¡Agregado exitosamente!");
          */
     }
 
@@ -769,7 +793,7 @@ public class dashboardController implements Initializable {
             if (!result.next()) { // Si el número de control no se encuentra en la base de datos
                 if (numeroControl.length() == 9) { // Si ya hemos añadido sufijos
                     // Mostrar mensaje de advertencia y limpiar campos
-                    System.out.println("El número de control no se encuentra en la base de datos.");
+                    //System.out.println("El número de control no se encuentra en la base de datos.");
                     return;
                 } else {
                     // Intentar con el siguiente prefijo
@@ -784,7 +808,7 @@ public class dashboardController implements Initializable {
             // Manejar cualquier excepción SQL que pueda ocurrir
             e.printStackTrace();
             // Mostrar un mensaje de error
-            System.out.println("Se produjo un error al intentar agregar el estudiante.");
+            //System.out.println("Se produjo un error al intentar agregar el estudiante.");
         }
     }
 
@@ -1222,6 +1246,303 @@ public class dashboardController implements Initializable {
     }
 
     /*  -------- GENERAR REPORTES --------*/
+        public void reportePDF() throws BadElementException, IOException, SQLException {
+    Document documento = new Document();
+
+    try {
+        String ruta = System.getProperty("user.home");
+        PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ReportePrueba.pdf"));
+        documento.open();
+
+        //Agregar una imagen al documento
+        String rutaImagen = "C:\\Users\\bombo\\Desktop\\BiblioTec\\src\\reporte\\header.png"; // Reemplaza con la ruta de tu imagen
+        Image imagen = Image.getInstance(rutaImagen);
+        imagen.scaleAbsolute(500f, 70f);
+        imagen.setAlignment(Element.ALIGN_TOP); // Alinea la imagen en la parte superior
+        documento.add(imagen);
+
+        //Crear un párrafo con el texto deseado
+        Font font = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+        Paragraph header = new Paragraph("\n\n\n\n Instituto Tecnológico de Chihuahua II \n\n", font);
+        header.setAlignment(Element.ALIGN_RIGHT); // Alinea la imagen en la parte inferior
+        //Agregar el párrafo al documento
+        documento.add(header);
+
+        Paragraph alumno = new Paragraph("CENTRO DE INFORMACIÓN \n\n", font);
+        alumno.setAlignment(Element.ALIGN_CENTER); // Alinea la imagen en la parte inferior
+        documento.add(alumno);
+        
+            connect = database.connectDb();
+
+        // Consulta SQL para obtener el total de entradas por mes y género
+        String sql = "SELECT DATE_FORMAT(h.fechaEntrada, '%Y-%m-%d') as mes, a.genero, COUNT(*) as total " +
+                          "FROM historial h " +
+                          "JOIN alumnos a ON h.noControl = a.noControl " +
+                          "GROUP BY mes, a.genero";
+
+
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+        // Crear la tabla en el documento PDF
+        PdfPTable tabla = new PdfPTable(3); // 3 columnas: mes, mujeres, hombres
+        tabla.setWidthPercentage(100);
+
+        // Encabezados de la tabla
+        tabla.addCell("Mes");
+        tabla.addCell("Mujeres");
+        tabla.addCell("Hombres");
+
+        // Llenar la tabla con los resultados de la consulta
+        while (result.next()) {
+            String mes = result.getString("mes");
+            String genero = result.getString("genero");
+            int total = result.getInt("total");
+
+            // Agregar los datos a la tabla
+            PdfPCell cellMes = new PdfPCell(new Phrase(String.valueOf(mes)));
+            PdfPCell cellMujeres = new PdfPCell(new Phrase(genero.equals("F") ? String.valueOf(total) : ""));
+            PdfPCell cellHombres = new PdfPCell(new Phrase(genero.equals("M") ? String.valueOf(total) : ""));
+
+            tabla.addCell(cellMes);
+            tabla.addCell(cellMujeres);
+            tabla.addCell(cellHombres);
+        }
+
+        // Cerrar la conexión a la base de datos
+        connect.close();
+
+        // Agregar la tabla al documento
+        documento.add(tabla);
+
+        
+
+        
+        
+        
+        
+        
+        
+        
+        //Agregar otra imagen al final del documento
+        String rutaImagenAbajo = "C:\\Users\\bombo\\Desktop\\BiblioTec\\src\\reporte\\footer.png"; // Reemplaza con la ruta de tu imagen inferior
+        Image imagenAbajo = Image.getInstance(rutaImagenAbajo);
+        imagenAbajo.scaleAbsolute(500f, 80f);
+        imagenAbajo.setAlignment(Element.ALIGN_BOTTOM); // Alinea la imagen en la parte inferior
+        documento.add(imagenAbajo);
+
+        documento.close();
+
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("biblioTec Message");
+        alert.setHeaderText(null);
+        alert.setContentText("Reporte creado.");
+        alert.showAndWait();
+    } catch (DocumentException | FileNotFoundException e) {
+        e.printStackTrace(); // Manejar excepciones adecuadamente en tu aplicación
+    }
+}
+        
+// Agregar esta clase interna para manejar eventos de página
+/*    private static class HeaderFooterEvent extends PdfPageEventHelper {
+        @Override
+        public void onStartPage(PdfWriter writer, Document document) {
+            // Agregar aquí el contenido del encabezado en cada página
+            // Puedes ajustar la posición y el contenido según tus necesidades
+            // Ejemplo:
+            PdfPTable headerTable = new PdfPTable(1);
+            headerTable.addCell("Encabezado");
+            try {
+                document.add(headerTable);
+            } catch (DocumentException ex) {
+            }
+        }
+
+        @Override
+        public void onEndPage(PdfWriter writer, Document document) {
+            // Agregar aquí el contenido del pie de página en cada página
+            // Puedes ajustar la posición y el contenido según tus necesidades
+            // Ejemplo:
+            PdfPTable footerTable = new PdfPTable(1);
+            footerTable.addCell("Pie de página");
+            try {
+                document.add(footerTable);
+            } catch (DocumentException ex) {
+            }
+        }
+    }
+
+    public void reportePDF() throws BadElementException, IOException {
+        Document documento = new Document();
+
+        try {
+            String ruta = System.getProperty("user.home");
+            PdfWriter writer = PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ReportePrueba.pdf"));
+
+            // Agregar el evento para el encabezado y el pie de página
+            HeaderFooterEvent event = new HeaderFooterEvent();
+            writer.setPageEvent(event);
+
+            documento.open();
+
+        //Crear un párrafo con el texto deseado
+        Font font = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+        Paragraph header = new Paragraph("\n\n\n\n Instituto Tecnológico de Chihuahua II \n\n", font);
+        header.setAlignment(Element.ALIGN_RIGHT); // Alinea la imagen en la parte inferior
+        //Agregar el párrafo al documento
+        documento.add(header);
+
+            documento.close();
+
+            // Resto de tu código...
+        } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace(); // Manejar excepciones adecuadamente en tu aplicación
+        }
+    }
+    
+*/    
+/*    public void reportePDF() throws BadElementException, IOException {
+    Document documento = new Document();
+
+    try {
+        String ruta = System.getProperty("user.home");
+        PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ReportePrueba.pdf"));
+        documento.open();
+
+        //Agregar una imagen al documento
+        String rutaImagen = "C:\\Users\\bombo\\Desktop\\BiblioTec\\src\\reporte\\header.png"; // Reemplaza con la ruta de tu imagen
+        Image imagen = Image.getInstance(rutaImagen);
+        imagen.scaleAbsolute(500f, 70f);
+        imagen.setAlignment(Element.ALIGN_TOP); // Alinea la imagen en la parte superior
+        documento.add(imagen);
+
+        //Crear un párrafo con el texto deseado
+        Font font = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+        Paragraph header = new Paragraph("\n\n\n\n Instituto Tecnológico de Chihuahua II \n\n", font);
+        header.setAlignment(Element.ALIGN_RIGHT); // Alinea la imagen en la parte inferior
+        //Agregar el párrafo al documento
+        documento.add(header);
+
+        Paragraph alumno = new Paragraph("CENTRO DE INFORMACIÓN \n\n", font);
+        alumno.setAlignment(Element.ALIGN_CENTER); // Alinea la imagen en la parte inferior
+        documento.add(alumno);
+        
+        
+                        
+        PdfPTable tabla = new PdfPTable(3);
+        tabla.addCell("noControl");
+        tabla.addCell("fechaEntrada");
+        tabla.addCell("horaEntrada");
+
+        try {
+            connect = database.connectDb();
+
+            String sql = "select * from historial";
+
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            if (result.next()) {
+                do {
+                    tabla.addCell(result.getString(2));
+                    tabla.addCell(result.getString(3));
+                    tabla.addCell(result.getString(4));
+
+                } while (result.next());
+
+                // Agregar la tabla al documento
+                documento.add(tabla);
+            }
+        } catch (DocumentException | SQLException e) {
+            e.printStackTrace(); // Manejar excepciones adecuadamente en tu aplicación
+        }
+
+        //Agregar otra imagen al final del documento
+        String rutaImagenAbajo = "C:\\Users\\bombo\\Desktop\\BiblioTec\\src\\reporte\\footer.png"; // Reemplaza con la ruta de tu imagen inferior
+        Image imagenAbajo = Image.getInstance(rutaImagenAbajo);
+        imagenAbajo.scaleAbsolute(500f, 80f);
+        imagenAbajo.setAlignment(Element.ALIGN_BOTTOM); // Alinea la imagen en la parte inferior
+        documento.add(imagenAbajo);
+
+        documento.close();
+
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("biblioTec Message");
+        alert.setHeaderText(null);
+        alert.setContentText("Reporte creado.");
+        alert.showAndWait();
+    } catch (DocumentException | FileNotFoundException e) {
+        e.printStackTrace(); // Manejar excepciones adecuadamente en tu aplicación
+    }
+}
+*/
+     
+/*        public void reportePDF() {
+            Document documento = new Document();
+            
+            try{
+                String ruta = System.getProperty("user.home");
+                PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ReportePrueba.pdf"));
+                documento.open();
+                
+                PdfPTable tabla = new PdfPTable(3);
+                tabla.addCell("noControl");
+                //tabla.addCell("apellidoPaterno");
+                //tabla.addCell("apellidoMaterno");
+                //tabla.addCell("nombre");
+                //tabla.addCell("carrera");
+               // tabla.addCell("genero");
+                tabla.addCell("fechaEntrada");
+                tabla.addCell("horaEntrada");
+                
+                try {
+                    connect = database.connectDb();
+
+                    //String sql = "SELECT historial.noControl, historial.fechaEntrada, historial.horaEntrada, alumnos.nombre, alumnos.apellidoPaterno, alumnos.apellidoMaterno, alumnos.carrera, alumnos.genero "
+                      //  + "FROM historial "
+                      //  + "JOIN alumnos ON historial.noControl = alumnos.noControl ORDER BY historial.fechaEntrada ASC, historial.horaEntrada ASC";
+                    
+                    String sql = "select * from historial";
+                   
+                    prepare = connect.prepareStatement(sql);
+                    result = prepare.executeQuery();
+                    
+                    if(result.next()){
+                        do{
+                            tabla.addCell(result.getString(2));
+                            tabla.addCell(result.getString(3));
+                            tabla.addCell(result.getString(4));
+                            
+                            
+                    //    tabla.addCell(result.getString("noControl"));
+                    //    tabla.addCell(result.getString("nombre"));
+                    //    tabla.addCell(result.getString("apellidoPaterno"));
+                    //    tabla.addCell(result.getString("apellidoMaterno"));
+                    //    tabla.addCell(result.getString("carrera"));
+                    //   tabla.addCell(result.getString("genero"));
+                    //    tabla.addCell(result.getDate("fechaEntrada"));
+                    //    LocalTime.parse(result.getString("horaEntrada"));
+                        } while (result.next());
+                        documento.add(tabla);
+                    }
+                } catch (DocumentException | SQLException e){
+                }
+                documento.close();
+                
+                Alert alert = new Alert(AlertType.INFORMATION);
+
+                        alert.setTitle("biblioTec Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Reporte creado.");
+                        alert.showAndWait();
+            } catch (DocumentException | FileNotFoundException e){
+            
+            }
+            
+            //reportePDF_btn
+    }
+*/
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         displayUsername();
