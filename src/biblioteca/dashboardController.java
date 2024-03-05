@@ -43,6 +43,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -857,6 +858,13 @@ public class dashboardController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+    
+    //Método para llamar a la función addStudentsAdd cuando se presione la tecla enter
+    public void txtFieldAddStudentKeyReleased(KeyEvent event){
+        if(event.getCode() == event.getCode().ENTER){
+            addStudentsAdd();
+        }
     }
 
     /*  -------- DATA ANALYSIS --------*/
