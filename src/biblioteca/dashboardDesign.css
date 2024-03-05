@@ -164,21 +164,93 @@
     -fx-background-color:linear-gradient(to bottom right, #133075, #6e6e96);  
 }
 
+/*BOTONES CARRERAS*/
 
+/*Botón Diseño industrial*/
+.IDIN-Button{
+    -fx-background-color:linear-gradient(to bottom right, #364774, #607CC8);   
+    -fx-cursor:hand;
+}
 
+/*Botón Administración*/
+.ADM-Button{
+    -fx-background-color:linear-gradient(to bottom right, #4B30A3, #6D74E5);   
+    -fx-cursor:hand;
+}
 
+/*Botón Sistemas*/
+.ISC-Button{
+    -fx-background-color:linear-gradient(to bottom right, #5284B2, #96DEFA);   
+    -fx-cursor:hand;
+}
 
+/*Botón Informática*/
+.IINF-Button{
+    -fx-background-color:linear-gradient(to bottom right, #1F7C46, #33D577);;   
+    -fx-cursor:hand;
+}
 
+/*Botón Ingeniería industrial*/
+.IIND-Button{
+    -fx-background-color:linear-gradient(to bottom right, #DCCE3C, #FFF45D);;   
+    -fx-cursor:hand;
+}
 
+/*Botón Gestión empresarial*/
+.IGE-Button{
+    -fx-background-color:linear-gradient(to bottom right, #D1693E, #FF933E);   
+    -fx-cursor:hand;
+}
 
+/*Botón Arquitectura*/
+.ARQ-Button{
+    -fx-background-color:linear-gradient(to bottom right, #972D2A, #FF4A47);;   
+    -fx-cursor:hand;
+}
 
+/*ETIQUETAS CARRERAS*/
 
+/*Etiqueta Diseño industrial*/
+.IDIN-Lable{
+    -fx-background-color:linear-gradient(to bottom right, #364774, #607CC8);   
+    -fx-background-radius:10px;
+}
 
+/*Etiqueta Administración*/
+.ADM-Lable{
+    -fx-background-color:linear-gradient(to bottom right, #4B30A3, #6D74E5);   
+    -fx-background-radius:10px;
+}
 
+/*Etiqueta Sistemas*/
+.ISC-Lable{
+    -fx-background-color:linear-gradient(to bottom right, #5284B2, #96DEFA);   
+    -fx-background-radius:10px;
+}
 
+/*Etiqueta Informática*/
+.IINF-Lable{
+    -fx-background-color:linear-gradient(to bottom right, #1F7C46, #33D577);;   
+    -fx-background-radius:10px;
+}
 
+/*Etiqueta Ingeniería industrial*/
+.IIND-Lable{
+    -fx-background-color:linear-gradient(to bottom right, #DCCE3C, #FFF45D);;   
+    -fx-background-radius:10px;
+}
 
+/*Etiqueta Gestión empresarial*/
+.IGE-Lable{
+    -fx-background-color:linear-gradient(to bottom right, #D1693E, #FF933E);   
+    -fx-background-radius:10px;
+}
 
+/*Etiqueta Arquitectura*/
+.ARQ-Lable{
+    -fx-background-color:linear-gradient(to bottom right, #972D2A, #FF4A47);;   
+    -fx-background-radius:10px;
+}
 
 
 /*  -------- ALUMNOS --------*/
