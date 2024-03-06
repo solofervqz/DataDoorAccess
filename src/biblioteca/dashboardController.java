@@ -454,6 +454,7 @@ public class dashboardController implements Initializable {
             home_btn.setStyle("-fx-background-color:transparent");
             dataAnalysis_btn.setStyle("-fx-background-color:transparent");
             addReporte_btn.setStyle("-fx-background-color:transparent");
+            addStudents_noControl.requestFocus();
 
 //            TO BECOME UPDATED ONCE YOU CLICK THE ADD STUDENTS BUTTON ON NAV
             addStudentsShowListData();
@@ -862,7 +863,7 @@ public class dashboardController implements Initializable {
                 addStudentsShowListData();
                 // TO CLEAR THE FIELDS
                 addStudentsClear();
-
+                addStudents_noControl.requestFocus();
             }
 
         } catch (Exception e) {
