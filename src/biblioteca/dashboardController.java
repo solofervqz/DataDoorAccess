@@ -316,6 +316,8 @@ public class dashboardController implements Initializable {
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
+    
+    int n = 0; //variable de control 
 
     /*  -------- HEADER --------*/
     public void close() {
@@ -747,19 +749,25 @@ public class dashboardController implements Initializable {
     }
 
     /* -----    Metodos recursivos para agregar estudiante a registro -----*/
-    private String agregarPrefijo(String numeroControl) {
-
-        char prefijo = numeroControl.charAt(0);
-        switch (prefijo) {
-            case 'C':
-                return "B" + numeroControl;
-            case 'B':
-                return "M" + numeroControl;
-            case 'M':
-                return "D" + numeroControl;
+    private String agregarPrefijo(String numeroControl, int n) {
+        String prefijo = null;
+        switch (n) {
+            case 1:
+                prefijo = "C";
+                break;
+            case 2:
+                prefijo = "B";
+                break;
+            case 3:
+                prefijo = "M";
+                break;
+            case 4:
+                prefijo = "D";
+                break;
             default:
-                return "C" + numeroControl;
+                break;
         }
+        return prefijo + numeroControl;
     }
 
     private void insertarDatos(String numeroControl) throws SQLException {
@@ -792,18 +800,21 @@ public class dashboardController implements Initializable {
             ResultSet result = checkStatement.executeQuery();
 
             if (!result.next()) { // Si el número de control no se encuentra en la base de datos
-                if (numeroControl.length() == 9) { // Si ya hemos añadido sufijos
-                    // Mostrar mensaje de advertencia y limpiar campos
-                    //System.out.println("El número de control no se encuentra en la base de datos.");
-                    return;
+                n++;
+                if (numeroControl.length() > 8) { // Si el num control tiene más de 8 caracteres
+                    //Toma solo los últimos 8
+                    numeroControl = numeroControl.substring(numeroControl.length() - 8);
+                    String nuevoNumeroControl = agregarPrefijo(numeroControl, n);
+                    verificarInsercion(nuevoNumeroControl);
                 } else {
                     // Intentar con el siguiente prefijo
-                    String nuevoNumeroControl = agregarPrefijo(numeroControl);
+                    String nuevoNumeroControl = agregarPrefijo(numeroControl, n);
                     verificarInsercion(nuevoNumeroControl);
                 }
             } else {
                 // Si el número de control se encuentra en la base de datos, proceder con la inserción
                 insertarDatos(numeroControl);
+                n = 0;
             }
         } catch (SQLException e) {
             // Manejar cualquier excepción SQL que pueda ocurrir
