@@ -316,6 +316,8 @@ public class dashboardController implements Initializable {
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
+    
+    int n = 0; //variable de control 
 
     /*  -------- HEADER --------*/
     public void close() {
@@ -452,6 +454,7 @@ public class dashboardController implements Initializable {
             home_btn.setStyle("-fx-background-color:transparent");
             dataAnalysis_btn.setStyle("-fx-background-color:transparent");
             addReporte_btn.setStyle("-fx-background-color:transparent");
+            addStudents_noControl.requestFocus();
 
 //            TO BECOME UPDATED ONCE YOU CLICK THE ADD STUDENTS BUTTON ON NAV
             addStudentsShowListData();
@@ -747,19 +750,25 @@ public class dashboardController implements Initializable {
     }
 
     /* -----    Metodos recursivos para agregar estudiante a registro -----*/
-    private String agregarPrefijo(String numeroControl) {
-
-        char prefijo = numeroControl.charAt(0);
-        switch (prefijo) {
-            case 'C':
-                return "B" + numeroControl;
-            case 'B':
-                return "M" + numeroControl;
-            case 'M':
-                return "D" + numeroControl;
+    private String agregarPrefijo(String numeroControl, int n) {
+        String prefijo = null;
+        switch (n) {
+            case 1:
+                prefijo = "C";
+                break;
+            case 2:
+                prefijo = "B";
+                break;
+            case 3:
+                prefijo = "M";
+                break;
+            case 4:
+                prefijo = "D";
+                break;
             default:
-                return "C" + numeroControl;
+                break;
         }
+        return prefijo + numeroControl;
     }
 
     private void insertarDatos(String numeroControl) throws SQLException {
@@ -784,32 +793,42 @@ public class dashboardController implements Initializable {
     }
 
     public void verificarInsercion(String numeroControl) {
-        try {
-            // Verificar si el número de control existe en la base de datos
-            String checkData = "SELECT noControl FROM alumnos WHERE noControl = ?";
-            PreparedStatement checkStatement = connect.prepareStatement(checkData);
-            checkStatement.setString(1, numeroControl);
-            ResultSet result = checkStatement.executeQuery();
+        // Verificar si el noControl ya fue agregado previamente
+        if (!codigoRepetido(numeroControl)) {
+            try {
+                // Verificar si el número de control existe en la base de datos
+                String checkData = "SELECT noControl FROM alumnos WHERE noControl = ?";
+                PreparedStatement checkStatement = connect.prepareStatement(checkData);
+                checkStatement.setString(1, numeroControl);
+                ResultSet resultado = checkStatement.executeQuery();
 
-            if (!result.next()) { // Si el número de control no se encuentra en la base de datos
-                if (numeroControl.length() == 9) { // Si ya hemos añadido sufijos
-                    // Mostrar mensaje de advertencia y limpiar campos
-                    //System.out.println("El número de control no se encuentra en la base de datos.");
-                    return;
+                if (!resultado.next()) { // Si el número de control no se encuentra en la base de datos
+                    n++;
+                    if (numeroControl.length() > 8) { // Si el num control tiene más de 8 caracteres
+                        //Toma solo los últimos 8
+                        numeroControl = numeroControl.substring(numeroControl.length() - 8);
+                        String nuevoNumeroControl = agregarPrefijo(numeroControl, n);
+                        verificarInsercion(nuevoNumeroControl);
+                    } else {
+                        // Intentar con el siguiente prefijo
+                        String nuevoNumeroControl = agregarPrefijo(numeroControl, n);
+                        verificarInsercion(nuevoNumeroControl);
+                    }
                 } else {
-                    // Intentar con el siguiente prefijo
-                    String nuevoNumeroControl = agregarPrefijo(numeroControl);
-                    verificarInsercion(nuevoNumeroControl);
+                    // Si el número de control se encuentra en la base de datos, proceder con la inserción
+                    insertarDatos(numeroControl);
+                    n = 0;
                 }
-            } else {
-                // Si el número de control se encuentra en la base de datos, proceder con la inserción
-                insertarDatos(numeroControl);
+            } catch (SQLException e) {
+                // Manejar cualquier excepción SQL que pueda ocurrir
+                e.printStackTrace();
+                //System.out.println("Se produjo un error al intentar agregar el estudiante.");
             }
-        } catch (SQLException e) {
-            // Manejar cualquier excepción SQL que pueda ocurrir
-            e.printStackTrace();
-            // Mostrar un mensaje de error
-            //System.out.println("Se produjo un error al intentar agregar el estudiante.");
+                    
+        } else {
+            //System.out.println("El código de barras ya fue escaneado previamente.");
+            addStudentsClear();
+            addStudents_noControl.requestFocus();
         }
     }
 
@@ -839,19 +858,18 @@ public class dashboardController implements Initializable {
                     addStudents_noControl.setText(numeroControl);
 
                 }
-
+                
                 verificarInsercion(numeroControl);
                 /* alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Agregado exitosamente!");
-                alert.showAndWait();
-                 */
+                alert.showAndWait();*/
                 // TO UPDATE THE TABLEVIEW
                 addStudentsShowListData();
                 // TO CLEAR THE FIELDS
                 addStudentsClear();
-
+                addStudents_noControl.requestFocus();               
             }
 
         } catch (Exception e) {
@@ -865,6 +883,25 @@ public class dashboardController implements Initializable {
         if(event.getCode() == event.getCode().ENTER){
             addStudentsAdd();
         }
+    }
+    
+    //Método para ver si el mismo numero de control está repetido
+    public boolean codigoRepetido(String noControl) {
+        try {
+            // Consultar el último código de barras agregado a la base de datos
+            String sql = "SELECT noControl FROM historial ORDER BY id DESC LIMIT 1";
+            connect = database.connectDb();
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            if (result.next()) {
+                String ultimoCodigo = result.getString("noControl");
+                return noControl.equals(ultimoCodigo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /*  -------- DATA ANALYSIS --------*/

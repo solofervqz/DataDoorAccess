@@ -260,7 +260,7 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="analysis_Careers" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0" visible="false">
+                                    <AnchorPane fx:id="analysis_Careers" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0">
                                        <children>
                                           <AnchorPane prefHeight="43.0" prefWidth="940.0">
                                              <children>
@@ -365,10 +365,10 @@
                                                       </Button>
                                                    </children>
                                                 </AnchorPane>
-                                                <AnchorPane fx:id="analysisCareers_pieChart" layoutX="390.0" prefHeight="450.0" prefWidth="542.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="389.6" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                                <AnchorPane fx:id="analysisCareers_pieChart" layoutX="352.8" prefHeight="450.0" prefWidth="579.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="353.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
                                                    <children>
                                                       <PieChart fx:id="analisisPorCarreras_chart" animated="false" clockwise="false" labelsVisible="false" layoutY="16.0" legendVisible="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="406.0" prefWidth="515.0" stylesheets="@pieChartCareers.css" AnchorPane.bottomAnchor="28.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="16.0" />
-                                                      <AnchorPane layoutX="455.0" layoutY="137.0" prefHeight="39.0" prefWidth="42.0" styleClass="IDIN-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="40.0" prefHeight="39.0" prefWidth="42.0" styleClass="IDIN-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalIDIN" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -377,7 +377,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="350.0" layoutY="7.0" prefHeight="39.0" prefWidth="42.0" styleClass="IIND-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="265.0" prefHeight="39.0" prefWidth="42.0" styleClass="IIND-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalIIND" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -386,7 +386,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="119.0" layoutY="26.0" prefHeight="39.0" prefWidth="42.0" styleClass="ARQ-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="373.0" prefHeight="39.0" prefWidth="42.0" styleClass="ARQ-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalARQ" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -395,7 +395,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="36.0" layoutY="164.0" prefHeight="39.0" prefWidth="42.0" styleClass="IGE-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="319.0" prefHeight="39.0" prefWidth="42.0" styleClass="IGE-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalIGE" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -404,7 +404,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="91.0" layoutY="350.0" prefHeight="39.0" prefWidth="42.0" styleClass="IINF-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="210.0" prefHeight="39.0" prefWidth="42.0" styleClass="IINF-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalIINF" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -413,7 +413,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="322.0" layoutY="400.0" prefHeight="37.0" prefWidth="42.0" styleClass="ADM-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="100.0" prefHeight="37.0" prefWidth="42.0" styleClass="ADM-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalADM" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="44.0" prefWidth="42.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -422,7 +422,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="444.0" layoutY="294.0" prefHeight="39.0" prefWidth="42.0" styleClass="ISC-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="155.0" prefHeight="39.0" prefWidth="42.0" styleClass="ISC-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalISC" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
