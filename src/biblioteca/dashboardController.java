@@ -66,6 +66,8 @@ import javafx.scene.control.Alert.AlertType;
 
 import com.itextpdf.text.pdf.PdfPageEvent;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -281,12 +283,6 @@ public class dashboardController implements Initializable {
 
     @FXML
     private BarChart<?, ?> totalEnrolledChart_daily;
-
-    @FXML
-    private LineChart<?, ?> totalFemaleChart_daily;
-
-    @FXML
-    private LineChart<?, ?> totalMaleChart_daily;
 
     @FXML
     private AnchorPane quarter_charts;
@@ -512,8 +508,6 @@ public class dashboardController implements Initializable {
             analysis_Careers.setVisible(false);
             reporte_form.setVisible(false);
 
-            DisplayEnrolledMaleChart_daily();
-            DisplayFemaleEnrolledChart_daily();
             DisplayTotalEnrolledChart_daily();
 
             nav_chart.setVisible(true);
@@ -681,7 +675,7 @@ public class dashboardController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    
     /*  -------- ALUMNOS --------*/
     public ObservableList<studentData> addStudentsListData() {
         ObservableList<studentData> listStudents = FXCollections.observableArrayList();
@@ -982,83 +976,43 @@ public class dashboardController implements Initializable {
     public void DisplayTotalEnrolledChart_daily() {
         totalEnrolledChart_daily.getData().clear();
 
-        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) DESC LIMIT 7";
-        //String sql = "SELECT fechaEntrada, COUNT(id) FROM students GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
+    String femaleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' AND DATE(fechaEntrada) = ? GROUP BY fechaEntrada ORDER BY fechaEntrada DESC LIMIT 5";
+    String maleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' AND DATE(fechaEntrada) = ? GROUP BY fechaEntrada ORDER BY fechaEntrada DESC LIMIT 5";
 
-        connect = database.connectDb();
+    connect = database.connectDb();
 
-        try {
-            XYChart.Series chart = new XYChart.Series();
+    try {
+        XYChart.Series femaleSeries = new XYChart.Series();
+        femaleSeries.setName("Mujeres");
 
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
+        prepare = connect.prepareStatement(femaleSql);
+        prepare.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+        result = prepare.executeQuery();
 
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            totalEnrolledChart_daily.getData().add(chart);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        while (result.next()) {
+            femaleSeries.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
         }
 
-    }
+        totalEnrolledChart_daily.getData().add(femaleSeries);
 
-    public void DisplayFemaleEnrolledChart_daily() {
-        totalFemaleChart_daily.getData().clear();
+        XYChart.Series maleSeries = new XYChart.Series();
+        maleSeries.setName("Hombres");
 
-        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) DESC LIMIT 7";
-        //String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Femenino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
+        prepare = connect.prepareStatement(maleSql);
+        prepare.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+        result = prepare.executeQuery();
 
-        connect = database.connectDb();
-
-        try {
-            XYChart.Series chart = new XYChart.Series();
-            chart.setName("Mujeres");
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            totalFemaleChart_daily.getData().add(chart);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void DisplayEnrolledMaleChart_daily() {
-
-        totalMaleChart_daily.getData().clear();
-
-        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) DESC LIMIT 7";
-        //String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Masculino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
-
-        connect = database.connectDb();
-
-        try {
-            XYChart.Series chart = new XYChart.Series();
-            chart.setName("Hombres");
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            totalMaleChart_daily.getData().add(chart);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        while (result.next()) {
+            maleSeries.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
         }
 
-    }
+        totalEnrolledChart_daily.getData().add(maleSeries);
 
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+    
     public void DisplayTotalEnrolledChart_quarter() {
         totalEnrolledChart_quarter.getData().clear();
 
@@ -1364,7 +1318,6 @@ public class dashboardController implements Initializable {
     }    
     
     
-    
 /*
         public void reportePDF() throws BadElementException, IOException, SQLException {
     Document documento = new Document();
@@ -1600,8 +1553,6 @@ public class dashboardController implements Initializable {
         DisplayDailyChartHome();
 
         DisplayCareersPieChart();
-        DisplayEnrolledMaleChart_daily();
-        DisplayFemaleEnrolledChart_daily();
         DisplayTotalEnrolledChart_daily();
         DisplayEnrolledMaleChart_quarter();
         DisplayFemaleEnrolledChart_quarter();

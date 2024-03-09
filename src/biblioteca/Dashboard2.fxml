@@ -507,13 +507,13 @@
                                                 </Label>
                                              </children>
                                           </AnchorPane>
-                                          <AnchorPane layoutX="14.0" layoutY="63.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@dashboardDesign.css">
+                                          <AnchorPane layoutX="14.0" layoutY="63.0" prefHeight="450.0" prefWidth="932.0" stylesheets="@dashboardDesign.css">
                                              <styleClass>
                                                 <String fx:value="white-bg" />
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <BarChart fx:id="totalEnrolledChart_daily" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@barChartGeneral.css" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <BarChart fx:id="totalEnrolledChart_daily" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@barChartMaleFemale.css" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -521,38 +521,6 @@
                                                       <NumberAxis side="LEFT" />
                                                    </yAxis>
                                                 </BarChart>
-                                             </children>
-                                          </AnchorPane>
-                                          <AnchorPane layoutX="477.0" layoutY="63.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@dashboardDesign.css">
-                                             <styleClass>
-                                                <String fx:value="white-bg" />
-                                                <String fx:value="shadow" />
-                                             </styleClass>
-                                             <children>
-                                                <LineChart fx:id="totalFemaleChart_daily" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartFemale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <xAxis>
-                                                      <CategoryAxis side="BOTTOM" />
-                                                   </xAxis>
-                                                   <yAxis>
-                                                      <NumberAxis side="LEFT" />
-                                                   </yAxis>
-                                                </LineChart>
-                                             </children>
-                                          </AnchorPane>
-                                          <AnchorPane layoutX="477.0" layoutY="293.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@dashboardDesign.css">
-                                             <styleClass>
-                                                <String fx:value="white-bg" />
-                                                <String fx:value="shadow" />
-                                             </styleClass>
-                                             <children>
-                                                <LineChart fx:id="totalMaleChart_daily" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartMale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <xAxis>
-                                                      <CategoryAxis side="BOTTOM" />
-                                                   </xAxis>
-                                                   <yAxis>
-                                                      <NumberAxis side="LEFT" />
-                                                   </yAxis>
-                                                </LineChart>
                                              </children>
                                           </AnchorPane>
                                        </children>
