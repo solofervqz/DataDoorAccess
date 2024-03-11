@@ -777,8 +777,6 @@ public class dashboardController implements Initializable {
             case 4:
                 prefijo = "D";
                 break;
-            default:
-                break;
         }
         return prefijo + numeroControl;
     }
@@ -815,16 +813,20 @@ public class dashboardController implements Initializable {
                 ResultSet resultado = checkStatement.executeQuery();
 
                 if (!resultado.next()) { // Si el número de control no se encuentra en la base de datos
-                    n++;
-                    if (numeroControl.length() > 8) { // Si el num control tiene más de 8 caracteres
-                        //Toma solo los últimos 8
-                        numeroControl = numeroControl.substring(numeroControl.length() - 8);
-                        String nuevoNumeroControl = agregarPrefijo(numeroControl, n);
-                        verificarInsercion(nuevoNumeroControl);
+                    if (n < 4) { // Verificar si n es menor que 4
+                        n++;
+                        if (numeroControl.length() > 8) { // Si el num control tiene más de 8 caracteres
+                            //Toma solo los últimos 8
+                            numeroControl = numeroControl.substring(numeroControl.length() - 8);
+                            String nuevoNumeroControl = agregarPrefijo(numeroControl, n);
+                            verificarInsercion(nuevoNumeroControl);
+                        } else {
+                            // Intentar con el siguiente prefijo
+                            String nuevoNumeroControl = agregarPrefijo(numeroControl, n);
+                            verificarInsercion(nuevoNumeroControl);
+                        }
                     } else {
-                        // Intentar con el siguiente prefijo
-                        String nuevoNumeroControl = agregarPrefijo(numeroControl, n);
-                        verificarInsercion(nuevoNumeroControl);
+                        // Si n llega a 4, detener la recursión
                     }
                 } else {
                     // Si el número de control se encuentra en la base de datos, proceder con la inserción
@@ -836,7 +838,7 @@ public class dashboardController implements Initializable {
                 e.printStackTrace();
                 //System.out.println("Se produjo un error al intentar agregar el estudiante.");
             }
-                    
+
         } else {
             //System.out.println("El código de barras ya fue escaneado previamente.");
             addStudentsClear();
@@ -872,11 +874,6 @@ public class dashboardController implements Initializable {
                 }
                 
                 verificarInsercion(numeroControl);
-                /* alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Agregado exitosamente!");
-                alert.showAndWait();*/
                 // TO UPDATE THE TABLEVIEW
                 addStudentsShowListData();
                 // TO CLEAR THE FIELDS
@@ -912,7 +909,7 @@ public class dashboardController implements Initializable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } 
         return false;
     }
 
