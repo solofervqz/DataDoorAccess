@@ -66,6 +66,8 @@ import javafx.scene.control.Alert.AlertType;
 
 import com.itextpdf.text.pdf.PdfPageEvent;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -281,12 +283,6 @@ public class dashboardController implements Initializable {
 
     @FXML
     private BarChart<?, ?> totalEnrolledChart_daily;
-
-    @FXML
-    private LineChart<?, ?> totalFemaleChart_daily;
-
-    @FXML
-    private LineChart<?, ?> totalMaleChart_daily;
 
     @FXML
     private AnchorPane quarter_charts;
@@ -512,8 +508,6 @@ public class dashboardController implements Initializable {
             analysis_Careers.setVisible(false);
             reporte_form.setVisible(false);
 
-            DisplayEnrolledMaleChart_daily();
-            DisplayFemaleEnrolledChart_daily();
             DisplayTotalEnrolledChart_daily();
 
             nav_chart.setVisible(true);
@@ -681,7 +675,7 @@ public class dashboardController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    
     /*  -------- ALUMNOS --------*/
     public ObservableList<studentData> addStudentsListData() {
         ObservableList<studentData> listStudents = FXCollections.observableArrayList();
@@ -979,83 +973,43 @@ public class dashboardController implements Initializable {
     public void DisplayTotalEnrolledChart_daily() {
         totalEnrolledChart_daily.getData().clear();
 
-        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) DESC LIMIT 7";
-        //String sql = "SELECT fechaEntrada, COUNT(id) FROM students GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
+    String femaleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' AND DATE(fechaEntrada) = ? GROUP BY fechaEntrada ORDER BY fechaEntrada DESC LIMIT 5";
+    String maleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' AND DATE(fechaEntrada) = ? GROUP BY fechaEntrada ORDER BY fechaEntrada DESC LIMIT 5";
 
-        connect = database.connectDb();
+    connect = database.connectDb();
 
-        try {
-            XYChart.Series chart = new XYChart.Series();
+    try {
+        XYChart.Series femaleSeries = new XYChart.Series();
+        femaleSeries.setName("Mujeres");
 
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
+        prepare = connect.prepareStatement(femaleSql);
+        prepare.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+        result = prepare.executeQuery();
 
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            totalEnrolledChart_daily.getData().add(chart);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        while (result.next()) {
+            femaleSeries.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
         }
 
-    }
+        totalEnrolledChart_daily.getData().add(femaleSeries);
 
-    public void DisplayFemaleEnrolledChart_daily() {
-        totalFemaleChart_daily.getData().clear();
+        XYChart.Series maleSeries = new XYChart.Series();
+        maleSeries.setName("Hombres");
 
-        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) DESC LIMIT 7";
-        //String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Femenino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
+        prepare = connect.prepareStatement(maleSql);
+        prepare.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+        result = prepare.executeQuery();
 
-        connect = database.connectDb();
-
-        try {
-            XYChart.Series chart = new XYChart.Series();
-            chart.setName("Mujeres");
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            totalFemaleChart_daily.getData().add(chart);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void DisplayEnrolledMaleChart_daily() {
-
-        totalMaleChart_daily.getData().clear();
-
-        String sql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) DESC LIMIT 7";
-        //String sql = "SELECT fechaEntrada, COUNT(id) FROM students WHERE genero = 'Masculino' GROUP BY fechaEntrada ORDER BY TIMESTAMP(fechaEntrada) ASC LIMIT 5";
-
-        connect = database.connectDb();
-
-        try {
-            XYChart.Series chart = new XYChart.Series();
-            chart.setName("Hombres");
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            totalMaleChart_daily.getData().add(chart);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        while (result.next()) {
+            maleSeries.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
         }
 
-    }
+        totalEnrolledChart_daily.getData().add(maleSeries);
 
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+    
     public void DisplayTotalEnrolledChart_quarter() {
         totalEnrolledChart_quarter.getData().clear();
 
@@ -1288,6 +1242,80 @@ public class dashboardController implements Initializable {
     }
 
     /*  -------- GENERAR REPORTES --------*/
+    public void reportePDF() {
+        Document documento = new Document();
+        documento.setMargins(0, 20, 0, 0); // Establecer márgenes a cero
+        
+        try{
+            String ruta = System.getProperty("user.home");
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ReportePrueba.pdf"));
+            documento.open();
+            
+            // Agregar el título
+            Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
+            Paragraph title = new Paragraph("Instituto Tecnológico de Chihuahua II\n", titleFont);
+            title.setAlignment(Element.ALIGN_CENTER); // Alineación central del título
+            documento.add(title);
+
+            Font subTitleFont = new Font(Font.FontFamily.TIMES_ROMAN, 14);
+            Paragraph subTitle = new Paragraph("Centro de Información\n\n", subTitleFont);
+            subTitle.setAlignment(Element.ALIGN_CENTER); // Alineación central del subtítulo
+            documento.add(subTitle);
+
+            Font font = new Font(Font.FontFamily.TIMES_ROMAN, 8); // Puedes ajustar el tamaño del texto aquí
+
+            PdfPTable tabla = new PdfPTable(8);
+            tabla.getDefaultCell().setMinimumHeight(10); // Establecer altura mínima de celda
+
+            tabla.addCell(new PdfPCell(new Phrase("noControl", font)));
+            tabla.addCell(new PdfPCell(new Phrase("nombre", font)));
+            tabla.addCell(new PdfPCell(new Phrase("apellidoPaterno", font)));
+            tabla.addCell(new PdfPCell(new Phrase("apellidoMaterno", font)));
+            tabla.addCell(new PdfPCell(new Phrase("carrera", font)));
+            tabla.addCell(new PdfPCell(new Phrase("genero", font)));
+            tabla.addCell(new PdfPCell(new Phrase("fechaEntrada", font)));
+            tabla.addCell(new PdfPCell(new Phrase("horaEntrada", font)));
+            try {
+                connect = database.connectDb();
+
+                String sql = "SELECT historial.noControl, historial.fechaEntrada, historial.horaEntrada, alumnos.nombre, alumnos.apellidoPaterno, alumnos.apellidoMaterno, alumnos.carrera, alumnos.genero "
+                    + "FROM historial "
+                    + "JOIN alumnos ON historial.noControl = alumnos.noControl ORDER BY historial.fechaEntrada ASC, historial.horaEntrada ASC";
+
+                prepare = connect.prepareStatement(sql);
+                result = prepare.executeQuery();
+
+                if (result.next()) {
+                    Font dataFont = new Font(Font.FontFamily.TIMES_ROMAN, 8); // Tamaño de fuente más pequeño para los datos
+
+                    do {
+                        tabla.addCell(new PdfPCell(new Phrase(result.getString(1), dataFont)));
+                        tabla.addCell(new PdfPCell(new Phrase(result.getString(4), dataFont)));
+                        tabla.addCell(new PdfPCell(new Phrase(result.getString(5), dataFont)));
+                        tabla.addCell(new PdfPCell(new Phrase(result.getString(6), dataFont)));
+                        tabla.addCell(new PdfPCell(new Phrase(result.getString(7), dataFont)));
+                        tabla.addCell(new PdfPCell(new Phrase(result.getString(8), dataFont)));
+                        tabla.addCell(new PdfPCell(new Phrase(result.getString(2), dataFont)));
+                        tabla.addCell(new PdfPCell(new Phrase(result.getString(3), dataFont)));
+                    } while (result.next());
+                    documento.add(tabla);
+                }
+            } catch (DocumentException | SQLException e){
+            }
+            documento.close();
+
+            Alert alert = new Alert(AlertType.INFORMATION);
+
+                    alert.setTitle("biblioTec Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Reporte creado.");
+                    alert.showAndWait();
+        } catch (DocumentException | FileNotFoundException e){
+        }
+    }    
+    
+    
+/*
         public void reportePDF() throws BadElementException, IOException, SQLException {
     Document documento = new Document();
 
@@ -1358,14 +1386,6 @@ public class dashboardController implements Initializable {
         documento.add(tabla);
 
         
-
-        
-        
-        
-        
-        
-        
-        
         //Agregar otra imagen al final del documento
         String rutaImagenAbajo = "C:\\Users\\bombo\\Desktop\\BiblioTec\\src\\reporte\\footer.png"; // Reemplaza con la ruta de tu imagen inferior
         Image imagenAbajo = Image.getInstance(rutaImagenAbajo);
@@ -1384,7 +1404,7 @@ public class dashboardController implements Initializable {
         e.printStackTrace(); // Manejar excepciones adecuadamente en tu aplicación
     }
 }
-        
+ */       
 // Agregar esta clase interna para manejar eventos de página
 /*    private static class HeaderFooterEvent extends PdfPageEventHelper {
         @Override
@@ -1518,73 +1538,7 @@ public class dashboardController implements Initializable {
     }
 }
 */
-     
-/*        public void reportePDF() {
-            Document documento = new Document();
-            
-            try{
-                String ruta = System.getProperty("user.home");
-                PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ReportePrueba.pdf"));
-                documento.open();
-                
-                PdfPTable tabla = new PdfPTable(3);
-                tabla.addCell("noControl");
-                //tabla.addCell("apellidoPaterno");
-                //tabla.addCell("apellidoMaterno");
-                //tabla.addCell("nombre");
-                //tabla.addCell("carrera");
-               // tabla.addCell("genero");
-                tabla.addCell("fechaEntrada");
-                tabla.addCell("horaEntrada");
-                
-                try {
-                    connect = database.connectDb();
-
-                    //String sql = "SELECT historial.noControl, historial.fechaEntrada, historial.horaEntrada, alumnos.nombre, alumnos.apellidoPaterno, alumnos.apellidoMaterno, alumnos.carrera, alumnos.genero "
-                      //  + "FROM historial "
-                      //  + "JOIN alumnos ON historial.noControl = alumnos.noControl ORDER BY historial.fechaEntrada ASC, historial.horaEntrada ASC";
-                    
-                    String sql = "select * from historial";
-                   
-                    prepare = connect.prepareStatement(sql);
-                    result = prepare.executeQuery();
-                    
-                    if(result.next()){
-                        do{
-                            tabla.addCell(result.getString(2));
-                            tabla.addCell(result.getString(3));
-                            tabla.addCell(result.getString(4));
-                            
-                            
-                    //    tabla.addCell(result.getString("noControl"));
-                    //    tabla.addCell(result.getString("nombre"));
-                    //    tabla.addCell(result.getString("apellidoPaterno"));
-                    //    tabla.addCell(result.getString("apellidoMaterno"));
-                    //    tabla.addCell(result.getString("carrera"));
-                    //   tabla.addCell(result.getString("genero"));
-                    //    tabla.addCell(result.getDate("fechaEntrada"));
-                    //    LocalTime.parse(result.getString("horaEntrada"));
-                        } while (result.next());
-                        documento.add(tabla);
-                    }
-                } catch (DocumentException | SQLException e){
-                }
-                documento.close();
-                
-                Alert alert = new Alert(AlertType.INFORMATION);
-
-                        alert.setTitle("biblioTec Message");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Reporte creado.");
-                        alert.showAndWait();
-            } catch (DocumentException | FileNotFoundException e){
-            
-            }
-            
-            //reportePDF_btn
-    }
-*/
-    
+   
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         displayUsername();
@@ -1596,8 +1550,6 @@ public class dashboardController implements Initializable {
         DisplayDailyChartHome();
 
         DisplayCareersPieChart();
-        DisplayEnrolledMaleChart_daily();
-        DisplayFemaleEnrolledChart_daily();
         DisplayTotalEnrolledChart_daily();
         DisplayEnrolledMaleChart_quarter();
         DisplayFemaleEnrolledChart_quarter();
