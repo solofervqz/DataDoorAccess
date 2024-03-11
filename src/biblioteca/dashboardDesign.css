@@ -137,7 +137,7 @@
     -fx-padding:0px 0px 0px 5px;
 }
 
-.add-btn{
+.reporte-btn{
     -fx-background-color:#2d5278;
     -fx-background-radius:8px;
     -fx-cursor:hand;
@@ -145,7 +145,7 @@
     -fx-font-size:14px;
     -fx-font-family:"Arial";
 }
-.add-btn:hover{
+.reporte-btn:hover{
     -fx-background-color:#2268ae;
 }
 
@@ -251,54 +251,3 @@
     -fx-background-color:linear-gradient(to bottom right, #972D2A, #FF4A47);;   
     -fx-background-radius:10px;
 }
-
-
-/*  -------- ALUMNOS --------*/
-/*        public ObservableList<studentData> addStudentsListData() {
-
-        ObservableList<studentData> listStudents = FXCollections.observableArrayList();
-
-        String sql = "SELECT * FROM historial";
-
-        connect = database.connectDb();
-
-        try {
-            studentData studentD;
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                studentD = new studentData(result.getString("noControl"),
-                        LocalTime.parse(result.getString("horaEntrada")),
-                        result.getDate("fechaEntrada"));
-                                                
-                listStudents.add(studentD);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listStudents;
-    }
-    
-    private ObservableList<studentData> addStudentsListD;
-    
-    public void addStudentsShowListData() {
-        addStudentsListD = addStudentsListData();
-
-        addStudents_col_noControl.setCellValueFactory(new PropertyValueFactory<>("noControl"));
-        addStudents_col_horaEntrada.setCellValueFactory(new PropertyValueFactory<>("horaEntrada"));
-        addStudents_col_fechaEntrada.setCellValueFactory(new PropertyValueFactory<>("fechaEntrada"));
-
-        addStudents_tableView.setItems(addStudentsListD);
-    }
-*/
-
-
-
-
-
-
-
-
-
