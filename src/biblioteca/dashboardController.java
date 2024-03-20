@@ -973,42 +973,92 @@ public class dashboardController implements Initializable {
     public void DisplayTotalEnrolledChart_daily() {
         totalEnrolledChart_daily.getData().clear();
 
-    String femaleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' AND DATE(fechaEntrada) = ? GROUP BY fechaEntrada ORDER BY fechaEntrada DESC LIMIT 5";
-    String maleSql = "SELECT fechaEntrada, COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' AND DATE(fechaEntrada) = ? GROUP BY fechaEntrada ORDER BY fechaEntrada DESC LIMIT 5";
+        String femaleSql = """
+                           SELECT 
+                               CASE 
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 7 AND 8 THEN '08:00 - 09:00'
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 8 AND 9 THEN '09:00 - 10:00'
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 9 AND 10 THEN '10:00 - 11:00'
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 10 AND 11 THEN '11:00 - 12:00'
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 11 AND 12 THEN '12:00 - 13:00'
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 12 AND 13 THEN '13:00 - 14:00'
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 13 AND 14 THEN '14:00 - 15:00'
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 14 AND 15 THEN '15:00 - 16:00'
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 15 AND 16 THEN '16:00 - 17:00'
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 16 AND 17 THEN '17:00 - 18:00'
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 17 AND 18 THEN '18:00 - 19:00'
+                                   WHEN HOUR(h.horaEntrada) BETWEEN 18 AND 19 THEN '19:00 - 20:00'
+                               END AS hora,
+                               SUM(CASE WHEN a.genero = 'F' THEN 1 ELSE 0 END)
+                           FROM 
+                               historial h
+                           JOIN 
+                               Alumnos a ON h.noControl = a.noControl
+                           WHERE 
+                               DATE(h.fechaEntrada) = ?
+                               AND TIME(h.horaEntrada) BETWEEN '08:00:00' AND '20:00:00'
+                           GROUP BY 
+                               hora;""";
+        String maleSql = """
+                         SELECT 
+                             CASE 
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 7 AND 8 THEN '08:00 - 09:00'
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 8 AND 9 THEN '09:00 - 10:00'
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 9 AND 10 THEN '10:00 - 11:00'
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 10 AND 11 THEN '11:00 - 12:00'
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 11 AND 12 THEN '12:00 - 13:00'
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 12 AND 13 THEN '13:00 - 14:00'
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 13 AND 14 THEN '14:00 - 15:00'
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 14 AND 15 THEN '15:00 - 16:00'
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 15 AND 16 THEN '16:00 - 17:00'
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 16 AND 17 THEN '17:00 - 18:00'
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 17 AND 18 THEN '18:00 - 19:00'
+                                 WHEN HOUR(h.horaEntrada) BETWEEN 18 AND 19 THEN '19:00 - 20:00'
+                             END AS hora,
+                             SUM(CASE WHEN a.genero = 'M' THEN 1 ELSE 0 END)
+                         FROM 
+                             historial h
+                         JOIN 
+                             Alumnos a ON h.noControl = a.noControl
+                         WHERE 
+                             DATE(h.fechaEntrada) = ?
+                             AND TIME(h.horaEntrada) BETWEEN '08:00:00' AND '20:00:00'
+                         GROUP BY 
+                             hora;""";
 
-    connect = database.connectDb();
+        connect = database.connectDb();
 
-    try {
-        XYChart.Series femaleSeries = new XYChart.Series();
-        femaleSeries.setName("Mujeres");
+        try {
+            XYChart.Series femaleSeries = new XYChart.Series();
+            femaleSeries.setName("Mujeres");
 
-        prepare = connect.prepareStatement(femaleSql);
-        prepare.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
-        result = prepare.executeQuery();
+            prepare = connect.prepareStatement(femaleSql);
+            prepare.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+            result = prepare.executeQuery();
 
-        while (result.next()) {
-            femaleSeries.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
+            while (result.next()) {
+                femaleSeries.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
+            }
+
+            totalEnrolledChart_daily.getData().add(femaleSeries);
+
+            XYChart.Series maleSeries = new XYChart.Series();
+            maleSeries.setName("Hombres");
+
+            prepare = connect.prepareStatement(maleSql);
+            prepare.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                maleSeries.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
+            }
+
+            totalEnrolledChart_daily.getData().add(maleSeries);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        totalEnrolledChart_daily.getData().add(femaleSeries);
-
-        XYChart.Series maleSeries = new XYChart.Series();
-        maleSeries.setName("Hombres");
-
-        prepare = connect.prepareStatement(maleSql);
-        prepare.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
-        result = prepare.executeQuery();
-
-        while (result.next()) {
-            maleSeries.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-        }
-
-        totalEnrolledChart_daily.getData().add(maleSeries);
-
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
     
     public void DisplayTotalEnrolledChart_quarter() {
         totalEnrolledChart_quarter.getData().clear();
