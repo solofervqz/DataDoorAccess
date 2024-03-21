@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package biblioteca;
 
 import com.itextpdf.text.BadElementException;
@@ -69,10 +65,18 @@ import javafx.scene.control.Alert.AlertType;
 
 import com.itextpdf.text.pdf.PdfPageEvent;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
+import java.awt.Color;
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 /**
  * FXML Controller class
  *
@@ -372,6 +376,7 @@ public class dashboardController implements Initializable {
 
     }
 
+    
     /*  -------- NAV --------*/
     private double x = 0;
     private double y = 0;
@@ -584,6 +589,7 @@ public class dashboardController implements Initializable {
 
     }
 
+    
     /*  -------- HOME --------*/
     public void homeDisplayTotalEnrolledStudents() {
 
@@ -694,6 +700,7 @@ public class dashboardController implements Initializable {
         }
     }
     
+    
     /*  -------- ALUMNOS --------*/
     public ObservableList<studentData> addStudentsListData() {
         ObservableList<studentData> listStudents = FXCollections.observableArrayList();
@@ -761,7 +768,8 @@ public class dashboardController implements Initializable {
         addStudents_noControl.setText("");
     }
 
-    /* -----    Metodos recursivos para agregar estudiante a registro -----*/
+    
+            /* -----    Metodos recursivos para agregar estudiante a registro -----*/
     private String agregarPrefijo(String numeroControl, int n) {
         String prefijo = null;
         switch (n) {
@@ -846,7 +854,7 @@ public class dashboardController implements Initializable {
         }
     }
 
-    /* ------------------METODO PARA AGREGAR AL REGISTRO ---------------- */
+            /* ------------------METODO PARA AGREGAR AL REGISTRO ---------------- */
     public void addStudentsAdd() {
 
         String numeroControl = "";
@@ -887,14 +895,14 @@ public class dashboardController implements Initializable {
 
     }
     
-    //Método para llamar a la función addStudentsAdd cuando se presione la tecla enter
+            //Método para llamar a la función addStudentsAdd cuando se presione la tecla enter
     public void txtFieldAddStudentKeyReleased(KeyEvent event){
         if(event.getCode() == event.getCode().ENTER){
             addStudentsAdd();
         }
     }
     
-    //Método para ver si el mismo numero de control está repetido
+            //Método para ver si el mismo numero de control está repetido
     public boolean codigoRepetido(String noControl) {
         try {
             // Consultar el último código de barras agregado a la base de datos
@@ -913,8 +921,9 @@ public class dashboardController implements Initializable {
         return false;
     }
 
+    
     /*  -------- DATA ANALYSIS --------*/
-    //Función para desplegar la gráfica de pastel de todas las carreras
+            //Función para desplegar la gráfica de pastel de todas las carreras
     public void DisplayCareersPieChart() {
         analisisPorCarreras_chart.getData().clear();
 
@@ -941,7 +950,7 @@ public class dashboardController implements Initializable {
         }
     }
 
-    //Funcion para desplegar cuantas mujeres y hombres ingresaron de cada carrera
+            //Funcion para desplegar cuantas mujeres y hombres ingresaron de cada carrera
     public void DisplayCareersFemaleMalePieChart(String carrera, PieChart grafico) {
         grafico.getData().clear();
 
@@ -964,7 +973,7 @@ public class dashboardController implements Initializable {
         }
     }
 
-    //Funcion para desplegar cuantas mujeres y hombres ingresaron de cada carrera
+            //Funcion para desplegar cuantas mujeres y hombres ingresaron de cada carrera
     public void DisplayTotalByCareer(String carrera, Label etiqueta) {
         String sql = "SELECT COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl "
                 + "WHERE a.carrera = '" + carrera + "';";
@@ -1184,7 +1193,7 @@ public class dashboardController implements Initializable {
         }
     }
 
-    //Función para aparecer las graficas individuales de cada carrera
+            //Función para aparecer las graficas individuales de cada carrera
     public void navigationCarrersChartButton() {
         if (IDIN_chart_btn.isFocused()) {
             SetFalsePieChartsCareersFM();
@@ -1274,41 +1283,41 @@ public class dashboardController implements Initializable {
 
     }
 
-    /*  -------- GENERAR REPORTES --------*/
     
+    /*  -------- GENERAR REPORTES --------*/
 public class HeaderFooter extends PdfPageEventHelper {
-    private Image headerImage;
+    private String imagePath;
     private float marginLeft;
+    private float marginTop;
+    private int numLineas;
 
-    public HeaderFooter(String imagePath, float marginLeft) {
-        try {
-            this.headerImage = Image.getInstance(imagePath);
-            this.headerImage.scaleToFit(300, 300);  // Ajusta el tamaño de la imagen según sea necesario
-            this.marginLeft = marginLeft;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public HeaderFooter(String imagePath, float marginLeft, float marginTop, int numLineas) {
+        this.imagePath = imagePath;
+        this.marginLeft = marginLeft;
+        this.marginTop = marginTop;
+        this.numLineas = numLineas;
     }
 
+    
     @Override
     public void onStartPage(PdfWriter writer, Document document) {
-        PdfContentByte cb = writer.getDirectContent();
-
-        float x = document.leftMargin() + marginLeft;  // Ajusta la coordenada X según sea necesario
-        float y = document.top() - headerImage.getScaledHeight() - 5;  // Ajusta la coordenada Y según sea necesario
-        headerImage.setAbsolutePosition(x, y);
         try {
-            cb.addImage(headerImage);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-
-        // Agregar tres saltos de línea después de la imagen
-        for (int i = 0; i < 3; i++) {
-            try {
-                document.add(Chunk.NEWLINE);
-            } catch (DocumentException ex) {
+            // Agregar saltos de línea
+            for (int i = 0; i < numLineas; i++) {
+                document.add(new Paragraph("\n"));
             }
+
+            // Cargar la imagen
+            Image image = Image.getInstance(imagePath);
+            image.scaleToFit(100, 100); // Ajusta el tamaño de la imagen según sea necesario
+            image.setAbsolutePosition(document.left() + marginLeft, document.top() - marginTop - image.getScaledHeight());
+
+            // Agregar la imagen al contenido del documento
+            PdfContentByte canvas = writer.getDirectContent();
+            canvas.addImage(image);
+
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
         }
     }
 }
@@ -1319,11 +1328,14 @@ public class HeaderFooter extends PdfPageEventHelper {
         
         try{
             String ruta = System.getProperty("user.home");
-            float marginLeft = 20f;  // Ajusta el margen izquierdo según sea necesario
+            float marginLeft = 20f;
+            float marginTop = 10f;
+            int numLineas = 5; // Cantidad de saltos de línea a agregar
+
             PdfWriter writer = PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/Lista de Registro General.pdf"));
 
             // Agregar el encabezado a cada página
-            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft);
+            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
             writer.setPageEvent(event);
 
             documento.open();
@@ -1710,198 +1722,361 @@ public class HeaderFooter extends PdfPageEventHelper {
         }
     }    
 
+    
+    Document documentoTrimestral;
     public void reporteTrimestral_PDF() {
-        Document documentoTrimestral = new Document();
-        documentoTrimestral.setMargins(0, 0, 20, 20); // Establecer márgenes izq, der, arr, ab
-        
-        try{
+        documentoTrimestral = new Document();
+        documentoTrimestral.setMargins(0, 0, 20, 20);
+
+        try {
             String ruta = System.getProperty("user.home");
             PdfWriter.getInstance(documentoTrimestral, new FileOutputStream(ruta + "/Desktop/Lista de Registro Trimestral.pdf"));
             documentoTrimestral.open();
-            
-            // Agregar el título
+
             Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
-            Paragraph title = new Paragraph("Instituto Tecnológico de Chihuahua II\n", titleFont);
-            title.setAlignment(Element.ALIGN_CENTER); // Alineación central del título
-            documentoTrimestral.add(title);
-
             Font subTitleFont = new Font(Font.FontFamily.TIMES_ROMAN, 14);
-            Paragraph subTitle = new Paragraph("Centro de Información\n", subTitleFont);
-            subTitle.setAlignment(Element.ALIGN_CENTER); // Alineación central del subtítulo
-            documentoTrimestral.add(subTitle);
+            Font annualReportFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 
-            // Nuevo párrafo para "Reporte anual" con letra más pequeña
-            Font generalReportFont = new Font(Font.FontFamily.TIMES_ROMAN, 12);
-            Paragraph generalReport = new Paragraph("Reporte Trimestral\n\n", generalReportFont);
-            generalReport.setAlignment(Element.ALIGN_CENTER);
-            documentoTrimestral.add(generalReport);
+            addTitle(documentoTrimestral, titleFont, "Instituto Tecnológico de Chihuahua II");
+            addTitle(documentoTrimestral, subTitleFont, "Centro de Información");
+            addTitle(documentoTrimestral, annualReportFont, "Reporte Trimestral");
 
-            Font font = new Font(Font.FontFamily.TIMES_ROMAN, 10); // Puedes ajustar el tamaño del texto aquí
+            // Tabla para enero a marzo
+            addSubtitle(documentoTrimestral, annualReportFont, "Afluencia Enero-Marzo\n\n", Element.ALIGN_LEFT, 20f);
+            PdfPTable tablaEneroMarzo = createTable(annualReportFont);
+            addDataToTable(tablaEneroMarzo, "WHERE MONTH(historial.fechaEntrada) BETWEEN 1 AND 3");
+            documentoTrimestral.add(tablaEneroMarzo);
 
-            PdfPTable tabla = new PdfPTable(8);
-            tabla.getDefaultCell().setMinimumHeight(20); // Establecer altura mínima de celda
-            
-            // Establecer el ancho de la tabla al 90% del ancho de la página
-            tabla.setWidthPercentage(90);
+            // Añade un párrafo en blanco para crear un espacio
+            documentoTrimestral.add(new Paragraph("\n"));
 
-            // Establecer los anchos de las columnas (en porcentaje)
-            float[] columnWidths = {10f, 15f, 13f, 13f, 16f, 10f, 10f, 10f};
-            tabla.setWidths(columnWidths);
+            // Llama al método para obtener el total de alumnos de enero a marzo
+            int totalAlumnosEneroMarzo = obtenerTotalAlumnosTrimestre(1, 3);
+            // Muestra el total de alumnos para enero a marzo
+            addTitle(documentoTrimestral, annualReportFont, "Total de Alumnos (Enero-Marzo): " + totalAlumnosEneroMarzo + "\n\n");
 
-            tabla.addCell(new PdfPCell(new Phrase("No Control", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Nombre", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Apellido Paterno", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Apellido Materno", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Carrera", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Género", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Fecha de Entrada", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Hora de Entrada", font)));
-            try {
-                connect = database.connectDb();
+            // Tabla para abril a junio
+            addSubtitle(documentoTrimestral, annualReportFont, "Afluencia Abril-Junio\n\n", Element.ALIGN_LEFT, 20f);
+            PdfPTable tablaAbrilJunio = createTable(annualReportFont);
+            addDataToTable(tablaAbrilJunio, "WHERE MONTH(historial.fechaEntrada) BETWEEN 4 AND 6");
+            documentoTrimestral.add(tablaAbrilJunio);
 
-                String sql = "SELECT historial.noControl, historial.fechaEntrada, historial.horaEntrada, alumnos.nombre, alumnos.apellidoPaterno, alumnos.apellidoMaterno, alumnos.carrera, alumnos.genero "
-                    + "FROM historial "
-                    + "JOIN alumnos ON historial.noControl = alumnos.noControl ORDER BY historial.fechaEntrada ASC, historial.horaEntrada ASC";
+            // Añade un párrafo en blanco para crear un espacio
+            documentoTrimestral.add(new Paragraph("\n"));
 
-                prepare = connect.prepareStatement(sql);
-                result = prepare.executeQuery();
+            // Llama al método para obtener el total de alumnos de abril a junio
+            int totalAlumnosAbrilJunio = obtenerTotalAlumnosTrimestre(4, 6);
+            // Muestra el total de alumnos para abril a junio
+            addTitle(documentoTrimestral, annualReportFont, "Total de Alumnos (Abril-Junio): " + totalAlumnosAbrilJunio + "\n\n");
 
-                if (result.next()) {
-                    Font dataFont = new Font(Font.FontFamily.TIMES_ROMAN, 8); // Tamaño de fuente más pequeño para los datos
+            // Tabla para julio a septiembre
+            addSubtitle(documentoTrimestral, annualReportFont, "Afluencia Julio-Septiembre\n\n", Element.ALIGN_LEFT, 20f);
+            PdfPTable tablaJulioSeptiembre = createTable(annualReportFont);
+            addDataToTable(tablaJulioSeptiembre, "WHERE MONTH(historial.fechaEntrada) BETWEEN 7 AND 9");
+            documentoTrimestral.add(tablaJulioSeptiembre);
 
-                    do {
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(1), dataFont)));
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(4), dataFont)));
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(5), dataFont)));
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(6), dataFont)));
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(7), dataFont)));
-                        
-                        // Condición para mostrar "Femenino" o "Masculino" en lugar de "F" o "M"
-                        String genero = result.getString(8);
-                        if (genero.equals("F")) {
-                            tabla.addCell(new PdfPCell(new Phrase("Femenino", dataFont)));
-                        } else if (genero.equals("M")) {
-                            tabla.addCell(new PdfPCell(new Phrase("Masculino", dataFont)));
-                        } else {
-                            // Manejar otro caso si es necesario
-                            tabla.addCell(new PdfPCell(new Phrase(genero, dataFont)));
-                        }
+            // Añade un párrafo en blanco para crear un espacio
+            documentoTrimestral.add(new Paragraph("\n"));
 
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(2), dataFont)));
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(3), dataFont)));
-                } while (result.next());
-                    documentoTrimestral.add(tabla);
-                }
-            } catch (DocumentException | SQLException e){
-            }
+            // Llama al método para obtener el total de alumnos de julio a septiembre
+            int totalAlumnosJulioSeptiembre = obtenerTotalAlumnosTrimestre(7, 9);
+            // Muestra el total de alumnos para julio a septiembre
+            addTitle(documentoTrimestral, annualReportFont, "Total de Alumnos (Julio-Septiembre): " + totalAlumnosJulioSeptiembre + "\n\n");
+
+            // Tabla para octubre a diciembre
+            addSubtitle(documentoTrimestral, annualReportFont, "Afluencia Octubre-Diciembre\n\n", Element.ALIGN_LEFT, 20f);
+            PdfPTable tablaOctubreDiciembre = createTable(annualReportFont);
+            addDataToTable(tablaOctubreDiciembre, "WHERE MONTH(historial.fechaEntrada) BETWEEN 10 AND 12");
+            documentoTrimestral.add(tablaOctubreDiciembre);
+
+            // Añade un párrafo en blanco para crear un espacio
+            documentoTrimestral.add(new Paragraph("\n"));
+
+            // Llama al método para obtener el total de alumnos de octubre a diciembre
+            int totalAlumnosOctubreDiciembre = obtenerTotalAlumnosTrimestre(10, 12);
+            // Muestra el total de alumnos para octubre a diciembre
+            addTitle(documentoTrimestral, annualReportFont, "Total de Alumnos (Octubre-Diciembre): " + totalAlumnosOctubreDiciembre + "\n\n");
+
+            // Agrega un párrafo en blanco para crear un espacio antes del PieChart
+            documentoTrimestral.add(new Paragraph("\n"));
+
             documentoTrimestral.close();
 
             Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("biblioTec Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Reporte creado.");
+            alert.showAndWait();
 
-                    alert.setTitle("biblioTec Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Reporte creado.");
-                    alert.showAndWait();
-        } catch (DocumentException | FileNotFoundException e){
+        } catch (DocumentException | FileNotFoundException | SQLException e) {
+            e.printStackTrace(); // Manejo de excepciones
         }
-    }    
+    }
 
+    private int obtenerTotalAlumnosTrimestre(int mesInicio, int mesFin) throws SQLException {
+        connect = database.connectDb();
+
+        String sql = "SELECT COUNT(*) AS TotalAlumnos FROM historial " +
+                     "WHERE MONTH(historial.fechaEntrada) BETWEEN ? AND ? " +
+                     "AND YEAR(historial.fechaEntrada) = YEAR(CURDATE())";
+
+        prepare = connect.prepareStatement(sql);
+        prepare.setInt(1, mesInicio);
+        prepare.setInt(2, mesFin);
+        result = prepare.executeQuery();
+
+        int totalAlumnos = 0;
+
+        if (result.next()) {
+            totalAlumnos = result.getInt("TotalAlumnos");
+        }
+
+        connect.close();
+
+        return totalAlumnos;
+    }    
+    
+
+    Document documentoSemestral;
     public void reporteSemestral_PDF() {
-        Document documentoSemestral = new Document();
-        documentoSemestral.setMargins(0, 0, 20, 20); // Establecer márgenes izq, der, arr, ab
-        
-        try{
+        documentoSemestral = new Document();
+        documentoSemestral.setMargins(0, 0, 20, 20);
+
+        try {
             String ruta = System.getProperty("user.home");
             PdfWriter.getInstance(documentoSemestral, new FileOutputStream(ruta + "/Desktop/Lista de Registro Semestral.pdf"));
             documentoSemestral.open();
-            
-            // Agregar el título
+
             Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
-            Paragraph title = new Paragraph("Instituto Tecnológico de Chihuahua II\n", titleFont);
-            title.setAlignment(Element.ALIGN_CENTER); // Alineación central del título
-            documentoSemestral.add(title);
-
             Font subTitleFont = new Font(Font.FontFamily.TIMES_ROMAN, 14);
-            Paragraph subTitle = new Paragraph("Centro de Información\n", subTitleFont);
-            subTitle.setAlignment(Element.ALIGN_CENTER); // Alineación central del subtítulo
-            documentoSemestral.add(subTitle);
+            Font annualReportFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 
-            // Nuevo párrafo para "Reporte anual" con letra más pequeña
-            Font generalReportFont = new Font(Font.FontFamily.TIMES_ROMAN, 12);
-            Paragraph generalReport = new Paragraph("Reporte Semestral\n\n", generalReportFont);
-            generalReport.setAlignment(Element.ALIGN_CENTER);
-            documentoSemestral.add(generalReport);
+            addTitle(documentoSemestral, titleFont, "Instituto Tecnológico de Chihuahua II");
+            addTitle(documentoSemestral, subTitleFont, "Centro de Información");
+            addTitle(documentoSemestral, annualReportFont, "Reporte Semestral");
+                   
+            // Tabla para enero a junio
+            addSubtitle(documentoSemestral, annualReportFont, "Afluencia Enero-Junio\n\n", Element.ALIGN_LEFT, 20f);
+            PdfPTable tablaEneroJunio = createTable(annualReportFont);
+            addDataToTable(tablaEneroJunio, "WHERE MONTH(historial.fechaEntrada) BETWEEN 1 AND 6");            
+            documentoSemestral.add(tablaEneroJunio);
 
-            Font font = new Font(Font.FontFamily.TIMES_ROMAN, 10); // Puedes ajustar el tamaño del texto aquí
+            // Añade un párrafo en blanco para crear un espacio
+            documentoSemestral.add(new Paragraph("\n"));
 
-            PdfPTable tabla = new PdfPTable(8);
-            tabla.getDefaultCell().setMinimumHeight(20); // Establecer altura mínima de celda
+            // Llama al método para obtener el total de alumnos de enero a junio
+        int totalAlumnosEneroJunio = obtenerTotalAlumnosEneroJunio();
+        // Muestra el total de alumnos para enero a junio
+        addTitle(documentoSemestral, annualReportFont, "Total de Alumnos (Enero-Junio): " + totalAlumnosEneroJunio + "\n\n");
+
+            // Nueva página para la tabla de agosto a diciembre
+            //documentoSemestral.newPage();
+
+            // Tabla para agosto a diciembre
+            addSubtitle(documentoSemestral, annualReportFont, "Afluencia Agosto-Diciembre\n\n", Element.ALIGN_LEFT, 20f);
+            PdfPTable tablaAgostoDiciembre = createTable(annualReportFont);
+            addDataToTable(tablaAgostoDiciembre, "WHERE MONTH(historial.fechaEntrada) BETWEEN 8 AND 12");
+            documentoSemestral.add(tablaAgostoDiciembre);
+
+            // Añade un párrafo en blanco para crear un espacio
+            documentoSemestral.add(new Paragraph("\n"));
+
+            // Llama al método para obtener el total de alumnos de agosto a diciembre
+        int totalAlumnosAgostoDiciembre = obtenerTotalAlumnosAgostoDiciembre();
+        // Muestra el total de alumnos para agosto a diciembre
+        addTitle(documentoSemestral, annualReportFont, "Total de Alumnos (Agosto-Diciembre): " + totalAlumnosAgostoDiciembre);
             
-            // Establecer el ancho de la tabla al 90% del ancho de la página
-            tabla.setWidthPercentage(90);
-
-            // Establecer los anchos de las columnas (en porcentaje)
-            float[] columnWidths = {10f, 15f, 13f, 13f, 16f, 10f, 10f, 10f};
-            tabla.setWidths(columnWidths);
-
-            tabla.addCell(new PdfPCell(new Phrase("No Control", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Nombre", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Apellido Paterno", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Apellido Materno", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Carrera", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Género", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Fecha de Entrada", font)));
-            tabla.addCell(new PdfPCell(new Phrase("Hora de Entrada", font)));
-            try {
-                connect = database.connectDb();
-
-                String sql = "SELECT historial.noControl, historial.fechaEntrada, historial.horaEntrada, alumnos.nombre, alumnos.apellidoPaterno, alumnos.apellidoMaterno, alumnos.carrera, alumnos.genero "
-                    + "FROM historial "
-                    + "JOIN alumnos ON historial.noControl = alumnos.noControl ORDER BY historial.fechaEntrada ASC, historial.horaEntrada ASC";
-
-                prepare = connect.prepareStatement(sql);
-                result = prepare.executeQuery();
-
-                if (result.next()) {
-                    Font dataFont = new Font(Font.FontFamily.TIMES_ROMAN, 8); // Tamaño de fuente más pequeño para los datos
-
-                    do {
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(1), dataFont)));
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(4), dataFont)));
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(5), dataFont)));
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(6), dataFont)));
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(7), dataFont)));
-                        
-                        // Condición para mostrar "Femenino" o "Masculino" en lugar de "F" o "M"
-                        String genero = result.getString(8);
-                        if (genero.equals("F")) {
-                            tabla.addCell(new PdfPCell(new Phrase("Femenino", dataFont)));
-                        } else if (genero.equals("M")) {
-                            tabla.addCell(new PdfPCell(new Phrase("Masculino", dataFont)));
-                        } else {
-                            // Manejar otro caso si es necesario
-                            tabla.addCell(new PdfPCell(new Phrase(genero, dataFont)));
-                        }
-
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(2), dataFont)));
-                        tabla.addCell(new PdfPCell(new Phrase(result.getString(3), dataFont)));
-                } while (result.next());
-                    documentoSemestral.add(tabla);
-                }
-            } catch (DocumentException | SQLException e){
-            }
-            documentoSemestral.close();
+        // Agrega un párrafo en blanco para crear un espacio antes del PieChart
+        documentoSemestral.add(new Paragraph("\n"));
+        
+        documentoSemestral.close();
 
             Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("biblioTec Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Reporte creado.");
+            alert.showAndWait();
 
-                    alert.setTitle("biblioTec Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Reporte creado.");
-                    alert.showAndWait();
-        } catch (DocumentException | FileNotFoundException e){
+        } catch (DocumentException | FileNotFoundException | SQLException e) {
+            e.printStackTrace(); // Manejo de excepciones
         }
-    }    
+    }
+
+    // Método para agregar títulos al documento
+    private void addTitle(Document document, Font font, String title) throws DocumentException {
+        Paragraph paragraph = new Paragraph(title, font);
+        paragraph.setAlignment(Element.ALIGN_CENTER);
+        document.add(paragraph);
+        
+    }
+
+    // Método para agregar subtitulos al documento
+    private void addSubtitle(Document document, Font font, String title, int alignment, float indentationLeft) throws DocumentException {
+        Paragraph paragraph = new Paragraph(title, font);
+        paragraph.setAlignment(alignment);
+        paragraph.setIndentationLeft(indentationLeft); // Establecer el relleno izquierdo
+        document.add(paragraph);
+        
+    }
+
+    private PdfPTable createTable(Font font) throws DocumentException {
+        PdfPTable tabla = new PdfPTable(3);
+        tabla.getDefaultCell().setMinimumHeight(20);
+        tabla.setWidthPercentage(90);
+
+        float[] columnWidths = {30f, 30f, 30f};
+        tabla.setWidths(columnWidths);
+
+        tabla.addCell(new PdfPCell(new Phrase("Mes", font)));
+        tabla.addCell(new PdfPCell(new Phrase("Hombres", font)));
+        tabla.addCell(new PdfPCell(new Phrase("Mujeres", font)));
+
+        return tabla;
+    }
     
+    private int obtenerTotalAlumnosEneroJunio() throws SQLException {
+        connect = database.connectDb();
+
+        String sql = "SELECT COUNT(*) AS TotalAlumnos FROM historial " +
+                     "WHERE MONTH(historial.fechaEntrada) BETWEEN 1 AND 6 " +
+                     "AND YEAR(historial.fechaEntrada) = YEAR(CURDATE())";
+
+        prepare = connect.prepareStatement(sql);
+        result = prepare.executeQuery();
+
+        int totalAlumnos = 0;
+
+        if (result.next()) {
+            totalAlumnos = result.getInt("TotalAlumnos");
+        }
+
+        connect.close();
+
+        return totalAlumnos;
+    }
+    
+    private int obtenerTotalAlumnosAgostoDiciembre() throws SQLException {
+        connect = database.connectDb();
+
+        String sql = "SELECT COUNT(*) AS TotalAlumnos FROM historial " +
+                     "WHERE MONTH(historial.fechaEntrada) BETWEEN 8 AND 12 " +
+                     "AND YEAR(historial.fechaEntrada) = YEAR(CURDATE())";
+
+        prepare = connect.prepareStatement(sql);
+        result = prepare.executeQuery();
+
+        int totalAlumnos = 0;
+
+        if (result.next()) {
+            totalAlumnos = result.getInt("TotalAlumnos");
+        }
+
+        connect.close();
+
+        return totalAlumnos;
+    }    
+
+    private void addDataToTable(PdfPTable tabla, String condition) throws SQLException, DocumentException {
+        try {
+            connect = database.connectDb();
+
+            String sql = "SELECT MONTHNAME(historial.fechaEntrada) AS Mes, " +
+                         "SUM(CASE WHEN alumnos.genero = 'M' THEN 1 ELSE 0 END) AS Hombres, " +
+                         "SUM(CASE WHEN alumnos.genero = 'F' THEN 1 ELSE 0 END) AS Mujeres " +
+                         "FROM historial " +
+                         "JOIN alumnos ON historial.noControl = alumnos.noControl " +
+                         condition +
+                         " AND YEAR(historial.fechaEntrada) = YEAR(CURDATE()) " +
+                         "GROUP BY MONTH(historial.fechaEntrada) " +
+                         "ORDER BY MONTH(historial.fechaEntrada) ASC";
+
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            Font dataFont = new Font(Font.FontFamily.TIMES_ROMAN, 8);
+
+            int totalHombres = 0;
+            int totalMujeres = 0;
+
+            while (result.next()) {
+                tabla.addCell(new PdfPCell(new Phrase(result.getString("Mes"), dataFont)));
+                int hombres = result.getInt("Hombres");
+                int mujeres = result.getInt("Mujeres");
+                tabla.addCell(new PdfPCell(new Phrase(String.valueOf(hombres), dataFont)));
+                tabla.addCell(new PdfPCell(new Phrase(String.valueOf(mujeres), dataFont)));
+
+                // Acumula el total de hombres y mujeres
+                totalHombres += hombres;
+                totalMujeres += mujeres;
+            }
+
+            // Agrega una fila adicional con el total
+            tabla.addCell(new PdfPCell(new Phrase("Total", dataFont)));
+            tabla.addCell(new PdfPCell(new Phrase(String.valueOf(totalHombres), dataFont)));
+            tabla.addCell(new PdfPCell(new Phrase(String.valueOf(totalMujeres), dataFont)));
+
+
+            // Crea un conjunto de datos para el gráfico PieChart
+            DefaultPieDataset dataset = new DefaultPieDataset();
+            dataset.setValue("Hombres", totalHombres);
+            dataset.setValue("Mujeres", totalMujeres);
+
+
+            // Crea el gráfico PieChart
+            JFreeChart chart = ChartFactory.createPieChart(
+                    "\n",
+                    dataset,
+                    true,
+                    true,
+                    false
+            );
+
+            // Personaliza los colores de las secciones del gráfico
+            PiePlot plot = (PiePlot) chart.getPlot();
+            
+            //plot.setBackgroundPaint(Color.WHITE);
+            plot.setSectionPaint("Hombres", new Color(82, 132, 178)); // Color azul #5284b2
+            plot.setSectionPaint("Mujeres", new Color(226, 192, 193)); // Color rosa #e2c0c1
+
+            // Ajusta el tamaño del gráfico
+            chart.setBackgroundPaint(null);
+            
+            // Crea un panel para mostrar el gráfico
+            ChartPanel chartPanel = new ChartPanel(chart);
+            chartPanel.setMaximumDrawWidth(800);
+            chartPanel.setMaximumDrawHeight(300);
+            
+            // Convierte el ChartPanel a una imagen
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            try {
+                ChartUtilities.writeChartAsPNG(byteArrayOutputStream, chart, 800, 300);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            byte[] imageData = byteArrayOutputStream.toByteArray();
+
+            // Crea una imagen desde los datos de la imagen
+            Image chartImage = null;
+            try {
+                chartImage = Image.getInstance(imageData);
+            } catch (BadElementException | IOException e) {
+                e.printStackTrace();
+            }
+
+            // Añade la imagen a la celda del documento
+            PdfPCell chartCell = new PdfPCell(chartImage, true);
+            chartCell.setColspan(3);
+            chartCell.setBorder(0); // Sin bordes
+            tabla.addCell(chartCell);        
+        } finally {
+            if (connect != null) {
+                connect.close();
+            }
+        }
+    }
+    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         displayUsername();

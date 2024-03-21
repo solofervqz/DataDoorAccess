@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package biblioteca;
 
 import java.sql.Date;
@@ -11,31 +7,6 @@ import java.time.LocalTime;
  *
  * @author bombo
  */
-/*public class studentData {
-    private String noControl;
-    private LocalTime horaEntrada;
-    private Date fechaEntrada;
-
-    // MAKE SURE THAT SAME DATATYPE THAT YOU WILL PUT THERE 
-    public studentData(String noControl, Date fechaEntrada, LocalTime horaEntrada) {
-        this.noControl = noControl;
-        this.fechaEntrada = fechaEntrada;
-        this.horaEntrada = horaEntrada;
-    }
-    
-    public String getNoControl() {
-        return noControl;
-    }
-    
-    public Date getFechaEntrada() {
-        return fechaEntrada;
-    }
-
-    public LocalTime getHoraEntrada() {
-        return horaEntrada;
-    }
-}*/
-
     public class studentData {
     private String noControl;
     private Date fechaEntrada;
