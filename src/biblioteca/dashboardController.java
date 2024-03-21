@@ -1309,7 +1309,7 @@ public class HeaderFooter extends PdfPageEventHelper {
 
             // Cargar la imagen
             Image image = Image.getInstance(imagePath);
-            image.scaleToFit(100, 100); // Ajusta el tamaño de la imagen según sea necesario
+            image.scaleToFit(200, 100); // Ancho // Altura
             image.setAbsolutePosition(document.left() + marginLeft, document.top() - marginTop - image.getScaledHeight());
 
             // Agregar la imagen al contenido del documento
@@ -1330,7 +1330,7 @@ public class HeaderFooter extends PdfPageEventHelper {
             String ruta = System.getProperty("user.home");
             float marginLeft = 20f;
             float marginTop = 10f;
-            int numLineas = 5; // Cantidad de saltos de línea a agregar
+            int numLineas = 3; // Cantidad de saltos de línea a agregar
 
             PdfWriter writer = PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/Lista de Registro General.pdf"));
 
@@ -1421,7 +1421,7 @@ public class HeaderFooter extends PdfPageEventHelper {
 
                     alert.setTitle("biblioTec Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Reporte creado.");
+                    alert.setContentText("Reporte general creado.");
                     alert.showAndWait();
         } catch (DocumentException | FileNotFoundException e){
         }
@@ -1430,10 +1430,19 @@ public class HeaderFooter extends PdfPageEventHelper {
     public void reporteAnual_PDF() {
         Document documentoAnual = new Document();
         documentoAnual.setMargins(0, 0, 20, 20); // Establecer márgenes izq, der, arr, ab
-        
+
         try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documentoAnual, new FileOutputStream(ruta + "/Desktop/Lista de Registro Anual.pdf"));
+            float marginLeft = 20f;
+            float marginTop = 10f;
+            int numLineas = 3; // Cantidad de saltos de línea a agregar
+
+            PdfWriter writer = PdfWriter.getInstance(documentoAnual, new FileOutputStream(ruta + "/Desktop/Lista de Registro Anual.pdf"));
+
+            // Agregar el encabezado a cada página
+            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
+            writer.setPageEvent(event);
+        
             documentoAnual.open();
             
             // Agregar el título
@@ -1519,7 +1528,7 @@ public class HeaderFooter extends PdfPageEventHelper {
 
                     alert.setTitle("biblioTec Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Reporte creado.");
+                    alert.setContentText("Reporte anual creado.");
                     alert.showAndWait();
         } catch (DocumentException | FileNotFoundException e){
         }
@@ -1531,7 +1540,16 @@ public class HeaderFooter extends PdfPageEventHelper {
         
         try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documentoDiario, new FileOutputStream(ruta + "/Desktop/Lista de Registro Diario.pdf"));
+            float marginLeft = 20f;
+            float marginTop = 10f;
+            int numLineas = 3; // Cantidad de saltos de línea a agregar
+
+            PdfWriter writer = PdfWriter.getInstance(documentoDiario, new FileOutputStream(ruta + "/Desktop/Lista de Registro Diario.pdf"));
+
+            // Agregar el encabezado a cada página
+            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
+            writer.setPageEvent(event);
+
             documentoDiario.open();
             
             // Agregar el título
@@ -1617,7 +1635,7 @@ public class HeaderFooter extends PdfPageEventHelper {
 
                     alert.setTitle("biblioTec Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Reporte creado.");
+                    alert.setContentText("Reporte diario creado.");
                     alert.showAndWait();
         } catch (DocumentException | FileNotFoundException e){
         }
@@ -1629,7 +1647,16 @@ public class HeaderFooter extends PdfPageEventHelper {
         
         try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documentoMensual, new FileOutputStream(ruta + "/Desktop/Lista de Registro Mensual.pdf"));
+            float marginLeft = 20f;
+            float marginTop = 10f;
+            int numLineas = 3; // Cantidad de saltos de línea a agregar
+
+            PdfWriter writer = PdfWriter.getInstance(documentoMensual, new FileOutputStream(ruta + "/Desktop/Lista de Registro Mensual.pdf"));
+
+            // Agregar el encabezado a cada página
+            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
+            writer.setPageEvent(event);
+
             documentoMensual.open();
             
             // Agregar el título
@@ -1716,21 +1743,29 @@ public class HeaderFooter extends PdfPageEventHelper {
 
                     alert.setTitle("biblioTec Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Reporte creado.");
+                    alert.setContentText("Reporte mensual creado.");
                     alert.showAndWait();
         } catch (DocumentException | FileNotFoundException e){
         }
     }    
-
-    
+  
     Document documentoTrimestral;
     public void reporteTrimestral_PDF() {
         documentoTrimestral = new Document();
         documentoTrimestral.setMargins(0, 0, 20, 20);
 
-        try {
+        try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documentoTrimestral, new FileOutputStream(ruta + "/Desktop/Lista de Registro Trimestral.pdf"));
+            float marginLeft = 20f;
+            float marginTop = 10f;
+            int numLineas = 3; // Cantidad de saltos de línea a agregar
+
+            PdfWriter writer = PdfWriter.getInstance(documentoTrimestral, new FileOutputStream(ruta + "/Desktop/Lista de Registro Trimestral.pdf"));
+
+            // Agregar el encabezado a cada página
+            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
+            writer.setPageEvent(event);
+
             documentoTrimestral.open();
 
             Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
@@ -1805,7 +1840,7 @@ public class HeaderFooter extends PdfPageEventHelper {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("biblioTec Message");
             alert.setHeaderText(null);
-            alert.setContentText("Reporte creado.");
+            alert.setContentText("Reporte trimestral creado.");
             alert.showAndWait();
 
         } catch (DocumentException | FileNotFoundException | SQLException e) {
@@ -1836,15 +1871,23 @@ public class HeaderFooter extends PdfPageEventHelper {
         return totalAlumnos;
     }    
     
-
     Document documentoSemestral;
     public void reporteSemestral_PDF() {
         documentoSemestral = new Document();
         documentoSemestral.setMargins(0, 0, 20, 20);
 
-        try {
+        try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documentoSemestral, new FileOutputStream(ruta + "/Desktop/Lista de Registro Semestral.pdf"));
+            float marginLeft = 20f;
+            float marginTop = 10f;
+            int numLineas = 3; // Cantidad de saltos de línea a agregar
+
+            PdfWriter writer = PdfWriter.getInstance(documentoSemestral, new FileOutputStream(ruta + "/Desktop/Lista de Registro Semestral.pdf"));
+
+            // Agregar el encabezado a cada página
+            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
+            writer.setPageEvent(event);
+
             documentoSemestral.open();
 
             Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
@@ -1894,7 +1937,7 @@ public class HeaderFooter extends PdfPageEventHelper {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("biblioTec Message");
             alert.setHeaderText(null);
-            alert.setContentText("Reporte creado.");
+            alert.setContentText("Reporte semestral creado.");
             alert.showAndWait();
 
         } catch (DocumentException | FileNotFoundException | SQLException e) {
