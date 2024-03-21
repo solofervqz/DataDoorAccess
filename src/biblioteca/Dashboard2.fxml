@@ -37,12 +37,12 @@
                                     <Font name="Tahoma" size="15.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="minimize" focusTraversable="false" layoutX="1148.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css">
+                              <Button fx:id="minimize" focusTraversable="false" layoutX="1200.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css">
                                  <graphic>
                                     <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="maximize" focusTraversable="false" layoutX="1199.0" layoutY="2.0" mnemonicParsing="false" onAction="#maximize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css">
+                              <Button fx:id="maximize" disable="true" focusTraversable="false" layoutX="1151.0" layoutY="2.0" mnemonicParsing="false" onAction="#maximize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css" visible="false">
                                  <graphic>
                                     <FontAwesomeIcon glyphName="SQUARE" size="1.2em" />
                                  </graphic>
@@ -217,7 +217,7 @@
                                             </columns>
                                           </TableView>
                                           <TextField fx:id="addStudents_noControl" layoutX="17.0" layoutY="24.0" onKeyReleased="#txtFieldAddStudentKeyReleased" prefHeight="30.0" prefWidth="234.0" styleClass="textfield" stylesheets="@dashboardDesign.css" />
-                                          <Button fx:id="addStudents_addBtn" layoutX="260.0" layoutY="26.0" mnemonicParsing="false" onAction="#addStudentsAdd" prefHeight="26.0" prefWidth="130.0" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Añadir estudiante" />
+                                          <Button fx:id="addStudents_addBtn" layoutX="260.0" layoutY="26.0" mnemonicParsing="false" onAction="#addStudentsAdd" prefHeight="26.0" prefWidth="130.0" styleClass="reporte-btn" stylesheets="@dashboardDesign.css" text="Añadir estudiante" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -653,14 +653,77 @@
                         </AnchorPane>
                         <AnchorPane fx:id="reporte_form" prefHeight="636.0" prefWidth="1100.0" visible="false">
                            <children>
-                              <AnchorPane layoutX="11.0" layoutY="20.0" prefHeight="601.0" prefWidth="1073.0" stylesheets="@dashboardDesign.css">
+                              <AnchorPane layoutX="11.0" layoutY="20.0" prefHeight="601.0" prefWidth="1075.0" stylesheets="@dashboardDesign.css">
                                  <children>
-                                    <AnchorPane prefHeight="600.0" prefWidth="1073.0">
+                                    <AnchorPane layoutX="347.0" layoutY="1.0" prefHeight="600.0" prefWidth="714.0">
                                        <children>
-                                          <Text layoutX="524.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hola" />
-                                          <Button fx:id="reportePDF_btn" layoutX="432.0" layoutY="321.0" mnemonicParsing="false" onAction="#reportePDF" prefHeight="60.0" prefWidth="209.0" text="Generar pdf" />
+                                          <Text layoutX="65.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Registro" wrappingWidth="157.5810546875">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font></Text>
+                                          <Button fx:id="reportePDF_btnGeneral" layoutX="338.0" layoutY="29.0" mnemonicParsing="false" onAction="#reporteGeneral_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass></Button>
+                                          <Text layoutX="65.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Registro del Día">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Button fx:id="reportePDF_btnDia" layoutX="338.0" layoutY="119.0" mnemonicParsing="false" onAction="#reporteDiario_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                          </Button>
+                                          <Text layoutX="61.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Registro del Mes">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Button fx:id="reportePDF_btnMes" layoutX="338.0" layoutY="209.0" mnemonicParsing="false" onAction="#reporteMensual_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                          </Button>
+                                          <Text layoutX="63.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registro Trimestral">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Button fx:id="reportePDF_btnTrimestral" layoutX="338.0" layoutY="388.0" mnemonicParsing="false" onAction="#reporteTrimestral_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                          </Button>
+                                          <Text layoutX="61.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registro Semestral">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Button fx:id="reportePDF_btnSemestral" layoutX="338.0" layoutY="476.0" mnemonicParsing="false" onAction="#reporteSemestral_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                          </Button>
+                                          <Text layoutX="61.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Registro anual">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Button fx:id="reportePDF_btnAnual" layoutX="338.0" layoutY="299.0" mnemonicParsing="false" onAction="#reporteAnual_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                          </Button>
                                        </children>
                                     </AnchorPane>
+                                    <FontAwesomeIcon fill="#2c4277" glyphName="FILE_TEXT" layoutX="146.0" layoutY="335.0" size="8em" />
                                  </children>
                                  <styleClass>
                                     <String fx:value="shadow" />
