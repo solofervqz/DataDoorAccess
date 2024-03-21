@@ -37,12 +37,12 @@
                                     <Font name="Tahoma" size="15.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="minimize" focusTraversable="false" layoutX="1148.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css">
+                              <Button fx:id="minimize" focusTraversable="false" layoutX="1200.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css">
                                  <graphic>
                                     <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="maximize" focusTraversable="false" layoutX="1199.0" layoutY="2.0" mnemonicParsing="false" onAction="#maximize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css">
+                              <Button fx:id="maximize" disable="true" focusTraversable="false" layoutX="1151.0" layoutY="2.0" mnemonicParsing="false" onAction="#maximize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css" visible="false">
                                  <graphic>
                                     <FontAwesomeIcon glyphName="SQUARE" size="1.2em" />
                                  </graphic>
