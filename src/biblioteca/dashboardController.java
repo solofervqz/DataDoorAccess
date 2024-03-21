@@ -1308,7 +1308,7 @@ public class HeaderFooter extends PdfPageEventHelper {
             }
 
             // Cargar la imagen
-            Image image = Image.getInstance(imagePath);
+            Image image = Image.getInstance(getClass().getResource(imagePath));
             image.scaleToFit(200, 100); // Ancho // Altura
             image.setAbsolutePosition(document.left() + marginLeft, document.top() - marginTop - image.getScaledHeight());
 
@@ -1335,7 +1335,8 @@ public class HeaderFooter extends PdfPageEventHelper {
             PdfWriter writer = PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/Lista de Registro General.pdf"));
 
             // Agregar el encabezado a cada página
-            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
+            String imagePath = "/reporte/educacionTec.png";
+            HeaderFooter event = new HeaderFooter(imagePath, marginLeft, marginTop, numLineas);
             writer.setPageEvent(event);
 
             documento.open();
@@ -1440,7 +1441,8 @@ public class HeaderFooter extends PdfPageEventHelper {
             PdfWriter writer = PdfWriter.getInstance(documentoAnual, new FileOutputStream(ruta + "/Desktop/Lista de Registro Anual.pdf"));
 
             // Agregar el encabezado a cada página
-            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
+            String imagePath = "/reporte/educacionTec.png";
+            HeaderFooter event = new HeaderFooter(imagePath, marginLeft, marginTop, numLineas);
             writer.setPageEvent(event);
         
             documentoAnual.open();
@@ -1547,7 +1549,8 @@ public class HeaderFooter extends PdfPageEventHelper {
             PdfWriter writer = PdfWriter.getInstance(documentoDiario, new FileOutputStream(ruta + "/Desktop/Lista de Registro Diario.pdf"));
 
             // Agregar el encabezado a cada página
-            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
+            String imagePath = "/reporte/educacionTec.png";
+            HeaderFooter event = new HeaderFooter(imagePath, marginLeft, marginTop, numLineas);
             writer.setPageEvent(event);
 
             documentoDiario.open();
@@ -1654,7 +1657,8 @@ public class HeaderFooter extends PdfPageEventHelper {
             PdfWriter writer = PdfWriter.getInstance(documentoMensual, new FileOutputStream(ruta + "/Desktop/Lista de Registro Mensual.pdf"));
 
             // Agregar el encabezado a cada página
-            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
+            String imagePath = "/reporte/educacionTec.png";
+            HeaderFooter event = new HeaderFooter(imagePath, marginLeft, marginTop, numLineas);
             writer.setPageEvent(event);
 
             documentoMensual.open();
@@ -1763,7 +1767,8 @@ public class HeaderFooter extends PdfPageEventHelper {
             PdfWriter writer = PdfWriter.getInstance(documentoTrimestral, new FileOutputStream(ruta + "/Desktop/Lista de Registro Trimestral.pdf"));
 
             // Agregar el encabezado a cada página
-            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
+            String imagePath = "/reporte/educacionTec.png";
+            HeaderFooter event = new HeaderFooter(imagePath, marginLeft, marginTop, numLineas);
             writer.setPageEvent(event);
 
             documentoTrimestral.open();
@@ -1885,7 +1890,8 @@ public class HeaderFooter extends PdfPageEventHelper {
             PdfWriter writer = PdfWriter.getInstance(documentoSemestral, new FileOutputStream(ruta + "/Desktop/Lista de Registro Semestral.pdf"));
 
             // Agregar el encabezado a cada página
-            HeaderFooter event = new HeaderFooter(ruta + "/Desktop/educacion.png", marginLeft, marginTop, numLineas);
+            String imagePath = "/reporte/educacionTec.png";
+            HeaderFooter event = new HeaderFooter(imagePath, marginLeft, marginTop, numLineas);
             writer.setPageEvent(event);
 
             documentoSemestral.open();
