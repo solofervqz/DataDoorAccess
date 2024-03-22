@@ -37,12 +37,12 @@
                                     <Font name="Tahoma" size="15.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="minimize" focusTraversable="false" layoutX="1148.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css">
+                              <Button fx:id="minimize" focusTraversable="false" layoutX="1200.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css">
                                  <graphic>
                                     <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="maximize" focusTraversable="false" layoutX="1199.0" layoutY="2.0" mnemonicParsing="false" onAction="#maximize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css">
+                              <Button fx:id="maximize" disable="true" focusTraversable="false" layoutX="1151.0" layoutY="2.0" mnemonicParsing="false" onAction="#maximize" prefHeight="24.0" prefWidth="48.0" scaleShape="false" styleClass="minimize" stylesheets="@dashboardDesign.css" visible="false">
                                  <graphic>
                                     <FontAwesomeIcon glyphName="SQUARE" size="1.2em" />
                                  </graphic>
@@ -216,8 +216,8 @@
                                                 <TableColumn fx:id="addStudents_col_horaEntrada" editable="false" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" sortable="false" text="horaEntrada" />
                                             </columns>
                                           </TableView>
-                                          <TextField fx:id="addStudents_noControl" layoutX="17.0" layoutY="24.0" prefHeight="30.0" prefWidth="234.0" styleClass="textfield" stylesheets="@dashboardDesign.css" />
-                                          <Button fx:id="addStudents_addBtn" layoutX="260.0" layoutY="26.0" mnemonicParsing="false" onAction="#addStudentsAdd" prefHeight="26.0" prefWidth="130.0" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Añadir estudiante" />
+                                          <TextField fx:id="addStudents_noControl" layoutX="17.0" layoutY="24.0" onKeyReleased="#txtFieldAddStudentKeyReleased" prefHeight="30.0" prefWidth="234.0" styleClass="textfield" stylesheets="@dashboardDesign.css" />
+                                          <Button fx:id="addStudents_addBtn" layoutX="260.0" layoutY="26.0" mnemonicParsing="false" onAction="#addStudentsAdd" prefHeight="26.0" prefWidth="130.0" styleClass="reporte-btn" stylesheets="@dashboardDesign.css" text="Añadir estudiante" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -260,7 +260,7 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="analysis_Careers" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0" visible="false">
+                                    <AnchorPane fx:id="analysis_Careers" layoutX="113.0" layoutY="23.0" prefHeight="545.0" prefWidth="960.0">
                                        <children>
                                           <AnchorPane prefHeight="43.0" prefWidth="940.0">
                                              <children>
@@ -365,10 +365,10 @@
                                                       </Button>
                                                    </children>
                                                 </AnchorPane>
-                                                <AnchorPane fx:id="analysisCareers_pieChart" layoutX="390.0" prefHeight="450.0" prefWidth="542.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="389.6" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                                <AnchorPane fx:id="analysisCareers_pieChart" layoutX="352.8" prefHeight="450.0" prefWidth="579.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="353.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
                                                    <children>
                                                       <PieChart fx:id="analisisPorCarreras_chart" animated="false" clockwise="false" labelsVisible="false" layoutY="16.0" legendVisible="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="406.0" prefWidth="515.0" stylesheets="@pieChartCareers.css" AnchorPane.bottomAnchor="28.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="16.0" />
-                                                      <AnchorPane layoutX="455.0" layoutY="137.0" prefHeight="39.0" prefWidth="42.0" styleClass="IDIN-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="40.0" prefHeight="39.0" prefWidth="42.0" styleClass="IDIN-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalIDIN" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -377,7 +377,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="350.0" layoutY="7.0" prefHeight="39.0" prefWidth="42.0" styleClass="IIND-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="265.0" prefHeight="39.0" prefWidth="42.0" styleClass="IIND-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalIIND" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -386,7 +386,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="119.0" layoutY="26.0" prefHeight="39.0" prefWidth="42.0" styleClass="ARQ-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="373.0" prefHeight="39.0" prefWidth="42.0" styleClass="ARQ-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalARQ" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -395,7 +395,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="36.0" layoutY="164.0" prefHeight="39.0" prefWidth="42.0" styleClass="IGE-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="319.0" prefHeight="39.0" prefWidth="42.0" styleClass="IGE-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalIGE" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -404,7 +404,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="91.0" layoutY="350.0" prefHeight="39.0" prefWidth="42.0" styleClass="IINF-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="210.0" prefHeight="39.0" prefWidth="42.0" styleClass="IINF-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalIINF" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -413,7 +413,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="322.0" layoutY="400.0" prefHeight="37.0" prefWidth="42.0" styleClass="ADM-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="100.0" prefHeight="37.0" prefWidth="42.0" styleClass="ADM-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalADM" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="44.0" prefWidth="42.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -422,7 +422,7 @@
                                                             </Label>
                                                          </children>
                                                       </AnchorPane>
-                                                      <AnchorPane layoutX="444.0" layoutY="294.0" prefHeight="39.0" prefWidth="42.0" styleClass="ISC-Lable" stylesheets="@dashboardDesign.css">
+                                                      <AnchorPane layoutY="155.0" prefHeight="39.0" prefWidth="42.0" styleClass="ISC-Lable" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label fx:id="totalISC" alignment="CENTER" layoutX="12.8" layoutY="7.0" prefHeight="53.0" prefWidth="46.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <font>
@@ -507,13 +507,13 @@
                                                 </Label>
                                              </children>
                                           </AnchorPane>
-                                          <AnchorPane layoutX="14.0" layoutY="63.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@dashboardDesign.css">
+                                          <AnchorPane layoutX="14.0" layoutY="63.0" prefHeight="450.0" prefWidth="932.0" stylesheets="@dashboardDesign.css">
                                              <styleClass>
                                                 <String fx:value="white-bg" />
                                                 <String fx:value="shadow" />
                                              </styleClass>
                                              <children>
-                                                <BarChart fx:id="totalEnrolledChart_daily" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@barChartGeneral.css" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <BarChart fx:id="totalEnrolledChart_daily" layoutX="1.0" layoutY="-1.0" prefHeight="450.0" prefWidth="450.0" stylesheets="@barChartMaleFemale.css" title="Total de ingresados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <xAxis>
                                                       <CategoryAxis side="BOTTOM" />
                                                    </xAxis>
@@ -521,38 +521,6 @@
                                                       <NumberAxis side="LEFT" />
                                                    </yAxis>
                                                 </BarChart>
-                                             </children>
-                                          </AnchorPane>
-                                          <AnchorPane layoutX="477.0" layoutY="63.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@dashboardDesign.css">
-                                             <styleClass>
-                                                <String fx:value="white-bg" />
-                                                <String fx:value="shadow" />
-                                             </styleClass>
-                                             <children>
-                                                <LineChart fx:id="totalFemaleChart_daily" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartFemale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <xAxis>
-                                                      <CategoryAxis side="BOTTOM" />
-                                                   </xAxis>
-                                                   <yAxis>
-                                                      <NumberAxis side="LEFT" />
-                                                   </yAxis>
-                                                </LineChart>
-                                             </children>
-                                          </AnchorPane>
-                                          <AnchorPane layoutX="477.0" layoutY="293.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@dashboardDesign.css">
-                                             <styleClass>
-                                                <String fx:value="white-bg" />
-                                                <String fx:value="shadow" />
-                                             </styleClass>
-                                             <children>
-                                                <LineChart fx:id="totalMaleChart_daily" layoutY="-1.0" prefHeight="220.0" prefWidth="475.0" stylesheets="@lineChartMale.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <xAxis>
-                                                      <CategoryAxis side="BOTTOM" />
-                                                   </xAxis>
-                                                   <yAxis>
-                                                      <NumberAxis side="LEFT" />
-                                                   </yAxis>
-                                                </LineChart>
                                              </children>
                                           </AnchorPane>
                                        </children>
@@ -685,14 +653,77 @@
                         </AnchorPane>
                         <AnchorPane fx:id="reporte_form" prefHeight="636.0" prefWidth="1100.0" visible="false">
                            <children>
-                              <AnchorPane layoutX="11.0" layoutY="20.0" prefHeight="601.0" prefWidth="1073.0" stylesheets="@dashboardDesign.css">
+                              <AnchorPane layoutX="11.0" layoutY="20.0" prefHeight="601.0" prefWidth="1075.0" stylesheets="@dashboardDesign.css">
                                  <children>
-                                    <AnchorPane prefHeight="600.0" prefWidth="1073.0">
+                                    <AnchorPane layoutX="347.0" layoutY="1.0" prefHeight="600.0" prefWidth="714.0">
                                        <children>
-                                          <Text layoutX="524.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hola" />
-                                          <Button fx:id="reportePDF_btn" layoutX="432.0" layoutY="321.0" mnemonicParsing="false" onAction="#reportePDF" prefHeight="60.0" prefWidth="209.0" text="Generar pdf" />
+                                          <Text layoutX="65.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Registro" wrappingWidth="157.5810546875">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font></Text>
+                                          <Button fx:id="reportePDF_btnGeneral" layoutX="338.0" layoutY="29.0" mnemonicParsing="false" onAction="#reporteGeneral_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass></Button>
+                                          <Text layoutX="65.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Registro del Día">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Button fx:id="reportePDF_btnDia" layoutX="338.0" layoutY="119.0" mnemonicParsing="false" onAction="#reporteDiario_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                          </Button>
+                                          <Text layoutX="61.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Registro del Mes">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Button fx:id="reportePDF_btnMes" layoutX="338.0" layoutY="209.0" mnemonicParsing="false" onAction="#reporteMensual_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                          </Button>
+                                          <Text layoutX="63.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registro Trimestral">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Button fx:id="reportePDF_btnTrimestral" layoutX="338.0" layoutY="388.0" mnemonicParsing="false" onAction="#reporteTrimestral_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                          </Button>
+                                          <Text layoutX="61.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registro Semestral">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Button fx:id="reportePDF_btnSemestral" layoutX="338.0" layoutY="476.0" mnemonicParsing="false" onAction="#reporteSemestral_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                          </Button>
+                                          <Text layoutX="61.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Registro anual">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Text>
+                                          <Button fx:id="reportePDF_btnAnual" layoutX="338.0" layoutY="299.0" mnemonicParsing="false" onAction="#reporteAnual_PDF" prefHeight="60.0" prefWidth="209.0" stylesheets="@dashboardDesign.css" text="Generar pdf">
+                                             <styleClass>
+                                                <String fx:value="reporte-btn" />
+                                                <String fx:value="shadow" />
+                                             </styleClass>
+                                          </Button>
                                        </children>
                                     </AnchorPane>
+                                    <FontAwesomeIcon fill="#2c4277" glyphName="FILE_TEXT" layoutX="146.0" layoutY="335.0" size="8em" />
                                  </children>
                                  <styleClass>
                                     <String fx:value="shadow" />
