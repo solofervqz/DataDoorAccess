@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -15,7 +16,7 @@ import javafx.stage.StageStyle;
 public class Biblioteca extends Application{
 
 private double x=0;
-    private double y=0;
+private double y=0;
     
     @Override
     public void start(Stage stage) throws Exception{
@@ -25,7 +26,10 @@ private double x=0;
         
         stage.setTitle("BiblioTec"); //Titulo de la ventana
         stage.initStyle(StageStyle.TRANSPARENT); //Oculta la barra de la ventana
-        
+
+        // Establecer el icono de la aplicación
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("DataDoor_Access_logo.png")));
+
         root.setOnMousePressed((MouseEvent event) ->{    
             x = event.getSceneX();
             y = event.getSceneY();
