@@ -27,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -291,7 +292,10 @@ public class FXMLDocumentController implements Initializable {
                 
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
-                
+        
+                // Establecer el icono de la aplicación
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("DataDoor_Access_logo.png")));
+
                 //User.username = result.getString("username");
                 //User.path = result.getString("image");
                                                                              
