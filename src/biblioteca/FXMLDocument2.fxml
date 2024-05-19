@@ -17,12 +17,12 @@
          <children>
             <AnchorPane prefHeight="680.0" prefWidth="650.0" styleClass="login-bg" stylesheets="@fxmldocument.css">
                <children>
-                  <Label fx:id="biblioTec" alignment="CENTER" layoutX="145.0" layoutY="97.0" prefHeight="226.0" prefWidth="361.0" text="BiblioTec">
+                  <Label fx:id="biblioTec" alignment="CENTER" layoutX="13.0" layoutY="140.0" prefHeight="226.0" prefWidth="625.0" text="DataDoor Access">
                      <font>
-                        <Font name="Franklin Gothic Medium" size="92.0" />
+                        <Font name="Franklin Gothic Medium" size="80.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="241.0" fitWidth="221.0" layoutX="222.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="241.0" fitWidth="221.0" layoutX="220.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../iconos/Logo%20Tec%20II.png" />
                      </image>
@@ -70,12 +70,12 @@
          <children>
             <AnchorPane layoutX="650.0" prefHeight="680.0" prefWidth="650.0" styleClass="login-bg" stylesheets="@fxmldocument.css">
                <children>
-                  <Label fx:id="biblioTec2" alignment="CENTER" layoutX="142.0" layoutY="99.0" prefHeight="226.0" prefWidth="361.0" text="BiblioTec">
+                  <Label fx:id="biblioTec2" alignment="CENTER" layoutX="13.0" layoutY="141.0" prefHeight="226.0" prefWidth="625.0" text="DataDoor Access">
                      <font>
-                        <Font name="Franklin Gothic Medium" size="92.0" />
+                        <Font name="Franklin Gothic Medium" size="80.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="241.0" fitWidth="221.0" layoutX="209.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="241.0" fitWidth="221.0" layoutX="210.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../iconos/Logo%20Tec%20II.png" />
                      </image>

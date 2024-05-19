@@ -9,7 +9,9 @@ public class database {
     public static Connection connectDb() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/bibliotec", "root", "");
+            Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/bibliotec", "root", ""); //Xampp
+            //Connection connect = DriverManager.getConnection("jdbc:mysql://34.121.129.3/bibliotec","admin","tecnologicoII"); //Google Cloud
+
             return connect;
         } catch (Exception e) {
             e.printStackTrace();
