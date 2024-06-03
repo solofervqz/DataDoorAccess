@@ -868,7 +868,7 @@ public class dashboardController implements Initializable {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
-                alert.setContentText("No se ha ingresado num Control");
+                alert.setContentText("No se ha ingresado No de Control");
                 alert.showAndWait();
 
             } else { //Si entra aqui, entonces si hay algo dentro del campo de texto
@@ -1470,7 +1470,7 @@ public class HeaderFooter extends PdfPageEventHelper {
 
             Alert alert = new Alert(AlertType.INFORMATION);
 
-                    alert.setTitle("biblioTec Message");
+                    alert.setTitle("DataDoor Access Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Reporte general creado.");
                     alert.showAndWait();
@@ -1578,7 +1578,7 @@ public class HeaderFooter extends PdfPageEventHelper {
 
             Alert alert = new Alert(AlertType.INFORMATION);
 
-                    alert.setTitle("biblioTec Message");
+                    alert.setTitle("DataDoor Access Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Reporte anual creado.");
                     alert.showAndWait();
@@ -1686,7 +1686,7 @@ public class HeaderFooter extends PdfPageEventHelper {
 
             Alert alert = new Alert(AlertType.INFORMATION);
 
-                    alert.setTitle("biblioTec Message");
+                    alert.setTitle("DataDoor Access Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Reporte diario creado.");
                     alert.showAndWait();
@@ -1795,7 +1795,7 @@ public class HeaderFooter extends PdfPageEventHelper {
 
             Alert alert = new Alert(AlertType.INFORMATION);
 
-                    alert.setTitle("biblioTec Message");
+                    alert.setTitle("DataDoor Access Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Reporte mensual creado.");
                     alert.showAndWait();
@@ -1893,7 +1893,7 @@ public class HeaderFooter extends PdfPageEventHelper {
             documentoTrimestral.close();
 
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("biblioTec Message");
+            alert.setTitle("DataDoor Access Message");
             alert.setHeaderText(null);
             alert.setContentText("Reporte trimestral creado.");
             alert.showAndWait();
@@ -1991,7 +1991,7 @@ public class HeaderFooter extends PdfPageEventHelper {
         documentoSemestral.close();
 
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("biblioTec Message");
+            alert.setTitle("DataDoor Access Message");
             alert.setHeaderText(null);
             alert.setContentText("Reporte semestral creado.");
             alert.showAndWait();

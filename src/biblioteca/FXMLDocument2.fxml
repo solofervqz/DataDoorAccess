@@ -47,7 +47,7 @@
                         <Font size="15.0" />
                      </font>
                   </TextField>
-                  <PasswordField fx:id="password" layoutX="215.0" layoutY="371.0" onKeyTyped="#textfieldDesign" onMouseClicked="#textfieldDesign" onMouseDragged="#textfieldDesign" prefHeight="28.0" prefWidth="220.0" promptText="Contraseña" styleClass="textfield-design" stylesheets="@fxmldocument.css">
+                  <PasswordField fx:id="password" layoutX="215.0" layoutY="371.0" onKeyReleased="#PassLoginKeyReleased" onKeyTyped="#textfieldDesign" onMouseClicked="#textfieldDesign" onMouseDragged="#textfieldDesign" prefHeight="28.0" prefWidth="220.0" promptText="Contraseña" styleClass="textfield-design" stylesheets="@fxmldocument.css">
                      <font>
                         <Font size="15.0" />
                      </font>

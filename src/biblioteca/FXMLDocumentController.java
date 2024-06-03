@@ -34,6 +34,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 
 /**
  * FXML Controller class
@@ -334,6 +335,14 @@ public class FXMLDocumentController implements Initializable {
         }catch(Exception e){}
         
     }
+    
+    //Método para llamar a la función login cuando se presione la tecla enter
+    public void PassLoginKeyReleased(KeyEvent event){
+        if(event.getCode() == event.getCode().ENTER){
+            login();
+        }
+    }
+
     
     public void signup(){
         
