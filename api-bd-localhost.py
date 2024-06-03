@@ -46,3 +46,4 @@ conexion.commit()
 print("Datos insertados correctamente y cambios confirmados")
 conexion.close()
 print("Conexión cerrada")
+
