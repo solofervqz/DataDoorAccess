@@ -1020,12 +1020,12 @@ public class dashboardController implements Initializable {
                            FROM 
                                historial h
                            JOIN 
-                               Alumnos a ON h.noControl = a.noControl
+                               alumnos a ON h.noControl = a.noControl
                            WHERE 
                                DATE(h.fechaEntrada) = ?
                                AND TIME(h.horaEntrada) BETWEEN '08:00:00' AND '20:00:00'
                            GROUP BY 
-                               hora;""";
+                               hora;"""; //Alumnos -> alumnos
         String maleSql = """
                          SELECT 
                              CASE 
@@ -1046,12 +1046,12 @@ public class dashboardController implements Initializable {
                          FROM 
                              historial h
                          JOIN 
-                             Alumnos a ON h.noControl = a.noControl
+                             alumnos a ON h.noControl = a.noControl
                          WHERE 
                              DATE(h.fechaEntrada) = ?
                              AND TIME(h.horaEntrada) BETWEEN '08:00:00' AND '20:00:00'
                          GROUP BY 
-                             hora;""";
+                             hora;"""; //Alumnos -> alumnos
 
         connect = database.connectDb();
 
@@ -1176,7 +1176,7 @@ public class dashboardController implements Initializable {
         totalEnrolledChart_semestre.getData().clear();
 
         // Utilizando la función MONTH() y expresiones CASE para calcular el semestre
-        String sql = "SELECT CONCAT('Semestre ', CASE WHEN MONTH(fechaEntrada) <= 6 THEN 'A' ELSE 'B' END, ' ', YEAR(fechaEntrada)) AS Semestre, COUNT(*) FROM historial GROUP BY Semestre DESC LIMIT 2";
+        String sql = "SELECT  CONCAT('Semestre ',CASE WHEN MONTH(fechaEntrada) <= 6 THEN 'A' ELSE 'B' END,' ', YEAR(fechaEntrada)) AS Semestre, COUNT(*) as cantidad FROM historial GROUP BY Semestre";
 
         try (Connection connect = database.connectDb(); PreparedStatement prepare = connect.prepareStatement(sql); ResultSet result = prepare.executeQuery()) {
 
@@ -1199,7 +1199,7 @@ public class dashboardController implements Initializable {
         totalFemaleChart_semestre.getData().clear();
 
         // Utilizando la función QUARTER() y YEAR() para agrupar por semestre
-        String sql = "SELECT CONCAT('Semestre ', CASE WHEN QUARTER(fechaEntrada) <= 2 THEN 'A' ELSE 'B' END, ' ', YEAR(fechaEntrada)), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY YEAR(fechaEntrada), QUARTER(fechaEntrada) ORDER BY YEAR(fechaEntrada) DESC, QUARTER(fechaEntrada) DESC LIMIT 4";
+        String sql = "SELECT CONCAT('Semestre ', CASE WHEN QUARTER(fechaEntrada) <= 2 THEN 'A' ELSE 'B' END, ' ',YEAR(fechaEntrada)) as semestre, COUNT(*)  as cant FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'F' GROUP BY CONCAT('Semestre ', CASE WHEN QUARTER(fechaEntrada) <= 2 THEN 'A' ELSE 'B' END, ' ', YEAR(fechaEntrada))";
 
         try (Connection connect = database.connectDb(); PreparedStatement prepare = connect.prepareStatement(sql); ResultSet result = prepare.executeQuery()) {
 
@@ -1223,7 +1223,7 @@ public class dashboardController implements Initializable {
         totalMaleChart_semestre.getData().clear();
 
         // Utilizando la función QUARTER() y YEAR() para agrupar por semestre
-        String sql = "SELECT CONCAT('Semestre ', CASE WHEN QUARTER(fechaEntrada) <= 2 THEN 'A' ELSE 'B' END, ' ', YEAR(fechaEntrada)), COUNT(*) FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY YEAR(fechaEntrada), QUARTER(fechaEntrada) ORDER BY YEAR(fechaEntrada) DESC, QUARTER(fechaEntrada) DESC LIMIT 4";
+        String sql = "SELECT CONCAT('Semestre ', CASE WHEN QUARTER(fechaEntrada) <= 2 THEN 'A' ELSE 'B' END, ' ',YEAR(fechaEntrada)) as semestre, COUNT(*)  as cant FROM historial h JOIN alumnos a ON h.noControl = a.noControl WHERE a.genero = 'M' GROUP BY CONCAT('Semestre ', CASE WHEN QUARTER(fechaEntrada) <= 2 THEN 'A' ELSE 'B' END, ' ', YEAR(fechaEntrada))";
 
         try (Connection connect = database.connectDb(); PreparedStatement prepare = connect.prepareStatement(sql); ResultSet result = prepare.executeQuery()) {
 
