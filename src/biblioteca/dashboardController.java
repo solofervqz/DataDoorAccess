@@ -928,8 +928,8 @@ public class dashboardController implements Initializable {
         analisisPorCarreras_chart.getData().clear();
 
         String carreraSql = "SELECT a.carrera, COUNT(*) FROM alumnos a JOIN historial h ON a.noControl = h.noControl "
-                + "WHERE a.carrera NOT IN ('DOCTORADO EN CIENCIAS DE LA INGENIERIA', 'MAESTRIA EN SISTEMAS COMPUTACIONALES', "
-                + "'MAESTRIA EN INGENIERIA INDUSTRIAL') GROUP BY a.carrera ORDER BY CASE a.carrera "
+                + "WHERE a.carrera NOT LIKE '%DOCTORADO%' AND a.carrera NOT LIKE '%MAESTRÍA%' "
+                + "GROUP BY a.carrera ORDER BY CASE a.carrera "
                 + "WHEN 'INGENIERIA EN DISEÑO INDUSTRIAL' THEN 1 WHEN 'INGENIERIA INDUSTRIAL' THEN 2 WHEN 'ARQUITECTURA' "
                 + "THEN 3 WHEN 'INGENIERIA EN GESTION EMPRESARIAL' THEN 4 WHEN 'INGENIERIA INFORMATICA' THEN 5 "
                 + "WHEN 'LICENCIATURA EN ADMINISTRACION' THEN 6 WHEN 'INGENIERIA EN SISTEMAS COMPUTACIONALES' THEN 7 END;";
